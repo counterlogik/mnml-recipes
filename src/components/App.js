@@ -1,4 +1,5 @@
 import React from "react";
+import RecipeList from "./RecipeList";
 import base from "../base";
 
 class App extends React.Component {
@@ -14,10 +15,10 @@ class App extends React.Component {
     });
   }
 
-  addItem = newRecipe => {
+  addRecipe = () => {
     const recipes = this.state.recipes.concat([
       {
-        title: newRecipe,
+        title: `recipe-${Date.now()}`,
         dateAdded: Date.now()
       }
     ]);
@@ -25,7 +26,15 @@ class App extends React.Component {
   };
 
   render() {
-    return <div className="App" />;
+    if (this.state.recipes.length < 1) {
+      return <h1>No recipes!</h1>;
+    }
+
+    return (
+      <div className="App">
+        <RecipeList recipes={this.state.recipes} addRecipe={this.addRecipe} />
+      </div>
+    );
   }
 }
 
