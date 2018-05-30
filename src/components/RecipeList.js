@@ -1,15 +1,44 @@
 import React from "react";
 
 class RecipeList extends React.Component {
+  recipeTitleInput = React.createRef();
+
+  createRecipe = event => {
+    event.preventDefault();
+    this.props.addRecipe(this.recipeTitleInput.current.value);
+    // refresh the form
+    event.currentTarget.reset();
+  };
+
   render() {
     return (
-      <div className="recipeList">
+      <form className="recipeList" onSubmit={this.createRecipe}>
         <h1>Recipes</h1>
-        {this.props.recipes.map(recipe => (
-          <h2 key={recipe.key}>{recipe.title}</h2>
-        ))}
-        <button onClick={this.props.addRecipe}>+ Add Recipe</button>
-      </div>
+        <ul>
+          {Object.keys(this.props.recipes).map(key => {
+            return (
+              <li key={this.props.recipes[key].index}>
+                {this.props.recipes[key].title}
+                <button
+                  className="deleteRecipe"
+                  onClick={event => {
+                    event.preventDefault();
+                    this.props.deleteRecipe(key);
+                  }}
+                >
+                  &times;
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <input
+          name="recipeTitleInput"
+          type="text"
+          ref={this.recipeTitleInput}
+        />
+        <button type="submit">+ Add Recipe</button>
+      </form>
     );
   }
 }
