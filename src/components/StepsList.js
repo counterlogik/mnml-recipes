@@ -6,7 +6,7 @@ class StepsList extends React.Component {
     if (this.props.steps && this.props.steps.length > 0) {
       return (
         <ul className="steps-list">
-          {this.props.steps.map(step => <Step key={step} index={step} />)}
+          {this.props.steps.map(step => <Step key={step} step={step} />)}
         </ul>
       );
     }

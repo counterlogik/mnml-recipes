@@ -32,9 +32,7 @@ class App extends React.Component {
   };
 
   loadRecipe = id => {
-    let loadedRecipe = this.state.loadedRecipe;
-    loadedRecipe = id;
-    this.setState({ loadedRecipe: loadedRecipe });
+    this.setState({ loadedRecipe: id });
   };
 
   updateRecipe = recipes => {

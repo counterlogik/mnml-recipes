@@ -7,7 +7,7 @@ class IngredientsList extends React.Component {
       return (
         <ul className="ingredients-list">
           {this.props.ingredients.map(ingredient => (
-            <Ingredient key={ingredient} index={ingredient} />
+            <Ingredient key={ingredient} ingredient={ingredient} />
           ))}
         </ul>
       );
