@@ -35,14 +35,14 @@ class RecipeDetails extends React.Component {
   };
 
   render() {
-    if (this.props.recipe) {
+    if (this.props.recipes[this.props.loadedRecipe]) {
       return (
         <div>
-          <h4>{this.props.recipe.title}</h4>
+          <h4>{this.props.recipes[this.props.loadedRecipe].title}</h4>
           <IngredientsList
             ingredients={
-              this.props.recipe.ingredients
-                ? this.props.recipe.ingredients
+              this.props.recipes[this.props.loadedRecipe].ingredients
+                ? this.props.recipes[this.props.loadedRecipe].ingredients
                 : false
             }
           />
@@ -55,7 +55,11 @@ class RecipeDetails extends React.Component {
             + ingredient
           </button>
           <StepsList
-            steps={this.props.recipe.steps ? this.props.recipe.steps : false}
+            steps={
+              this.props.recipes[this.props.loadedRecipe].steps
+                ? this.props.recipes[this.props.loadedRecipe].steps
+                : false
+            }
           />
           <input
             name="stepContentInput"

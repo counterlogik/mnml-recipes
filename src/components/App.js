@@ -1,7 +1,9 @@
 import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import RecipeList from "./RecipeList";
 import RecipeDetails from "./RecipeDetails";
 import base from "../base";
+import NotFound from "./NotFound";
 
 class App extends React.Component {
   state = {
@@ -41,23 +43,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <RecipeList
-          recipes={this.state.recipes}
-          addRecipe={this.addRecipe}
-          deleteRecipe={this.deleteRecipe}
-          loadRecipe={this.loadRecipe}
-        />
-        <RecipeDetails
-          recipe={
-            this.state.loadedRecipe
-              ? this.state.recipes[this.state.loadedRecipe]
-              : ""
-          }
-          recipes={this.state.recipes}
-          updateRecipe={this.updateRecipe}
-        />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route path={"/"} exact component={RecipeList} />
+            <Route path={"/recipeDetails"} component={RecipeDetails} />
+            <Route path={"/notFound"} component={NotFound} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
