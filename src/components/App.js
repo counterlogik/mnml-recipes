@@ -1,10 +1,12 @@
 import React from "react";
 import RecipeList from "./RecipeList";
+import RecipeDetails from "./RecipeDetails";
 import base from "../base";
 
 class App extends React.Component {
   state = {
-    recipes: {}
+    recipes: {},
+    loadedRecipe: ""
   };
 
   componentDidMount() {
@@ -18,15 +20,24 @@ class App extends React.Component {
     const recipes = this.state.recipes;
     recipes[`recipe-${Date.now()}`] = {
       title: title,
-      dateAdded: Date.now(),
-      index: `recipe-${Date.now()}`
+      uid: `recipe-${title}`
     };
     this.setState({ recipes });
   };
 
-  deleteRecipe = key => {
+  deleteRecipe = id => {
     const recipes = { ...this.state.recipes };
-    recipes[key] = null;
+    recipes[id] = null;
+    this.setState({ recipes });
+  };
+
+  loadRecipe = id => {
+    let loadedRecipe = this.state.loadedRecipe;
+    loadedRecipe = id;
+    this.setState({ loadedRecipe: loadedRecipe });
+  };
+
+  updateRecipe = recipes => {
     this.setState({ recipes });
   };
 
@@ -37,6 +48,16 @@ class App extends React.Component {
           recipes={this.state.recipes}
           addRecipe={this.addRecipe}
           deleteRecipe={this.deleteRecipe}
+          loadRecipe={this.loadRecipe}
+        />
+        <RecipeDetails
+          recipe={
+            this.state.loadedRecipe
+              ? this.state.recipes[this.state.loadedRecipe]
+              : ""
+          }
+          recipes={this.state.recipes}
+          updateRecipe={this.updateRecipe}
         />
       </div>
     );

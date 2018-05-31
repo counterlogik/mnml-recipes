@@ -6,24 +6,27 @@ class RecipeList extends React.Component {
   createRecipe = event => {
     event.preventDefault();
     this.props.addRecipe(this.recipeTitleInput.current.value);
-    // refresh the form
-    event.currentTarget.reset();
+    this.recipeTitleInput.current.value = "";
   };
 
   render() {
     return (
-      <form className="recipeList" onSubmit={this.createRecipe}>
+      <div className="recipeList">
         <h1>Recipes</h1>
         <ul>
-          {Object.keys(this.props.recipes).map(key => {
+          {Object.keys(this.props.recipes).map(recipeId => {
             return (
-              <li key={this.props.recipes[key].index}>
-                {this.props.recipes[key].title}
+              <li key={recipeId}>
+                <button
+                  className="loadRecipe"
+                  onClick={event => this.props.loadRecipe(recipeId)}
+                >
+                  {this.props.recipes[recipeId].title}
+                </button>
                 <button
                   className="deleteRecipe"
                   onClick={event => {
-                    event.preventDefault();
-                    this.props.deleteRecipe(key);
+                    this.props.deleteRecipe(recipeId);
                   }}
                 >
                   &times;
@@ -37,8 +40,10 @@ class RecipeList extends React.Component {
           type="text"
           ref={this.recipeTitleInput}
         />
-        <button type="submit">+ Add Recipe</button>
-      </form>
+        <button type="button" onClick={this.createRecipe}>
+          + Add Recipe
+        </button>
+      </div>
     );
   }
 }
