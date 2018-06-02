@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-redux";
 
 class RecipeList extends React.Component {
   recipeTitleInput = React.createRef();
@@ -11,38 +12,42 @@ class RecipeList extends React.Component {
 
   render() {
     return (
-      <div className="recipeList">
-        <h1>Recipes</h1>
-        <ul>
-          {Object.keys(this.props.recipes).map(recipeId => {
+      <div className="dashboard">
+        <h1 className="dashboard__header">recipes</h1>
+        <ul className="hero-list">
+          {Object.keys(this.props.recipes).map((recipe, i) => {
             return (
-              <li key={recipeId}>
-                <button
-                  className="loadRecipe"
-                  onClick={event => this.props.loadRecipe(recipeId)}
-                >
-                  {this.props.recipes[recipeId].title}
-                </button>
+              <li
+                i={i}
+                recipe={recipe}
+                {...this.props}
+                className="hero-list__item"
+              >
+                <Link to={`/recipeDetails/${recipe.id}`}>
+                  <button className="loadRecipe">
+                    {this.props.recipes[recipe].title}
+                  </button>
+                </Link>
                 <button
                   className="deleteRecipe"
-                  onClick={event => {
-                    this.props.deleteRecipe(recipeId);
-                  }}
+                  onClick={() => this.props.deleteRecipe(recipe)}
                 >
                   &times;
                 </button>
               </li>
             );
           })}
+          <li className="hero-list__item">
+            <input
+              name="recipeTitleInput"
+              type="text"
+              ref={this.recipeTitleInput}
+            />
+            <button type="button" onClick={this.createRecipe}>
+              + Add Recipe
+            </button>
+          </li>
         </ul>
-        <input
-          name="recipeTitleInput"
-          type="text"
-          ref={this.recipeTitleInput}
-        />
-        <button type="button" onClick={this.createRecipe}>
-          + Add Recipe
-        </button>
       </div>
     );
   }

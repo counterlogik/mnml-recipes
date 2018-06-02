@@ -165,10 +165,135 @@ ul {
   list-style: none;
 }
 .App {
-  text-align: center;
+  height: 100%;
+}
+body {
+  font-family: AvenirNext-Regular;
 }
 button {
   background-color: transparent;
   border-color: transparent;
   margin-bottom: 10px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+.dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: left;
+  height: 100vh;
+  background-image: -webkit-gradient(linear, left top, right top, from(#a1ffce), to(rgba(250,255,209,0.99)));
+  background-image: linear-gradient(-270deg, #a1ffce 0%, rgba(250,255,209,0.99) 100%);
+}
+.dashboard__header {
+  font-size: 3.2em;
+  font-weight: 300;
+  color: #21a15b;
+  -webkit-transform: translateX(-28px) translateY(54px) rotate(-3deg);
+          transform: translateX(-28px) translateY(54px) rotate(-3deg);
+  text-align: right;
+}
+.hero-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 50px;
+  overflow: auto;
+}
+.hero-list__item {
+  font-size: 36px;
+  margin-bottom: 9px;
+}
+.hero-list__item button {
+  -webkit-transform: translate(49px);
+          transform: translate(49px);
+  opacity: 0.66;
+  border: 1px solid rgba(151,151,151,0.27);
+  color: #68b78c;
+  text-align: left;
+  line-height: 60px;
+}
+.hero-list__item:hover {
+  -webkit-transform: scale(1.1) rotate(-2deg) translateY(-2px);
+          transform: scale(1.1) rotate(-2deg) translateY(-2px);
+  -webkit-transition: 0.8s;
+  transition: 0.8s;
+}
+.hero-list__item:hover button {
+  text-decoration: underline;
+}
+.hero-list__item:nth-child(1) button {
+  -webkit-transform: translateX(34px) translateY(3px);
+          transform: translateX(34px) translateY(3px);
+}
+.hero-list__item:nth-child(2) button {
+  -webkit-transform: translateX(6px) translateY(21px);
+          transform: translateX(6px) translateY(21px);
+}
+.hero-list__item:nth-child(3) button {
+  -webkit-transform: translateX(65px) translateY(37px);
+          transform: translateX(65px) translateY(37px);
+}
+.hero-list__item:nth-child(4) button {
+  -webkit-transform: translateX(63px) translateY(5px);
+          transform: translateX(63px) translateY(5px);
+}
+.hero-list__item:nth-child(5) button {
+  -webkit-transform: translateX(65px) translateY(17px);
+          transform: translateX(65px) translateY(17px);
+}
+.hero-list__item:nth-child(6) button {
+  -webkit-transform: translateX(33px) translateY(4px);
+          transform: translateX(33px) translateY(4px);
+}
+.hero-list__item:nth-child(7) button {
+  -webkit-transform: translateX(7px) translateY(42px);
+          transform: translateX(7px) translateY(42px);
+}
+.hero-list__item:nth-child(8) button {
+  -webkit-transform: translateX(42px) translateY(13px);
+          transform: translateX(42px) translateY(13px);
+}
+.hero-list__item:nth-child(9) button {
+  -webkit-transform: translateX(13px) translateY(6px);
+          transform: translateX(13px) translateY(6px);
+}
+.hero-list__item:nth-child(10) button {
+  -webkit-transform: translateX(40px) translateY(41px);
+          transform: translateX(40px) translateY(41px);
+}
+.hero-list__item:nth-child(11) button {
+  -webkit-transform: translateX(37px) translateY(29px);
+          transform: translateX(37px) translateY(29px);
+}
+.hero-list__item:nth-child(12) button {
+  -webkit-transform: translateX(10px) translateY(33px);
+          transform: translateX(10px) translateY(33px);
+}
+.hero-list__item:nth-child(13) button {
+  -webkit-transform: translateX(39px) translateY(2px);
+          transform: translateX(39px) translateY(2px);
+}
+.hero-list__item:nth-child(14) button {
+  -webkit-transform: translateX(50px) translateY(25px);
+          transform: translateX(50px) translateY(25px);
+}
+.hero-list__item:nth-child(15) button {
+  -webkit-transform: translateX(28px) translateY(25px);
+          transform: translateX(28px) translateY(25px);
+}
+.hero-list__item:nth-child(16) button {
+  -webkit-transform: translateX(40px) translateY(20px);
+          transform: translateX(40px) translateY(20px);
 }

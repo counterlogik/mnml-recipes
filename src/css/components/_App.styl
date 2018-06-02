@@ -1,7 +1,110 @@
+// random number between 1 and 22
+random66()
+  return math(math(0, 'random') * 66 + 1, 'floor')
+
+// random number between 1 and 17
+random43()
+  return math(math(0, 'random') * 43 + 1, 'floor')
+
+// random number between -1 and 1
+
 .App
-  text-align center
+  height 100%
+
+body
+  font-family AvenirNext-Regular
 
 button
   background-color transparent
   border-color transparent
   margin-bottom 10px
+
+h1, h2, h3, h4, h5, h6
+  margin-top 0
+  margin-bottom 0.5em
+
+.dashboard
+  display flex
+  flex-direction column
+  text-align left
+  height 100vh
+  background-image linear-gradient(-270deg, #A1FFCE 0%, rgba(250,255,209,0.99) 100%)
+
+.dashboard__header
+  font-size 3.2em
+  font-weight 300
+  color #21A15B
+  transform translateX(-28px) translateY(54px) rotate(-3deg)
+  text-align right
+
+.hero-list
+  display grid
+  grid-template-columns 1fr 1fr
+  grid-column-gap: 50px
+  overflow auto
+
+.hero-list__item
+  font-size 36px
+  margin-bottom 9px
+
+.hero-list__item button
+  transform translate(random66()*1px)
+  opacity 0.66
+  border 1px solid rgba(151, 151, 151, 0.27)
+  color #68B78C
+  text-align left
+  line-height 60px
+
+.hero-list__item:hover
+  transform scale(1.1) rotate(-2deg) translateY(-2px)
+  transition 0.8s
+  button
+    text-decoration underline
+
+.hero-list__item:nth-child(1) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(2) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(3) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(4) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(5) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(6) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(7) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(8) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(9) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(10) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(11) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(12) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(13) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(14) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(15) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
+
+.hero-list__item:nth-child(16) button
+  transform translateX(random66()*1px) translateY(random43()*1px)
