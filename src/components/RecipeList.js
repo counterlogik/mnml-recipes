@@ -1,51 +1,34 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-class RecipeList extends React.Component {
-  recipeTitleInput = React.createRef();
+const RecipeList = ({ recipes, addRecipe, removeRecipe }) => {
+  let recipeTitleInput = React.createRef();
 
-  createRecipe = event => {
-    event.preventDefault();
-    this.props.addRecipe(this.recipeTitleInput.current.value);
-    this.recipeTitleInput.current.value = "";
-  };
-
-  render() {
-    return (
-      <div className="recipeList">
-        <h1>Recipes</h1>
-        <ul>
-          {Object.keys(this.props.recipes).map(recipeId => {
-            return (
-              <li key={recipeId}>
-                <button
-                  className="loadRecipe"
-                  onClick={event => this.props.loadRecipe(recipeId)}
-                >
-                  {this.props.recipes[recipeId].title}
+  return (
+    <div className="recipeList">
+      <h1>Recipes</h1>
+      <ul>
+        {Object.keys(recipes).map(recipeId => {
+          return (
+            <li key={recipeId}>
+              <Link to={`/recipeDetails/${recipeId}`}>
+                <button className="loadRecipe">
+                  {recipes[recipeId].title}
                 </button>
-                <button
-                  className="deleteRecipe"
-                  onClick={event => {
-                    this.props.deleteRecipe(recipeId);
-                  }}
-                >
-                  &times;
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-        <input
-          name="recipeTitleInput"
-          type="text"
-          ref={this.recipeTitleInput}
-        />
-        <button type="button" onClick={this.createRecipe}>
-          + Add Recipe
-        </button>
-      </div>
-    );
-  }
-}
+              </Link>
+              <button className="removeRecipe" onClick={removeRecipe}>
+                &times;
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <input name="recipeTitleInput" type="text" ref={recipeTitleInput} />
+      <button type="button" onClick={addRecipe}>
+        + Add Recipe
+      </button>
+    </div>
+  );
+};
 
 export default RecipeList;

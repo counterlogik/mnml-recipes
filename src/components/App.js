@@ -1,57 +1,26 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import RecipeList from "./RecipeList";
-import RecipeDetails from "./RecipeDetails";
-import base from "../base";
+import { Route, Switch } from "react-router-dom";
+import RecipeListContainer from "../containers/RecipeListContainer";
+import RecipeDetailsContainer from "../containers/RecipeDetailsContainer";
 import NotFound from "./NotFound";
 
 class App extends React.Component {
   state = {
-    recipes: {},
-    loadedRecipe: ""
-  };
-
-  componentDidMount() {
-    base.syncState("recipes", {
-      context: this,
-      state: "recipes"
-    });
-  }
-
-  addRecipe = title => {
-    const recipes = this.state.recipes;
-    recipes[`recipe-${Date.now()}`] = {
-      title: title,
-      uid: `recipe-${title}`
-    };
-    this.setState({ recipes });
-  };
-
-  deleteRecipe = id => {
-    const recipes = { ...this.state.recipes };
-    recipes[id] = null;
-    this.setState({ recipes });
-  };
-
-  loadRecipe = id => {
-    this.setState({ loadedRecipe: id });
-  };
-
-  updateRecipe = recipes => {
-    this.setState({ recipes });
+    recipes: {}
   };
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route path={"/"} exact component={RecipeList} />
-            <Route path={"/recipeDetails"} component={RecipeDetails} />
-            <Route path={"/notFound"} component={NotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route exact path={"/"} component={RecipeListContainer} />
+          <Route
+            path={"/recipeDetails/:recipeId"}
+            component={RecipeDetailsContainer}
+          />
+          <Route path={"/notFound"} component={NotFound} />
+        </Switch>
+      </div>
     );
   }
 }
