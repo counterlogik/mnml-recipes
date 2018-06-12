@@ -1,7 +1,17 @@
 import React from "react";
 
-const Step = ({ step }) => {
-  return <li>{step}</li>;
+const Step = ({ step, index, removeStep, recipeId }) => {
+  return (
+    <div className="step">
+      <li>{step}</li>
+      <button
+        className="removeStep"
+        onClick={() => removeStep(index, recipeId)}
+      >
+        &times;
+      </button>
+    </div>
+  );
 };
 
 export default Step;

@@ -16,7 +16,10 @@ const RecipeList = ({ recipes, addRecipe, removeRecipe }) => {
                   {recipes[recipeId].title}
                 </button>
               </Link>
-              <button className="removeRecipe" onClick={removeRecipe}>
+              <button
+                className="removeRecipe"
+                onClick={() => removeRecipe(recipeId)}
+              >
                 &times;
               </button>
             </li>
@@ -24,7 +27,13 @@ const RecipeList = ({ recipes, addRecipe, removeRecipe }) => {
         })}
       </ul>
       <input name="recipeTitleInput" type="text" ref={recipeTitleInput} />
-      <button type="button" onClick={addRecipe}>
+      <button
+        type="button"
+        onClick={() => {
+          addRecipe(recipeTitleInput.current.value);
+          recipeTitleInput.current.value = "";
+        }}
+      >
         + Add Recipe
       </button>
     </div>

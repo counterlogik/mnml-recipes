@@ -1,12 +1,17 @@
 import React from "react";
-import Ingredient from "./Ingredient";
+import IngredientContainer from "../containers/IngredientContainer";
 
-const IngredientsList = ({ ingredients }) => {
+const IngredientsList = ({ ingredients, recipeId }) => {
   if (ingredients && ingredients.length > 0) {
     return (
       <ul className="ingredients-list">
-        {ingredients.map(ingredient => (
-          <Ingredient key={ingredient} ingredient={ingredient} />
+        {ingredients.map((ingredient, index) => (
+          <IngredientContainer
+            key={index}
+            index={index}
+            ingredient={ingredient}
+            recipeId={recipeId}
+          />
         ))}
       </ul>
     );

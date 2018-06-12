@@ -1,11 +1,18 @@
 import React from "react";
-import Step from "./Step";
+import StepContainer from "../containers/StepContainer";
 
-const StepsList = ({ steps }) => {
+const StepsList = ({ steps, recipeId }) => {
   if (steps && steps.length > 0) {
     return (
       <ul className="steps-list">
-        {steps.map(step => <Step key={step} step={step} />)}
+        {steps.map((step, index) => (
+          <StepContainer
+            key={index}
+            index={index}
+            step={step}
+            recipeId={recipeId}
+          />
+        ))}
       </ul>
     );
   }

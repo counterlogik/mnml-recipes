@@ -8,9 +8,7 @@ const RecipeDetails = ({
   ingredients,
   steps,
   addIngredient,
-  removeIngredient,
-  addStep,
-  removeStep
+  addStep
 }) => {
   let ingredientContentInput = React.createRef();
   let stepContentInput = React.createRef();
@@ -18,7 +16,7 @@ const RecipeDetails = ({
   return (
     <div>
       <h4>{title}</h4>
-      <IngredientsList ingredients={ingredients} />
+      <IngredientsList ingredients={ingredients} recipeId={params.recipeId} />
       <input
         name="ingredientContentInput"
         type="text"
@@ -33,7 +31,7 @@ const RecipeDetails = ({
       >
         + ingredient
       </button>
-      <StepsList steps={steps} />
+      <StepsList steps={steps} recipeId={params.recipeId} />
       <input name="stepContentInput" type="text" ref={stepContentInput} />
       <button
         type="button"
