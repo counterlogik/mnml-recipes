@@ -125,9 +125,9 @@ function allRecipes(state = [], action) {
   }
 }
 
-const recipesReducer = combineReducers({
+const recipesApp = combineReducers({
   byId: recipesById,
   allIds: allRecipes
 });
 
-export default recipesReducer;
+export default recipesApp;

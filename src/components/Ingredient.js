@@ -2,15 +2,15 @@ import React from "react";
 
 const Ingredient = ({ ingredient, index, removeIngredient, recipeId }) => {
   return (
-    <div className="ingredient">
-      <li>{ingredient}</li>
+    <li>
+      {ingredient}
       <button
         className="removeIngredient"
         onClick={() => removeIngredient(index, recipeId)}
       >
         &times;
       </button>
-    </div>
+    </li>
   );
 };
 

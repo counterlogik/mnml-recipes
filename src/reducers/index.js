@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
 import { routerReducer } from "react-router-redux";
+import { firebaseReducer } from "react-redux-firebase";
 
-import recipesReducer from "./recipes";
+import recipesApp from "./recipes";
 
 const rootReducer = combineReducers({
-  recipes: recipesReducer,
-  routing: routerReducer
+  recipes: recipesApp,
+  routing: routerReducer,
+  firebase: firebaseReducer
 });
 
 export default rootReducer;
