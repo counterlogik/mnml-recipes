@@ -1,10 +1,8 @@
-let nextRecipeId = 100;
-let nextIngredientId = 100;
-let nextStepId = 100;
+import { v4 } from "node-uuid";
 
 export const addRecipe = title => ({
   type: "ADD_RECIPE",
-  id: `recipe-${nextRecipeId++}`,
+  id: `recipe-${v4()}`,
   title
 });
 
@@ -15,7 +13,7 @@ export const removeRecipe = id => ({
 
 export const addIngredient = (ingredient, recipeId) => ({
   type: "ADD_INGREDIENT",
-  id: `ingredient-${nextIngredientId++}`,
+  id: `ingredient-${v4()}`,
   ingredient,
   recipeId
 });
@@ -28,7 +26,7 @@ export const removeIngredient = (index, recipeId) => ({
 
 export const addStep = (step, recipeId) => ({
   type: "ADD_STEP",
-  id: `step-${nextStepId++}`,
+  id: `step-${v4()}`,
   step,
   recipeId
 });

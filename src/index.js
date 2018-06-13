@@ -3,22 +3,34 @@ import { render } from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+import throttle from "lodash/throttle";
 import App from "./components/App";
+import { loadState, saveState } from "./localStorage";
 import "./css/style.css";
 import registerServiceWorker from "./registerServiceWorker";
 
 // import the root reducers
 import rootReducer from "./reducers/index";
 
+// try to load state from localStorage
+const persistedState = loadState();
+
 // Create store with reducers and initial state and relevant enhancers
 export const store = createStore(
   rootReducer,
-  {
-    recipes: {},
-    ingredients: {},
-    steps: {}
-  },
+  persistedState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+store.subscribe(
+  throttle(() => {
+    saveState({
+      recipes: store.getState().recipes,
+      ingredients: store.getState().ingredients,
+      steps: store.getState().steps
+    });
+  }),
+  1000
 );
 
 render(
