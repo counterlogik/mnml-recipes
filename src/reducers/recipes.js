@@ -5,7 +5,6 @@ function addRecipe(state, action) {
 
   return {
     ...state,
-    // Update our Recipes object with a new entry
     [id]: {
       id,
       title,
@@ -23,12 +22,79 @@ function removeRecipe(state, action) {
   return newState;
 }
 
+function addIngredient(state, action) {
+  const { id, recipeId } = action;
+
+  const recipe = state[recipeId];
+
+  return {
+    ...state,
+    [recipeId]: {
+      ...recipe,
+      ingredients: recipe.ingredients.concat(id)
+    }
+  };
+}
+
+function removeIngredient(state, action) {
+  const { index, recipeId } = action;
+
+  const recipe = state[recipeId];
+
+  return {
+    ...state,
+    [recipeId]: {
+      ...recipe,
+      ingredients: [
+        ...recipe.ingredients.slice(0, index),
+        ...recipe.ingredients.slice(index + 1)
+      ]
+    }
+  };
+}
+
+function addStep(state, action) {
+  const { id, recipeId } = action;
+
+  const recipe = state[recipeId];
+
+  return {
+    ...state,
+    [recipeId]: {
+      ...recipe,
+      steps: recipe.steps.concat(id)
+    }
+  };
+}
+
+function removeStep(state, action) {
+  const { index, recipeId } = action;
+
+  const recipe = state[recipeId];
+
+  return {
+    ...state,
+    [recipeId]: {
+      ...recipe,
+      steps: [...recipe.steps.slice(0, index), ...recipe.steps.slice(index + 1)]
+    }
+  };
+}
+
 function recipesById(state = {}, action) {
   switch (action.type) {
     case "ADD_RECIPE":
       return addRecipe(state, action);
     case "REMOVE_RECIPE":
       return removeRecipe(state, action);
+    case "ADD_INGREDIENT":
+      return addIngredient(state, action);
+    case "REMOVE_INGREDIENT":
+      return removeIngredient(state, action);
+    case "ADD_STEP":
+      return addStep(state, action);
+    case "REMOVE_STEP":
+      return removeStep(state, action);
     default:
       return state;
   }

@@ -1,43 +1,31 @@
 import { combineReducers } from "redux";
 
-function addIngredient(state, action) {
-  const { recipeId, ingredient } = action;
-
-  // Look up the correct recipe, to simplify the rest of the code
-  const recipe = state[recipeId];
+function addIngredientEntry(state, action) {
+  const { id, ingredient } = action;
 
   return {
     ...state,
-    // Update our Recipe object with a new "ingredients" array
-    [recipeId]: {
-      ...recipe,
-      ingredients: recipe.ingredients.concat(ingredient)
+    [id]: {
+      id: id,
+      ingredient: ingredient
     }
   };
 }
 
-function removeIngredient(state, action) {
-  const { index, recipeId } = action;
-  const recipe = state[recipeId];
-  const ingredients = recipe.ingredients;
-  return {
-    ...state,
-    [recipeId]: {
-      ...recipe,
-      ingredients: [
-        ...ingredients.slice(0, index),
-        ...ingredients.slice(index + 1)
-      ]
-    }
-  };
+function removeIngredientEntry(state, action) {
+  const { index } = action;
+  const newState = { ...state };
+  delete newState[index];
+
+  return newState;
 }
 
 function ingredientsById(state = {}, action) {
   switch (action.type) {
     case "ADD_INGREDIENT":
-      return addIngredient(state, action);
+      return addIngredientEntry(state, action);
     case "REMOVE_INGREDIENT":
-      return removeIngredient(state, action);
+      return removeIngredientEntry(state, action);
     default:
       return state;
   }

@@ -1,17 +1,12 @@
 import React from "react";
-import StepContainer from "../containers/StepContainer";
+import Step from "./Step";
 
 const StepsList = ({ steps, recipeId }) => {
   if (steps && steps.length > 0) {
     return (
       <ul className="steps-list">
         {steps.map((step, index) => (
-          <StepContainer
-            key={index}
-            index={index}
-            step={step}
-            recipeId={recipeId}
-          />
+          <Step key={index} index={index} step={step} recipeId={recipeId} />
         ))}
       </ul>
     );

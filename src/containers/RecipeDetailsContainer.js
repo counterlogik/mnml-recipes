@@ -1,17 +1,13 @@
-import { compose } from "redux";
 import { connect } from "react-redux";
-import { firebaseConnect } from "react-redux-firebase";
 import RecipeDetails from "../components/RecipeDetails";
 import { addIngredient, addStep } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
-  const {
-    firebase: { data }
-  } = state;
-  const recipe = data.recipes
-    ? { ...data.recipes.byId[ownProps.match.params.recipeId] }
-    : {};
-  return recipe;
+  return {
+    recipe: state.recipes.byId[ownProps.match.params.recipeId],
+    ingredients: state.ingredients ? state.ingredients.byId : {},
+    steps: state.steps ? state.steps.byId : {}
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -25,12 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default compose(
-  firebaseConnect(props => [
-    `recipes/byId/${props.match.params.recipeId}` // sync /recipes/:recipeId from firebase into redux
-  ]),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(RecipeDetails);

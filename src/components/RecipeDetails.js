@@ -4,7 +4,7 @@ import StepsList from "./StepsList";
 
 const RecipeDetails = ({
   match: { params },
-  title,
+  recipe,
   ingredients,
   steps,
   addIngredient,
@@ -15,8 +15,13 @@ const RecipeDetails = ({
 
   return (
     <div>
-      <h4>{title}</h4>
-      <IngredientsList ingredients={ingredients} recipeId={params.recipeId} />
+      <h4>{recipe.title}</h4>
+      <IngredientsList
+        ingredients={recipe.ingredients.map(
+          ingredient => ingredients[ingredient].ingredient
+        )}
+        recipeId={params.recipeId}
+      />
       <input
         name="ingredientContentInput"
         type="text"
@@ -31,7 +36,10 @@ const RecipeDetails = ({
       >
         + ingredient
       </button>
-      <StepsList steps={steps} recipeId={params.recipeId} />
+      <StepsList
+        steps={recipe.steps.map(step => steps[step].step)}
+        recipeId={params.recipeId}
+      />
       <input name="stepContentInput" type="text" ref={stepContentInput} />
       <button
         type="button"

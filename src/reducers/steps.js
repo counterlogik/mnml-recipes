@@ -1,40 +1,31 @@
 import { combineReducers } from "redux";
 
-function addStep(state, action) {
-  const { recipeId, step } = action;
-
-  // Look up the correct recipe, to simplify the rest of the code
-  const recipe = state[recipeId];
+function addStepEntry(state, action) {
+  const { id, step } = action;
 
   return {
     ...state,
-    // Update our Recipe object with a new "steps" array
-    [recipeId]: {
-      ...recipe,
-      steps: recipe.steps.concat(step)
+    [id]: {
+      id: id,
+      step: step
     }
   };
 }
 
-function removeStep(state, action) {
-  const { index, recipeId } = action;
-  const recipe = state[recipeId];
-  const steps = recipe.steps;
-  return {
-    ...state,
-    [recipeId]: {
-      ...recipe,
-      steps: [...steps.slice(0, index), ...steps.slice(index + 1)]
-    }
-  };
+function removeStepEntry(state, action) {
+  const { index } = action;
+  const newState = { ...state };
+  delete newState[index];
+
+  return newState;
 }
 
 function stepsById(state = {}, action) {
   switch (action.type) {
     case "ADD_STEP":
-      return addStep(state, action);
+      return addStepEntry(state, action);
     case "REMOVE_STEP":
-      return removeStep(state, action);
+      return removeStepEntry(state, action);
     default:
       return state;
   }

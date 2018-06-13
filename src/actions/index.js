@@ -4,7 +4,7 @@ let nextStepId = 100;
 
 export const addRecipe = title => ({
   type: "ADD_RECIPE",
-  id: nextRecipeId++,
+  id: `recipe-${nextRecipeId++}`,
   title
 });
 
@@ -15,7 +15,7 @@ export const removeRecipe = id => ({
 
 export const addIngredient = (ingredient, recipeId) => ({
   type: "ADD_INGREDIENT",
-  id: nextIngredientId++,
+  id: `ingredient-${nextIngredientId++}`,
   ingredient,
   recipeId
 });
@@ -28,7 +28,7 @@ export const removeIngredient = (index, recipeId) => ({
 
 export const addStep = (step, recipeId) => ({
   type: "ADD_STEP",
-  id: nextStepId++,
+  id: `step-${nextStepId++}`,
   step,
   recipeId
 });
