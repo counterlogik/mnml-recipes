@@ -58,8 +58,8 @@ const fakeData = {
         id: "ingredient13",
         ingredient: "2 red bell peppers (238g)"
       },
-      ingredient13: {
-        id: "ingredient13",
+      ingredient42: {
+        id: "ingredient42",
         ingredient: "½ cup (56g) raw almonds"
       },
       ingredient14: {
@@ -76,7 +76,8 @@ const fakeData = {
       },
       ingredient17: {
         id: "ingredient17",
-        ingredient: "1–2 Tbsp (15–30ml) red wine vinegar (reduce for less acidity)"
+        ingredient:
+          "1–2 Tbsp (15–30ml) red wine vinegar (reduce for less acidity)"
       },
       ingredient18: {
         id: "ingredient18",
@@ -128,11 +129,13 @@ const fakeData = {
       },
       ingredient30: {
         id: "ingredient30",
-        ingredient: "Healthy pinch each of sea salt and black pepper, plus more to taste"
+        ingredient:
+          "Healthy pinch each of sea salt and black pepper, plus more to taste"
       },
       ingredient31: {
         id: "ingredient31",
-        ingredient: "1 15-ounce (425g) can chickpeas, thoroughly rinsed and drained"
+        ingredient:
+          "1 15-ounce (425g) can chickpeas, thoroughly rinsed and drained"
       },
       ingredient32: {
         id: "ingredient32",
@@ -152,8 +155,9 @@ const fakeData = {
       },
       ingredient36: {
         id: "ingredient36",
-        ingredient: "2 Tbsp (24g) coconut sugar (or substitute organic cane sugar or maple syrup), plus more to taste"
-      } ,
+        ingredient:
+          "2 Tbsp (24g) coconut sugar (or substitute organic cane sugar or maple syrup), plus more to taste"
+      },
       ingredient37: {
         id: "ingredient37",
         ingredient: "½ tsp ground turmeric"
@@ -216,46 +220,56 @@ const fakeData = {
       "ingredient38",
       "ingredient39",
       "ingredient40",
-      "ingredient41"
+      "ingredient41",
+      "ingredient42"
     ]
   },
   steps: {
     byId: {
       step1: {
         id: "step1",
-        ingredient: "Wrap the tofu in a clean, absorbent towel and set something heavy on top, such as a cast-iron skillet, to aid in absorbing excess moisture. Let rest for 15 minutes. Prepare the marinade at this time."
+        ingredient:
+          "Wrap the tofu in a clean, absorbent towel and set something heavy on top, such as a cast-iron skillet, to aid in absorbing excess moisture. Let rest for 15 minutes. Prepare the marinade at this time."
       },
       step2: {
         id: "step2",
-        ingredient: "Add all of the marinade ingredients (except the cornstarch) to a plastic bag and toss/shake to combine. Once the tofu is pressed, cube it and add it to the marinade. Toss to combine."
+        ingredient:
+          "Add all of the marinade ingredients (except the cornstarch) to a plastic bag and toss/shake to combine. Once the tofu is pressed, cube it and add it to the marinade. Toss to combine."
       },
       step3: {
         id: "step3",
-        ingredient: "Place in the refrigerator for at least 2 hours, preferably overnight (up to 2 days). The longer it rests, the stronger and more pronounced the flavor will become."
+        ingredient:
+          "Place in the refrigerator for at least 2 hours, preferably overnight (up to 2 days). The longer it rests, the stronger and more pronounced the flavor will become."
       },
       step4: {
         id: "step4",
-        ingredient: "When ready to cook, heat a large skillet over medium heat. Once hot, add 1 Tbsp (15ml) sesame oil. Use a slotted spoon to scoop the tofu into the skillet, leaving the majority of the marinade behind."
+        ingredient:
+          "When ready to cook, heat a large skillet over medium heat. Once hot, add 1 Tbsp (15ml) sesame oil. Use a slotted spoon to scoop the tofu into the skillet, leaving the majority of the marinade behind."
       },
       step5: {
         id: "step5",
-        ingredient: "Cook for 4–5 minutes, stirring frequently and adding 1–2 Tbsp (15–30 ml) marinade to add extra flavor. Flip/toss the tofu around to get all of the sides evenly browned. Reduce the heat if browning too quickly. Remove the pan from the heat and scoop out the tofu. Set aside (see note)."
+        ingredient:
+          "Cook for 4–5 minutes, stirring frequently and adding 1–2 Tbsp (15–30 ml) marinade to add extra flavor. Flip/toss the tofu around to get all of the sides evenly browned. Reduce the heat if browning too quickly. Remove the pan from the heat and scoop out the tofu. Set aside (see note)."
       },
       step6: {
         id: "step6",
-        ingredient: "Add the cornstarch to the remaining marinade in the plastic bag. Toss the contents to thicken the sauce."
+        ingredient:
+          "Add the cornstarch to the remaining marinade in the plastic bag. Toss the contents to thicken the sauce."
       },
       step7: {
         id: "step7",
-        ingredient: "Place the pan back over medium heat. Add the vegetables and remaining marinade. Sauté the vegetables, stirring frequently, for 1–2 minutes or until just tender. Then add the tofu back in and cook for 1–2 minutes more."
+        ingredient:
+          "Place the pan back over medium heat. Add the vegetables and remaining marinade. Sauté the vegetables, stirring frequently, for 1–2 minutes or until just tender. Then add the tofu back in and cook for 1–2 minutes more."
       },
       step8: {
         id: "step8",
-        ingredient: "Serve as is or with white rice, brown rice, or Cauliflower Rice. Serve with extra chili garlic sauce for added heat."
+        ingredient:
+          "Serve as is or with white rice, brown rice, or Cauliflower Rice. Serve with extra chili garlic sauce for added heat."
       },
       step9: {
         id: "step9",
-        ingredient: "Leftovers will keep stored in the refrigerator for up to 3 days. Reheat in the microwave or a skillet over medium heat until hot.
+        ingredient:
+          "Leftovers will keep stored in the refrigerator for up to 3 days. Reheat in the microwave or a skillet over medium heat until hot."
       },
       step10: {
         id: "step10",
@@ -263,59 +277,73 @@ const fakeData = {
       },
       step11: {
         id: "step11",
-        step: "In the meantime, cook the pasta according to the package instructions, drain, and set aside. Cover the pasta with a towel to keep warm."
+        step:
+          "In the meantime, cook the pasta according to the package instructions, drain, and set aside. Cover the pasta with a towel to keep warm."
       },
       step12: {
         id: "step12",
-        step: "Arrange tomato and bell peppers, still whole with stems, on one end of a rimmed baking sheet. On the other end of the baking sheet, arrange the almonds and garlic (still in skin). Lightly drizzle the garlic with the grape seed oil."
+        step:
+          "Arrange tomato and bell peppers, still whole with stems, on one end of a rimmed baking sheet. On the other end of the baking sheet, arrange the almonds and garlic (still in skin). Lightly drizzle the garlic with the grape seed oil."
       },
       step13: {
         id: "step13",
-        step: "Place the baking sheet in the oven and roast the almonds for 6–7 minutes, then remove from pan and set aside. Bake garlic for another 5–8 minutes, then remove and set aside."
+        step:
+          "Place the baking sheet in the oven and roast the almonds for 6–7 minutes, then remove from pan and set aside. Bake garlic for another 5–8 minutes, then remove and set aside."
       },
       step14: {
         id: "step14",
-        step: "Allow tomato and red pepper to roast until the skin is bubbled and mostly blackened, turning/flipping periodically to char all sides."
+        step:
+          "Allow tomato and red pepper to roast until the skin is bubbled and mostly blackened, turning/flipping periodically to char all sides."
       },
       step15: {
         id: "step15",
-        step: "Once charred, wrap the roasted red peppers in foil to steam for 2–3 minutes, then peel away the skin, seeds, and core. Also, remove the core of the tomato and remove the skin from the garlic."
+        step:
+          "Once charred, wrap the roasted red peppers in foil to steam for 2–3 minutes, then peel away the skin, seeds, and core. Also, remove the core of the tomato and remove the skin from the garlic."
       },
       step16: {
         id: "step16",
-        step: "Add the peeled peppers, cored tomato, almonds, garlic, olive oil, vinegar, paprika, salt, maple syrup, and harissa to the bowl of a blender or food processor. Purée until smooth, scraping down the sides as needed. Taste and adjust the seasonings as desired, adding more harissa paste for heat, vinegar for acidity, or salt for balance."
+        step:
+          "Add the peeled peppers, cored tomato, almonds, garlic, olive oil, vinegar, paprika, salt, maple syrup, and harissa to the bowl of a blender or food processor. Purée until smooth, scraping down the sides as needed. Taste and adjust the seasonings as desired, adding more harissa paste for heat, vinegar for acidity, or salt for balance."
       },
       step17: {
         id: "step17",
-        step: "Serve over pasta with Vegan Parmesan and any desired fresh herbs. Leftovers keep well, covered in the refrigerator, for 3–4 days, though best when fresh."
+        step:
+          "Serve over pasta with Vegan Parmesan and any desired fresh herbs. Leftovers keep well, covered in the refrigerator, for 3–4 days, though best when fresh."
       },
       step18: {
         id: "step18",
-        step: "Heat a large pot over medium heat. Once hot, add the olive oil, garlic, onion, carrots, and potatoes. Season with the salt and pepper. Cover and cook for 4 minutes."
+        step:
+          "Heat a large pot over medium heat. Once hot, add the olive oil, garlic, onion, carrots, and potatoes. Season with the salt and pepper. Cover and cook for 4 minutes."
       },
       step19: {
         id: "step19",
-        step: "Add chickpeas and curry paste. Stir to coat. Cook for 2 minutes more, then remove from the heat."
+        step:
+          "Add chickpeas and curry paste. Stir to coat. Cook for 2 minutes more, then remove from the heat."
       },
       step20: {
         id: "step20",
-        step: "Add tomato paste, broth, water, coconut sugar, and turmeric. Stir to combine. Place back over medium heat and cover. The liquid should barely cover all of the ingredients, so add more water if needed."
+        step:
+          "Add tomato paste, broth, water, coconut sugar, and turmeric. Stir to combine. Place back over medium heat and cover. The liquid should barely cover all of the ingredients, so add more water if needed."
       },
       step21: {
         id: "step21",
-        step: "Once the mixture has reached a simmer, reduce the heat to low and continue simmering, covered, for 20–25 minutes, or until the potatoes are fork tender and the flavor has permeated the chickpeas and vegetables."
+        step:
+          "Once the mixture has reached a simmer, reduce the heat to low and continue simmering, covered, for 20–25 minutes, or until the potatoes are fork tender and the flavor has permeated the chickpeas and vegetables."
       },
       step22: {
         id: "step22",
-        step: "While the curry is cooking, prepare any side dishes or toppings you wish, such as basmati rice, Cauliflower Rice, or Quick-Pickled Onions."
+        step:
+          "While the curry is cooking, prepare any side dishes or toppings you wish, such as basmati rice, Cauliflower Rice, or Quick-Pickled Onions."
       },
       step23: {
         id: "step23",
-        step: "Taste and adjust the seasonings as needed, adding more curry paste for depth of flavor and heat, salt, or coconut sugar for sweetness."
+        step:
+          "Taste and adjust the seasonings as needed, adding more curry paste for depth of flavor and heat, salt, or coconut sugar for sweetness."
       },
       step24: {
         id: "step24",
-        step: "Serve as is or with desired toppings or sides. Leftovers will stay fresh in the refrigerator for 3–4 days, or in the freezer for up to 1 month. Best when fresh."
+        step:
+          "Serve as is or with desired toppings or sides. Leftovers will stay fresh in the refrigerator for 3–4 days, or in the freezer for up to 1 month. Best when fresh."
       }
     },
     allIds: [
@@ -391,7 +419,8 @@ const fakeData = {
           "ingredient21",
           "ingredient22",
           "ingredient23",
-          "ingredient24"
+          "ingredient24",
+          "ingredient42"
         ],
         steps: [
           "step10",
