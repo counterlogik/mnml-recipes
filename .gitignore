@@ -1,11 +1,12 @@
 # dependencies
 /node_modules
+/client/node_modules
 
 # testing
 /coverage
 
 # production
-/build
+/client/build
 
 # misc
 .DS_Store
@@ -20,6 +21,9 @@ yarn-error.log*
 
 /.vscode
 
-
 # Do not expose firebase API key
-/src/base.js
+/client/src/base.js
+
+# ignore database
+
+/db
