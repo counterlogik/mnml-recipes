@@ -4,7 +4,7 @@ import { removeIngredient } from "../actions";
 
 const Ingredient = ({ ingredient, index, removeIngredient, recipeId }) => {
   return (
-    <li>
+    <li className="ingredient">
       {ingredient}
       <button
         className="removeIngredient"
@@ -14,6 +14,26 @@ const Ingredient = ({ ingredient, index, removeIngredient, recipeId }) => {
       </button>
     </li>
   );
+};
+
+const IngredientsList = ({ ingredients, recipeId, removeIngredient }) => {
+  if (ingredients && ingredients.length > 0) {
+    return (
+      <ul className="ingredients-list">
+        {ingredients.map((ingredient, index) => (
+          <Ingredient
+            key={index}
+            removeIngredient={removeIngredient}
+            index={index}
+            ingredient={ingredient}
+            recipeId={recipeId}
+          />
+        ))}
+      </ul>
+    );
+  }
+
+  return <h6>..add some ingredients..</h6>;
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -34,4 +54,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Ingredient);
+)(IngredientsList);

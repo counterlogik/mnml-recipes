@@ -11,16 +11,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Switch>
-          <Route exact path={"/"} component={RecipeListContainer} />
-          <Route
-            path={"/recipeDetails/:recipeId"}
-            component={RecipeDetailsContainer}
-          />
-          <Route path={"/notFound"} component={NotFound} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path={"/"} component={RecipeListContainer} />
+        <Route
+          path={"/recipeDetails/:recipeId"}
+          component={RecipeDetailsContainer}
+        />
+        <Route path={"/notFound"} component={NotFound} />
+      </Switch>
     );
   }
 }

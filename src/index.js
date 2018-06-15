@@ -39,6 +39,6 @@ render(
       <App />
     </Router>
   </Provider>,
-  document.querySelector("#main")
+  document.querySelector("#App")
 );
 registerServiceWorker();

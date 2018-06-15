@@ -4,16 +4,36 @@ import { removeStep } from "../actions";
 
 const Step = ({ step, index, removeStep, recipeId }) => {
   return (
-    <li>
-      {step}
+    <li className="step">
+      <p>{step}</p>
       <button
-        className="removeStep"
+        className="remove remove--step"
         onClick={() => removeStep(index, recipeId)}
       >
         &times;
       </button>
     </li>
   );
+};
+
+const StepsList = ({ steps, recipeId, removeStep }) => {
+  if (steps && steps.length > 0) {
+    return (
+      <ul className="steps-list">
+        {steps.map((step, index) => (
+          <Step
+            key={index}
+            removeStep={removeStep}
+            index={index}
+            step={step}
+            recipeId={recipeId}
+          />
+        ))}
+      </ul>
+    );
+  }
+
+  return <h6>..add some steps..</h6>;
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -34,4 +54,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Step);
+)(StepsList);
