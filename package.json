@@ -1,7 +1,7 @@
 {
   "name": "recipes-server",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "express": "^4.16.3",
     "mongoose": "^5.1.5"
