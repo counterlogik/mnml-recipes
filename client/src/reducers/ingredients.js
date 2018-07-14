@@ -13,9 +13,9 @@ function addIngredientEntry(state, action) {
 }
 
 function removeIngredientEntry(state, action) {
-  const { index } = action;
+  const { id } = action;
   const newState = { ...state };
-  delete newState[index];
+  delete newState[id];
 
   return newState;
 }

@@ -1,8 +1,10 @@
-var stepSchema = mongoose.Schema({
-  id: String,
+var mongoose = require("mongoose");
+
+var Schema = mongoose.Schema;
+
+var StepSchema = new Schema({
+  _id: String,
   step: String
 });
-
-var Step = mongoose.model("Step", StepSchema);
 
 module.exports = mongoose.model("Step", StepSchema);

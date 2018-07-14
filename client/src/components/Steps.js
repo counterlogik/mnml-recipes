@@ -24,8 +24,8 @@ const StepsList = ({ steps, recipeId, removeStep }) => {
           <Step
             key={index}
             removeStep={removeStep}
-            index={index}
-            step={step}
+            index={step.id}
+            step={step.step}
             recipeId={recipeId}
           />
         ))}

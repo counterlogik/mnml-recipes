@@ -37,7 +37,7 @@ function addIngredient(state, action) {
 }
 
 function removeIngredient(state, action) {
-  const { index, recipeId } = action;
+  const { id, recipeId } = action;
 
   const recipe = state[recipeId];
 
@@ -46,8 +46,8 @@ function removeIngredient(state, action) {
     [recipeId]: {
       ...recipe,
       ingredients: [
-        ...recipe.ingredients.slice(0, index),
-        ...recipe.ingredients.slice(index + 1)
+        ...recipe.ingredients.slice(0, id),
+        ...recipe.ingredients.slice(id + 1)
       ]
     }
   };

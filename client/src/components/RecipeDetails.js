@@ -15,6 +15,7 @@ const RecipeDetails = ({
 
   return (
     <main>
+      <button>SAVE</button>
       <h4 className="grid-header">{recipe.title}</h4>
       <section className="view-box">
         <IngredientsList
@@ -40,7 +41,12 @@ const RecipeDetails = ({
       </section>
       <section className="view-box view-box--major">
         <StepsList
-          steps={recipe.steps.map(step => steps[step].step)}
+          steps={recipe.steps.map(step => {
+            return {
+              id: step,
+              step: steps[step].step
+            };
+          })}
           recipeId={params.recipeId}
         />
         <input name="stepContentInput" type="text" ref={stepContentInput} />

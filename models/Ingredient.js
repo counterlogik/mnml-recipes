@@ -1,7 +1,9 @@
 var mongoose = require("mongoose");
 
-var ingredientSchema = mongoose.Schema({
-  id: String,
+var Schema = mongoose.Schema;
+
+var IngredientSchema = new Schema({
+  _id: String,
   ingredient: String
 });
 

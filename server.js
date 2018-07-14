@@ -1,9 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const api = require("./api");
+var express = require("express");
+var mongoose = require("mongoose");
+var api = require("./api");
 
 //Set up mongoose connection
-var mongoDB = "mongodb://127.0.0.1/recipes";
+var mongoDB =
+  "mongodb://addisonstaples:AwHjqLqsn9j8CCzMysgQ@ds125001.mlab.com:25001/mern_recipes";
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;

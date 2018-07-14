@@ -1,7 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 import throttle from "lodash/throttle";
 import App from "./components/App";
@@ -19,7 +20,8 @@ const persistedState = loadState();
 export const store = createStore(
   rootReducer,
   persistedState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  applyMiddleware(thunk)
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 store.subscribe(

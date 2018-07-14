@@ -1,18 +1,12 @@
 var mongoose = require("mongoose");
 
-var recipeSchema = mongoose.Schema({
-  id: String,
+var Schema = mongoose.Schema;
+
+var RecipeSchema = Schema({
+  _id: String,
   title: String,
-  ingredients: [
-    {
-      [{type: Schema.ObjectId, ref: 'Ingredient'}]
-    }
-  ],
-  steps: [
-    {
-      [{type: Schema.ObjectId, ref: 'Schema'}]
-    }
-  ]
+  ingredients: Array,
+  steps: Array
 });
 
 module.exports = mongoose.model("Recipe", RecipeSchema);

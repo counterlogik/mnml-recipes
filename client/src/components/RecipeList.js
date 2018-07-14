@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 const RecipeList = ({ recipes, addRecipe, removeRecipe }) => {
   let recipeTitleInput = React.createRef();
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    addRecipe(recipeTitleInput.current.value);
+    recipeTitleInput.current.value = "";
+  }
+
   return (
     <div className="recipeList">
       <h1>Recipes</h1>
@@ -26,16 +32,10 @@ const RecipeList = ({ recipes, addRecipe, removeRecipe }) => {
           );
         })}
       </ul>
-      <input name="recipeTitleInput" type="text" ref={recipeTitleInput} />
-      <button
-        type="button"
-        onClick={() => {
-          addRecipe(recipeTitleInput.current.value);
-          recipeTitleInput.current.value = "";
-        }}
-      >
-        + Add Recipe
-      </button>
+      <form onSubmit={handleSubmit}>
+        <input name="recipeTitleInput" type="text" ref={recipeTitleInput} />
+        <button type="submit">+ Add Recipe</button>
+      </form>
     </div>
   );
 };
