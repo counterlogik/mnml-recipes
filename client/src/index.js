@@ -6,35 +6,22 @@ import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 import throttle from "lodash/throttle";
 import App from "./components/App";
-import { loadState, saveState } from "./localStorage";
 import "./css/style.css";
 import registerServiceWorker from "./registerServiceWorker";
 
 // import the root reducers
 import rootReducer from "./reducers/index";
 
-// try to load state from localStorage
-const persistedState = loadState();
+const initialState = {};
 
 // Create store with reducers and initial state and relevant enhancers
 export const store = createStore(
   rootReducer,
-  persistedState,
+  initialState,
   compose(
     applyMiddleware(thunk),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
-);
-
-store.subscribe(
-  throttle(() => {
-    saveState({
-      recipes: store.getState().recipes,
-      ingredients: store.getState().ingredients,
-      steps: store.getState().steps
-    });
-  }),
-  1000
 );
 
 render(

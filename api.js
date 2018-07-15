@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const Ingredient = require("./models/Ingredient");
 const Recipe = require("./models/Recipe");
 const Step = require("./models/Step");
-const app = express();
 
 // here we are configuring express to use body-parser as middle-ware.
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -27,32 +26,28 @@ router.get("/", function(req, res, next) {
   });
 });
 
-// add route
-router.get("/recipes/add", function(req, res, next) {
-  res.json({
-    message: "Add recipe route, try a POST next time!"
+// recipes GET route
+router.get("/recipes", function(req, res) {
+  Recipe.find({}, function(err, docs) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(docs);
+    }
   });
 });
 
-// add submit POST route
+// add recipe POST route
 router.post("/recipes/add", function(req, res) {
   const recipe = new Recipe({ title: req.body.title, _id: req.body.id });
-  recipe.title = req.body.title;
 
   recipe.save(function(err) {
     if (err) res.send(err);
-    else res.json({ message: "Recipe deleted!" });
+    else res.json({ message: "Recipe added!" });
   });
 });
 
-// remove route
-router.get("/recipes/remove", function(req, res, next) {
-  res.json({
-    message: "Remove recipe route, try a POST next time!"
-  });
-});
-
-// remove submit POST route
+// remove recipe DELETE route
 router.delete("/recipes/remove", function(req, res, next) {
   Recipe.findByIdAndRemove(req.body.id, function(err) {
     if (err) res.send(err);
@@ -60,14 +55,7 @@ router.delete("/recipes/remove", function(req, res, next) {
   });
 });
 
-// add route
-router.get("/ingredients/add", function(req, res, next) {
-  res.json({
-    message: "Add ingredient route, try a POST next time!"
-  });
-});
-
-// add submit POST route
+// add ingredient POST route
 router.post("/ingredients/add", function(req, res, next) {
   const ingredient = new Ingredient({
     ingredient: req.body.ingredient,
@@ -93,14 +81,7 @@ router.post("/ingredients/add", function(req, res, next) {
   });
 });
 
-// remove route
-router.get("/ingredients/remove", function(req, res, next) {
-  res.json({
-    message: "Remove ingredient route, try a POST next time!"
-  });
-});
-
-// remove submit POST route
+// remove ingredient DELETE route
 router.delete("/ingredients/remove", function(req, res, next) {
   Ingredient.findByIdAndRemove(req.body.id, function(err) {
     if (err) {
@@ -121,14 +102,7 @@ router.delete("/ingredients/remove", function(req, res, next) {
   });
 });
 
-// add route
-router.get("/steps/add", function(req, res, next) {
-  res.json({
-    message: "Add step route, try a POST next time!"
-  });
-});
-
-// add submit POST route
+// add step POST route
 router.post("/steps/add", function(req, res, next) {
   const step = new Step({ step: req.body.step, _id: req.body.id });
 
@@ -151,14 +125,7 @@ router.post("/steps/add", function(req, res, next) {
   });
 });
 
-// remove route
-router.get("/steps/remove", function(req, res, next) {
-  res.json({
-    message: "Remove step route, try a POST next time!"
-  });
-});
-
-// remove submit POST route
+// remove step DELETE route
 router.delete("/steps/remove", function(req, res, next) {
   Step.findByIdAndRemove(req.body.id, function(err) {
     if (err) {

@@ -21,7 +21,7 @@ export const addRecipe = title => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "ADD_RECIPE",
           id: recipeId,
@@ -51,7 +51,7 @@ export const removeRecipe = id => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "REMOVE_RECIPE",
           id
@@ -85,7 +85,7 @@ export const addIngredient = (ingredient, recipeId) => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "ADD_INGREDIENT",
           id: ingredientId,
@@ -116,7 +116,7 @@ export const removeIngredient = (id, recipeId) => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "REMOVE_INGREDIENT",
           id,
@@ -147,7 +147,7 @@ export const addStep = (step, recipeId) => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "ADD_STEP",
           id: stepId,
@@ -178,7 +178,7 @@ export const removeStep = (id, recipeId) => {
         return response;
       })
       .catch(error => console.error("Error:", error))
-      .then(response => {
+      .then(() => {
         dispatch({
           type: "REMOVE_STEP",
           id,
