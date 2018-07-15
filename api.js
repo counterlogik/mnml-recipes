@@ -1,24 +1,42 @@
 const express = require("express");
 const router = express.Router();
-const bodyParser = require("body-parser");
-const Ingredient = require("./models/Ingredient");
+const mongoose = require("mongoose");
+const CONFIG = require("./config/config");
 const Recipe = require("./models/Recipe");
+const Ingredient = require("./models/Ingredient");
 const Step = require("./models/Step");
+const passport = require("passport");
 
 // TODO: refactor all pertinent api endpoints to handle one OR many items at once
 
-// here we are configuring express to use body-parser as middle-ware.
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
-
-router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
+// set up mongoose connection
+const mongoDB =
+  "mongodb://" +
+  CONFIG.db_user +
+  ":" +
+  CONFIG.db_password +
+  "@" +
+  CONFIG.db_host +
+  ":" +
+  CONFIG.db_port +
+  "/" +
+  CONFIG.db_name;
+mongoose.connect(mongoDB).catch(() => {
+  console.log("Cannot connect to Mongo Server:", mongoDB);
 });
+mongoose.Promise = global.Promise;
+
+let db = mongoose.connection;
+module.exports = db;
+db.once("open", () => {
+  console.log("Connected to Mongo Server at: " + mongoDB);
+});
+db.on("error", error => {
+  console.log("error", error);
+});
+
+// ROUTES
+// require("./middleware/passport")(passport);
 
 // GET api entry point message
 router.get("/", function(req, res, next) {
@@ -41,7 +59,10 @@ router.get("/recipes", function(req, res) {
 
 // add recipe POST route
 router.post("/recipes/add", function(req, res) {
-  const recipe = new Recipe({ title: req.body.title, _id: req.body.recipeId });
+  const recipe = new Recipe({
+    title: req.body.title,
+    _id: req.body.recipeId
+  });
 
   recipe.save(function(err) {
     if (err) res.send(err);
