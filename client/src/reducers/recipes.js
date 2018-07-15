@@ -12,12 +12,12 @@ function fetchRecipes(state, action) {
   return arrayToObject(recipes);
 }
 function addRecipe(state, action) {
-  const { id, title } = action;
+  const { recipeId, title } = action;
 
   return {
     ...state,
-    [id]: {
-      id,
+    [recipeId]: {
+      recipeId,
       title,
       ingredients: [],
       steps: []
@@ -26,15 +26,15 @@ function addRecipe(state, action) {
 }
 
 function removeRecipe(state, action) {
-  const { id } = action;
+  const { recipeId } = action;
   const newState = { ...state };
-  delete newState[id];
+  delete newState[recipeId];
 
   return newState;
 }
 
 function addIngredient(state, action) {
-  const { id, recipeId } = action;
+  const { ingredientId, recipeId } = action;
 
   const recipe = state[recipeId];
 
@@ -42,30 +42,13 @@ function addIngredient(state, action) {
     ...state,
     [recipeId]: {
       ...recipe,
-      ingredients: recipe.ingredients.concat(id)
+      ingredients: recipe.ingredients.concat(ingredientId)
     }
   };
 }
-
-// function removeIngredient(state, action) {
-//   const { id, recipeId } = action;
-
-//   const recipe = state[recipeId];
-
-//   return {
-//     ...state,
-//     [recipeId]: {
-//       ...recipe,
-//       ingredients: [
-//         ...recipe.ingredients.slice(0, id),
-//         ...recipe.ingredients.slice(id + 1)
-//       ]
-//     }
-//   };
-// }
 
 function addStep(state, action) {
-  const { id, recipeId } = action;
+  const { stepId, recipeId } = action;
 
   const recipe = state[recipeId];
 
@@ -73,24 +56,10 @@ function addStep(state, action) {
     ...state,
     [recipeId]: {
       ...recipe,
-      steps: recipe.steps.concat(id)
+      steps: recipe.steps.concat(stepId)
     }
   };
 }
-
-// function removeStep(state, action) {
-//   const { index, recipeId } = action;
-
-//   const recipe = state[recipeId];
-
-//   return {
-//     ...state,
-//     [recipeId]: {
-//       ...recipe,
-//       steps: [...recipe.steps.slice(0, index), ...recipe.steps.slice(index + 1)]
-//     }
-//   };
-// }
 
 function recipesById(state = [], action) {
   switch (action.type) {
@@ -102,26 +71,22 @@ function recipesById(state = [], action) {
       return removeRecipe(state, action);
     case "ADD_INGREDIENT":
       return addIngredient(state, action);
-    // case "REMOVE_INGREDIENT":
-    //   return removeIngredient(state, action);
     case "ADD_STEP":
       return addStep(state, action);
-    // case "REMOVE_STEP":
-    //   return removeStep(state, action);
     default:
       return state;
   }
 }
 
 function addRecipeId(state, action) {
-  const { id } = action;
+  const { recipeId } = action;
   // Just append the new Recipe's ID to the list of all IDs
-  return state.concat(id);
+  return state.concat(recipeId);
 }
 
 function removeRecipeId(state, action) {
   // Just remove the Recipe's ID from the list of all IDs
-  return state.filter((item, index) => item !== action.id);
+  return state.filter(item => item !== action.recipeId);
 }
 
 function allRecipes(state = [], action) {

@@ -1,21 +1,21 @@
 import { combineReducers } from "redux";
 
 function addIngredientEntry(state, action) {
-  const { id, ingredient } = action;
+  const { ingredientId, ingredient } = action;
 
   return {
     ...state,
-    [id]: {
-      id: id,
+    [ingredientId]: {
+      ingredientId: ingredientId,
       ingredient: ingredient
     }
   };
 }
 
 function removeIngredientEntry(state, action) {
-  const { id } = action;
+  const { ingredientId } = action;
   const newState = { ...state };
-  delete newState[id];
+  delete newState[ingredientId];
 
   return newState;
 }
@@ -32,14 +32,14 @@ function ingredientsById(state = {}, action) {
 }
 
 function addIngredientId(state, action) {
-  const { id } = action;
+  const { ingredientId } = action;
   // Just append the new Ingredient's ID to the list of all IDs
-  return state.concat(id);
+  return state.concat(ingredientId);
 }
 
 function removeIngredientId(state, action) {
   // Just remove the Ingredient's ID from the list of all IDs
-  return state.filter((item, index) => item !== action.id);
+  return state.filter(item => item !== action.ingredientId);
 }
 
 function allIngredients(state = [], action) {

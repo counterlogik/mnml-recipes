@@ -1,21 +1,21 @@
 import { combineReducers } from "redux";
 
 function addStepEntry(state, action) {
-  const { id, step } = action;
+  const { stepId, step } = action;
 
   return {
     ...state,
-    [id]: {
-      id: id,
+    [stepId]: {
+      stepId: stepId,
       step: step
     }
   };
 }
 
 function removeStepEntry(state, action) {
-  const { id } = action;
+  const { stepId } = action;
   const newState = { ...state };
-  delete newState[id];
+  delete newState[stepId];
 
   return newState;
 }
@@ -32,14 +32,14 @@ function stepsById(state = {}, action) {
 }
 
 function addStepId(state, action) {
-  const { id } = action;
+  const { stepId } = action;
   // Just append the new Step's ID to the list of all IDs
-  return state.concat(id);
+  return state.concat(stepId);
 }
 
 function removeStepId(state, action) {
   // Just remove the Step's ID from the list of all IDs
-  return state.filter((item, index) => item !== action.id);
+  return state.filter(item => item !== action.stepId);
 }
 
 function allSteps(state = [], action) {

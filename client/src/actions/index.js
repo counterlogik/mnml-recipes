@@ -31,7 +31,7 @@ export const addRecipe = title => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify({ title: title, id: recipeId })
+      body: JSON.stringify({ title, recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -40,23 +40,19 @@ export const addRecipe = title => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({
-          type: "ADD_RECIPE",
-          id: recipeId,
-          title
-        });
+        dispatch({ type: "ADD_RECIPE", recipeId, title });
       });
   };
 };
 
-export const removeRecipe = id => {
+export const removeRecipe = recipeId => {
   return (dispatch, getState) => {
     fetch("/api/recipes/remove", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify({ id: id })
+      body: JSON.stringify({ recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -68,14 +64,17 @@ export const removeRecipe = id => {
         const state = getState();
 
         // remove all ingredients for that recipe ID
-        const ingredientsToDelete = state.recipes.byId[id].ingredients;
+        const ingredientsToDelete = state.recipes.byId[recipeId].ingredients;
         ingredientsToDelete.forEach(ingredientId => {
           fetch("/api/ingredients/remove", {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json; charset=utf-8"
             },
-            body: JSON.stringify({ id: ingredientId, recipeId: id })
+            body: JSON.stringify({
+              ingredientId,
+              recipeId
+            })
           })
             .then(response => {
               if (!response.ok) throw Error(response.statusText);
@@ -86,21 +85,24 @@ export const removeRecipe = id => {
             .then(() => {
               dispatch({
                 type: "REMOVE_INGREDIENT",
-                id: ingredientId,
-                recipeId: id
+                ingredientId,
+                recipeId
               });
             });
         });
 
         // remove all steps for that recipe ID
-        const stepsToDelete = state.recipes.byId[id].steps;
+        const stepsToDelete = state.recipes.byId[recipeId].steps;
         stepsToDelete.forEach(stepId => {
           fetch("/api/steps/remove", {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json; charset=utf-8"
             },
-            body: JSON.stringify({ id: stepId, recipeId: id })
+            body: JSON.stringify({
+              stepId,
+              recipeId
+            })
           })
             .then(response => {
               if (!response.ok) throw Error(response.statusText);
@@ -109,12 +111,16 @@ export const removeRecipe = id => {
             })
             .catch(error => console.error("Error:", error))
             .then(() => {
-              dispatch({ type: "REMOVE_STEP", id: stepId, recipeId: id });
+              dispatch({
+                type: "REMOVE_STEP",
+                stepId,
+                recipeId
+              });
             });
         });
 
         // remove recipe itself
-        dispatch({ type: "REMOVE_RECIPE", id });
+        dispatch({ type: "REMOVE_RECIPE", recipeId });
       });
   };
 };
@@ -128,9 +134,9 @@ export const addIngredient = (ingredient, recipeId) => {
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify({
-        ingredient: ingredient,
-        id: ingredientId,
-        recipeId: recipeId
+        ingredient,
+        ingredientId,
+        recipeId
       })
     })
       .then(response => {
@@ -142,7 +148,7 @@ export const addIngredient = (ingredient, recipeId) => {
       .then(() => {
         dispatch({
           type: "ADD_INGREDIENT",
-          id: ingredientId,
+          ingredientId,
           ingredient,
           recipeId
         });
@@ -150,14 +156,14 @@ export const addIngredient = (ingredient, recipeId) => {
   };
 };
 
-export const removeIngredient = (id, recipeId) => {
+export const removeIngredient = (ingredientId, recipeId) => {
   return dispatch => {
     fetch("/api/ingredients/remove", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify({ id: id, recipeId: recipeId })
+      body: JSON.stringify({ ingredientId, recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -166,7 +172,7 @@ export const removeIngredient = (id, recipeId) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({ type: "REMOVE_INGREDIENT", id, recipeId });
+        dispatch({ type: "REMOVE_INGREDIENT", ingredientId, recipeId });
       });
   };
 };
@@ -179,7 +185,7 @@ export const addStep = (step, recipeId) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify({ step: step, id: stepId, recipeId: recipeId })
+      body: JSON.stringify({ step, stepId, recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -188,19 +194,19 @@ export const addStep = (step, recipeId) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({ type: "ADD_STEP", id: stepId, step, recipeId });
+        dispatch({ type: "ADD_STEP", stepId, step, recipeId });
       });
   };
 };
 
-export const removeStep = (id, recipeId) => {
+export const removeStep = (stepId, recipeId) => {
   return dispatch => {
     fetch("/api/steps/remove", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      body: JSON.stringify({ id: id, recipeId: recipeId })
+      body: JSON.stringify({ stepId, recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -209,7 +215,7 @@ export const removeStep = (id, recipeId) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({ type: "REMOVE_STEP", id, recipeId });
+        dispatch({ type: "REMOVE_STEP", stepId, recipeId });
       });
   };
 };

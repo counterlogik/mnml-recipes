@@ -39,7 +39,7 @@ router.get("/recipes", function(req, res) {
 
 // add recipe POST route
 router.post("/recipes/add", function(req, res) {
-  const recipe = new Recipe({ title: req.body.title, _id: req.body.id });
+  const recipe = new Recipe({ title: req.body.title, _id: req.body.recipeId });
 
   recipe.save(function(err) {
     if (err) res.send(err);
@@ -49,7 +49,7 @@ router.post("/recipes/add", function(req, res) {
 
 // remove recipe DELETE route
 router.delete("/recipes/remove", function(req, res, next) {
-  Recipe.findByIdAndRemove(req.body.id, function(err) {
+  Recipe.findByIdAndRemove(req.body.recipeId, function(err) {
     if (err) res.send(err);
     else res.json({ message: "Recipe deleted!" });
   });
@@ -59,7 +59,7 @@ router.delete("/recipes/remove", function(req, res, next) {
 router.post("/ingredients/add", function(req, res, next) {
   const ingredient = new Ingredient({
     ingredient: req.body.ingredient,
-    _id: req.body.id
+    _id: req.body.ingredientId
   });
 
   ingredient.save(function(err) {
@@ -68,7 +68,7 @@ router.post("/ingredients/add", function(req, res, next) {
     } else {
       Recipe.findByIdAndUpdate(
         req.body.recipeId,
-        { $push: { ingredients: req.body.id } },
+        { $push: { ingredients: req.body.ingredientId } },
         function(err) {
           if (err) {
             res.send(err);
@@ -83,13 +83,13 @@ router.post("/ingredients/add", function(req, res, next) {
 
 // remove ingredient DELETE route
 router.delete("/ingredients/remove", function(req, res, next) {
-  Ingredient.findByIdAndRemove(req.body.id, function(err) {
+  Ingredient.findByIdAndRemove(req.body.ingredientId, function(err) {
     if (err) {
       res.send(err);
     } else {
       Recipe.findByIdAndUpdate(
         req.body.recipeId,
-        { $pull: { ingredients: req.body.id } },
+        { $pull: { ingredients: req.body.ingredientId } },
         function(err) {
           if (err) {
             res.send(err);
@@ -104,7 +104,7 @@ router.delete("/ingredients/remove", function(req, res, next) {
 
 // add step POST route
 router.post("/steps/add", function(req, res, next) {
-  const step = new Step({ step: req.body.step, _id: req.body.id });
+  const step = new Step({ step: req.body.step, _id: req.body.stepId });
 
   step.save(function(err) {
     if (err) {
@@ -112,7 +112,7 @@ router.post("/steps/add", function(req, res, next) {
     } else {
       Recipe.findByIdAndUpdate(
         req.body.recipeId,
-        { $push: { steps: req.body.id } },
+        { $push: { steps: req.body.stepId } },
         function(err) {
           if (err) {
             res.send(err);
@@ -127,13 +127,13 @@ router.post("/steps/add", function(req, res, next) {
 
 // remove step DELETE route
 router.delete("/steps/remove", function(req, res, next) {
-  Step.findByIdAndRemove(req.body.id, function(err) {
+  Step.findByIdAndRemove(req.body.stepId, function(err) {
     if (err) {
       res.send(err);
     } else {
       Recipe.findByIdAndUpdate(
         req.body.recipeId,
-        { $pull: { steps: req.body.id } },
+        { $pull: { steps: req.body.stepId } },
         function(err) {
           if (err) {
             res.send(err);
