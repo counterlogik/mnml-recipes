@@ -1,5 +1,16 @@
 import { combineReducers } from "redux";
 
+function fetchRecipes(state, action) {
+  const { recipes } = action;
+
+  const arrayToObject = recipesArray =>
+    recipesArray.reduce((obj, recipe) => {
+      obj[recipe._id] = recipe;
+      return obj;
+    }, {});
+
+  return arrayToObject(recipes);
+}
 function addRecipe(state, action) {
   const { id, title } = action;
 
@@ -83,6 +94,8 @@ function removeStep(state, action) {
 
 function recipesById(state = {}, action) {
   switch (action.type) {
+    case "FETCH_RECIPES":
+      return fetchRecipes(state, action);
     case "ADD_RECIPE":
       return addRecipe(state, action);
     case "REMOVE_RECIPE":
@@ -113,6 +126,8 @@ function removeRecipeId(state, action) {
 
 function allRecipes(state = [], action) {
   switch (action.type) {
+    case "FETCH_RECIPES":
+      return fetchRecipes(state, action);
     case "ADD_RECIPE":
       return addRecipeId(state, action);
     case "REMOVE_RECIPE":

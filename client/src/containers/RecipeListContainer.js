@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import RecipeList from "../components/RecipeList";
-import { addRecipe, removeRecipe } from "../actions/index";
+import { fetchRecipes, addRecipe, removeRecipe } from "../actions/index";
 
 const mapStateToProps = state => {
   return {
@@ -10,6 +10,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchRecipes: () => {
+      dispatch(fetchRecipes());
+    },
     addRecipe: title => {
       dispatch(addRecipe(title));
     },

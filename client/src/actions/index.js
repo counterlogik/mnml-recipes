@@ -1,5 +1,33 @@
 import { v4 } from "node-uuid";
 
+export const fetchRecipes = () => {
+  return dispatch => {
+    fetch("/api/recipes", {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      mode: "cors", // no-cors, cors, *same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "same-origin", // include, same-origin, *omit
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      referrer: "no-referrer" // no-referrer, *client
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(recipes => {
+        dispatch({
+          type: "FETCH_RECIPES",
+          recipes
+        });
+      });
+  };
+};
+
 export const addRecipe = title => {
   const recipeId = `recipe-${v4()}`;
   return dispatch => {
@@ -11,7 +39,6 @@ export const addRecipe = title => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ title: title, id: recipeId }) // body data type must match "Content-Type" header
     })
@@ -41,7 +68,6 @@ export const removeRecipe = id => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ id: id }) // body data type must match "Content-Type" header
     })
@@ -71,7 +97,6 @@ export const addIngredient = (ingredient, recipeId) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({
         ingredient: ingredient,
@@ -106,7 +131,6 @@ export const removeIngredient = (id, recipeId) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ id: id, recipeId: recipeId }) // body data type must match "Content-Type" header
     })
@@ -137,7 +161,6 @@ export const addStep = (step, recipeId) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ step: step, id: stepId, recipeId: recipeId }) // body data type must match "Content-Type" header
     })
@@ -168,7 +191,6 @@ export const removeStep = (id, recipeId) => {
       headers: {
         "Content-Type": "application/json; charset=utf-8"
       },
-      redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify({ id: id, recipeId: recipeId }) // body data type must match "Content-Type" header
     })

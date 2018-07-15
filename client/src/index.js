@@ -4,7 +4,6 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
-import throttle from "lodash/throttle";
 import App from "./components/App";
 import "./css/style.css";
 import registerServiceWorker from "./registerServiceWorker";
