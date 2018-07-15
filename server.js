@@ -1,25 +1,52 @@
 var express = require("express");
 var mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 var api = require("./api");
+const CONFIG = require("./config/config");
 
-//Set up mongoose connection
-var mongoDB =
-  "mongodb://addisonstaples:AwHjqLqsn9j8CCzMysgQ@ds125001.mlab.com:25001/mern_recipes";
-mongoose.connect(mongoDB);
+// set up mongoose connection
+const mongoDB =
+  "mongodb://" +
+  CONFIG.db_user +
+  ":" +
+  CONFIG.db_password +
+  "@" +
+  CONFIG.db_host +
+  ":" +
+  CONFIG.db_port +
+  "/" +
+  CONFIG.db_name;
+mongoose.connect(mongoDB).catch(() => {
+  console.log("Cannot connect to Mongo Server:", mongoDB);
+});
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+let db = mongoose.connection;
+module.exports = db;
+db.once("open", () => {
+  console.log("Connected to Mongo Server at: " + mongoDB);
+});
+db.on("error", error => {
+  console.log("error", error);
+});
 
 const app = express();
 
-app.set("port", process.env.PORT || 3001);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-app.use(express.static("client/build"));
+// CORS
+app.use(cors());
+
+app.set("port", CONFIG.port || 3001);
+
+// app.use(express.static("client/build"));
 
 app.use("/api", api);
 
-app.listen(app.get("port"), function() {
+app.listen(CONFIG.port, function() {
   console.log(
-    `Find the Recipes app server at: http://localhost:${app.get("port")}/`
+    "Find the Recipes app server at: http://localhost:" + CONFIG.port
   );
 });

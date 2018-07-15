@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import LoginContainer from "../containers/LoginContainer";
 import RecipeListContainer from "../containers/RecipeListContainer";
 import RecipeDetailsContainer from "../containers/RecipeDetailsContainer";
 import NotFound from "./NotFound";
@@ -12,7 +13,8 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path={"/"} component={RecipeListContainer} />
+        <Route exact path={"/"} component={LoginContainer} />
+        <Route path={"/recipeList"} component={RecipeListContainer} />}
         <Route
           path={"/recipeDetails/:recipeId"}
           component={RecipeDetailsContainer}
