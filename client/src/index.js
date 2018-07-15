@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./components/App";
+import throttle from "lodash/throttle";
 import { loadState, saveState } from "./localStorage";
 import "./css/style.css";
 import registerServiceWorker from "./registerServiceWorker";

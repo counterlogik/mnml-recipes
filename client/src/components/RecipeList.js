@@ -8,11 +8,11 @@ class RecipeList extends React.Component {
     this.props.fetchRecipes();
   }
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
     this.props.addRecipe(this.recipeTitleInput.current.value);
     this.recipeTitleInput.current.value = "";
-  }
+  };
 
   render() {
     return (

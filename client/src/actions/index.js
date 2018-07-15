@@ -1,5 +1,7 @@
 import { v4 } from "node-uuid";
 
+// TODO: refactor actions to handle one OR many items at once
+
 export const fetchRecipes = () => {
   return dispatch => {
     fetch("/api/recipes", {
@@ -59,7 +61,7 @@ export const addRecipe = title => {
 };
 
 export const removeRecipe = id => {
-  return dispatch => {
+  return (dispatch, getState) => {
     fetch("/api/recipes/remove", {
       method: "DELETE", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
@@ -78,6 +80,67 @@ export const removeRecipe = id => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
+        const state = getState();
+
+        // remove all ingredients for that recipe ID
+        const ingredientsToDelete = state.recipes.byId[id].ingredients;
+        ingredientsToDelete.forEach(ingredientId => {
+          fetch("/api/ingredients/remove", {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, same-origin, *omit
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify({ id: ingredientId, recipeId: id }) // body data type must match "Content-Type" header
+          })
+            .then(response => {
+              if (!response.ok) throw Error(response.statusText);
+
+              return response;
+            })
+            .catch(error => console.error("Error:", error))
+            .then(() => {
+              dispatch({
+                type: "REMOVE_INGREDIENT",
+                id: ingredientId,
+                recipeId: id
+              });
+            });
+        });
+
+        // remove all steps for that recipe ID
+        const stepsToDelete = state.recipes.byId[id].steps;
+        stepsToDelete.forEach(stepId => {
+          fetch("/api/steps/remove", {
+            method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, same-origin, *omit
+            headers: {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify({ id: stepId, recipeId: id }) // body data type must match "Content-Type" header
+          })
+            .then(response => {
+              if (!response.ok) throw Error(response.statusText);
+
+              return response;
+            })
+            .catch(error => console.error("Error:", error))
+            .then(() => {
+              dispatch({
+                type: "REMOVE_STEP",
+                id: stepId,
+                recipeId: id
+              });
+            });
+        });
+
+        // remove recipe itself
         dispatch({
           type: "REMOVE_RECIPE",
           id

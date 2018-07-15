@@ -47,22 +47,22 @@ function addIngredient(state, action) {
   };
 }
 
-function removeIngredient(state, action) {
-  const { id, recipeId } = action;
+// function removeIngredient(state, action) {
+//   const { id, recipeId } = action;
 
-  const recipe = state[recipeId];
+//   const recipe = state[recipeId];
 
-  return {
-    ...state,
-    [recipeId]: {
-      ...recipe,
-      ingredients: [
-        ...recipe.ingredients.slice(0, id),
-        ...recipe.ingredients.slice(id + 1)
-      ]
-    }
-  };
-}
+//   return {
+//     ...state,
+//     [recipeId]: {
+//       ...recipe,
+//       ingredients: [
+//         ...recipe.ingredients.slice(0, id),
+//         ...recipe.ingredients.slice(id + 1)
+//       ]
+//     }
+//   };
+// }
 
 function addStep(state, action) {
   const { id, recipeId } = action;
@@ -78,21 +78,21 @@ function addStep(state, action) {
   };
 }
 
-function removeStep(state, action) {
-  const { index, recipeId } = action;
+// function removeStep(state, action) {
+//   const { index, recipeId } = action;
 
-  const recipe = state[recipeId];
+//   const recipe = state[recipeId];
 
-  return {
-    ...state,
-    [recipeId]: {
-      ...recipe,
-      steps: [...recipe.steps.slice(0, index), ...recipe.steps.slice(index + 1)]
-    }
-  };
-}
+//   return {
+//     ...state,
+//     [recipeId]: {
+//       ...recipe,
+//       steps: [...recipe.steps.slice(0, index), ...recipe.steps.slice(index + 1)]
+//     }
+//   };
+// }
 
-function recipesById(state = {}, action) {
+function recipesById(state = [], action) {
   switch (action.type) {
     case "FETCH_RECIPES":
       return fetchRecipes(state, action);
@@ -102,12 +102,12 @@ function recipesById(state = {}, action) {
       return removeRecipe(state, action);
     case "ADD_INGREDIENT":
       return addIngredient(state, action);
-    case "REMOVE_INGREDIENT":
-      return removeIngredient(state, action);
+    // case "REMOVE_INGREDIENT":
+    //   return removeIngredient(state, action);
     case "ADD_STEP":
       return addStep(state, action);
-    case "REMOVE_STEP":
-      return removeStep(state, action);
+    // case "REMOVE_STEP":
+    //   return removeStep(state, action);
     default:
       return state;
   }
@@ -126,8 +126,6 @@ function removeRecipeId(state, action) {
 
 function allRecipes(state = [], action) {
   switch (action.type) {
-    case "FETCH_RECIPES":
-      return fetchRecipes(state, action);
     case "ADD_RECIPE":
       return addRecipeId(state, action);
     case "REMOVE_RECIPE":
