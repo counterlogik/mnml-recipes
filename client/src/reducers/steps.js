@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
+// TODO: refactor all pertinent steps reducers to handle one OR many steps at once
+
 function addStepEntry(state, action) {
   const { stepId, step } = action;
 

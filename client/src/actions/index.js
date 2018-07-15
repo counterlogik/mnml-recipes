@@ -1,6 +1,6 @@
 import { v4 } from "node-uuid";
 
-// TODO: refactor actions to handle one OR many items at once
+// TODO: refactor all pertinent actions to handle one OR many items at once
 
 export const fetchRecipes = () => {
   return dispatch => {

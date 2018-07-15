@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
+// TODO: refactor all pertinent recipes reducers to handle one OR many recipes at once
+
 function fetchRecipes(state, action) {
   const { recipes } = action;
 

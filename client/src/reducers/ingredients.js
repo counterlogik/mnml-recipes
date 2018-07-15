@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 
+// TODO: refactor all pertinent ingredients reducers to handle one OR many ingredients at once
+
 function addIngredientEntry(state, action) {
   const { ingredientId, ingredient } = action;
 

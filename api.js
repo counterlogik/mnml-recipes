@@ -5,6 +5,8 @@ const Ingredient = require("./models/Ingredient");
 const Recipe = require("./models/Recipe");
 const Step = require("./models/Step");
 
+// TODO: refactor all pertinent api endpoints to handle one OR many items at once
+
 // here we are configuring express to use body-parser as middle-ware.
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
