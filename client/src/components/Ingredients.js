@@ -2,13 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { removeIngredient } from "../actions";
 
-const Ingredient = ({ ingredient, index, removeIngredient, recipeId }) => {
+const Ingredient = ({
+  ingredient,
+  ingredientId,
+  removeIngredient,
+  recipeId
+}) => {
   return (
     <li className="ingredient">
-      {ingredient}
+      <p>{ingredient}</p>
       <button
-        className="removeIngredient"
-        onClick={() => removeIngredient(index, recipeId)}
+        className="remove remove--ingredient"
+        onClick={() => removeIngredient(ingredientId, recipeId)}
       >
         &times;
       </button>
@@ -20,12 +25,12 @@ const IngredientsList = ({ ingredients, recipeId, removeIngredient }) => {
   if (ingredients && ingredients.length > 0) {
     return (
       <ul className="ingredients-list">
-        {ingredients.map((ingredient, index) => (
+        {ingredients.map(ingredient => (
           <Ingredient
-            key={index}
+            key={ingredient.id}
             removeIngredient={removeIngredient}
-            index={index}
-            ingredient={ingredient}
+            ingredientId={ingredient.id}
+            ingredient={ingredient.ingredient}
             recipeId={recipeId}
           />
         ))}

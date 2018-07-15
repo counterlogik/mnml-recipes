@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { removeStep } from "../actions";
 
-const Step = ({ step, index, removeStep, recipeId }) => {
+const Step = ({ step, stepId, removeStep, recipeId }) => {
   return (
     <li className="step">
       <p>{step}</p>
       <button
         className="remove remove--step"
-        onClick={() => removeStep(index, recipeId)}
+        onClick={() => removeStep(stepId, recipeId)}
       >
         &times;
       </button>
@@ -20,11 +20,11 @@ const StepsList = ({ steps, recipeId, removeStep }) => {
   if (steps && steps.length > 0) {
     return (
       <ul className="steps-list">
-        {steps.map((step, index) => (
+        {steps.map(step => (
           <Step
-            key={index}
+            key={step.id}
             removeStep={removeStep}
-            index={step.id}
+            stepId={step.id}
             step={step.step}
             recipeId={recipeId}
           />

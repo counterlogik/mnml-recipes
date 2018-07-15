@@ -19,9 +19,16 @@ const RecipeDetails = ({
       <h4 className="grid-header">{recipe.title}</h4>
       <section className="view-box">
         <IngredientsList
-          ingredients={recipe.ingredients.map(
-            ingredient => ingredients[ingredient].ingredient
-          )}
+          ingredients={Object.keys(ingredients)
+            .filter(ingredientId => {
+              return recipe.ingredients.includes(ingredientId);
+            })
+            .map(ingredientId => {
+              return {
+                id: ingredientId,
+                ingredient: ingredients[ingredientId].ingredient
+              };
+            })}
           recipeId={params.recipeId}
         />
         <input
@@ -40,15 +47,21 @@ const RecipeDetails = ({
         </button>
       </section>
       <section className="view-box view-box--major">
-        <StepsList
-          steps={recipe.steps.map(step => {
-            return {
-              id: step,
-              step: steps[step].step
-            };
-          })}
-          recipeId={params.recipeId}
-        />
+        {
+          <StepsList
+            steps={Object.keys(steps)
+              .filter(stepId => {
+                return recipe.steps.includes(stepId);
+              })
+              .map(stepId => {
+                return {
+                  id: stepId,
+                  step: steps[stepId].step
+                };
+              })}
+            recipeId={params.recipeId}
+          />
+        }
         <input name="stepContentInput" type="text" ref={stepContentInput} />
         <button
           type="button"
