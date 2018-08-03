@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import RecipesListContainer from "../containers/RecipeListContainer";
 
 class Dashboard extends Component {
   login() {
@@ -8,7 +9,7 @@ class Dashboard extends Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
-        {isAuthenticated() && <h4>You are logged in!</h4>}
+        {isAuthenticated() && <RecipesListContainer />}
         {!isAuthenticated() && (
           <h4>
             You are not logged in! Please{" "}

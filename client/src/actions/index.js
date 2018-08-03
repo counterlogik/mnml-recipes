@@ -5,7 +5,10 @@ import { v4 } from "node-uuid";
 export const fetchRecipes = () => {
   return dispatch => {
     fetch("/api/recipes", {
-      method: "GET"
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.access_token}`
+      }
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -29,7 +32,8 @@ export const addRecipe = title => {
     fetch("/api/recipes/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({ title, recipeId })
     })
@@ -50,7 +54,8 @@ export const removeRecipe = recipeId => {
     fetch("/api/recipes/remove", {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({ recipeId })
     })
@@ -69,7 +74,8 @@ export const removeRecipe = recipeId => {
           fetch("/api/ingredients/remove", {
             method: "DELETE",
             headers: {
-              "Content-Type": "application/json; charset=utf-8"
+              "Content-Type": "application/json; charset=utf-8",
+              authorization: `Bearer ${localStorage.access_token}`
             },
             body: JSON.stringify({
               ingredientId,
@@ -97,7 +103,8 @@ export const removeRecipe = recipeId => {
           fetch("/api/steps/remove", {
             method: "DELETE",
             headers: {
-              "Content-Type": "application/json; charset=utf-8"
+              "Content-Type": "application/json; charset=utf-8",
+              authorization: `Bearer ${localStorage.access_token}`
             },
             body: JSON.stringify({
               stepId,
@@ -131,7 +138,8 @@ export const addIngredient = (ingredient, recipeId) => {
     fetch("/api/ingredients/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({
         ingredient,
@@ -161,7 +169,8 @@ export const removeIngredient = (ingredientId, recipeId) => {
     fetch("/api/ingredients/remove", {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({ ingredientId, recipeId })
     })
@@ -183,7 +192,8 @@ export const addStep = (step, recipeId) => {
     fetch("/api/steps/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({ step, stepId, recipeId })
     })
@@ -204,7 +214,8 @@ export const removeStep = (stepId, recipeId) => {
     fetch("/api/steps/remove", {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({ stepId, recipeId })
     })
