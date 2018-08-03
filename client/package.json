@@ -4,7 +4,9 @@
   "private": false,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "auth0-js": "^9.7.3",
     "autoprefixer-stylus": "^0.14.0",
+    "history": "^4.7.2",
     "lodash": "^4.17.10",
     "node-uuid": "^1.4.8",
     "prop-types": "^15.6.1",

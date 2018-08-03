@@ -1,9 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const User = require("./models/User");
+const jwt = require("express-jwt");
+const jwksRsa = require("jwks-rsa");
+require("dotenv").config();
 const Recipe = require("./models/Recipe");
 const Ingredient = require("./models/Ingredient");
 const Step = require("./models/Step");
+
+if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
+  throw "Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file";
+}
+
+const checkJwt = jwt({
+  // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
+
+  // Validate the audience and the issuer.
+  audience: process.env.AUTH0_AUDIENCE,
+  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ["RS256"]
+});
 
 // TODO: refactor all pertinent api endpoints to handle one OR many items at once
 
@@ -14,6 +35,8 @@ router.get("/", function(req, res, next) {
       "This is the default route for our Recipes API, try a more specific route query."
   });
 });
+
+router.use(checkJwt);
 
 // recipes GET route
 router.get("/recipes", function(req, res) {

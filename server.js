@@ -1,7 +1,8 @@
 var express = require("express");
+const app = express();
+const cors = require("cors");
 var mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 var api = require("./api");
 const CONFIG = require("./config/config");
 
@@ -31,17 +32,16 @@ db.on("error", error => {
   console.log("error", error);
 });
 
-const app = express();
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// CORS
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000"
+};
+
+app.use(cors(corsOptions));
 
 app.set("port", CONFIG.port || 3001);
-
-// app.use(express.static("client/build"));
 
 app.use("/api", api);
 

@@ -3,8 +3,7 @@ import { render } from "react-dom";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { BrowserRouter as Router } from "react-router-dom";
-import App from "./components/App";
+import { makeRoutes } from "./routes";
 import throttle from "lodash/throttle";
 import { loadState, saveState } from "./localStorage";
 import "./css/style.css";
@@ -14,7 +13,8 @@ import registerServiceWorker from "./registerServiceWorker";
 import rootReducer from "./reducers/index";
 
 // try to load state from localStorage
-const persistedState = loadState();
+const loadedState = loadState();
+const persistedState = { ...loadedState };
 
 // Create store with reducers and initial state and relevant enhancers
 export const store = createStore(
@@ -37,12 +37,11 @@ store.subscribe(
   1000
 );
 
+const routes = makeRoutes();
+
 render(
-  <Provider store={store}>
-    <Router>
-      <App />
-    </Router>
-  </Provider>,
+  <Provider store={store}>{routes}</Provider>,
   document.querySelector("#App")
 );
+
 registerServiceWorker();

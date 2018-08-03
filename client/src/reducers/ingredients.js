@@ -55,9 +55,9 @@ function allIngredients(state = [], action) {
   }
 }
 
-const ingredientsApp = combineReducers({
+const ingredientsReducer = combineReducers({
   byId: ingredientsById,
   allIds: allIngredients
 });
 
-export default ingredientsApp;
+export default ingredientsReducer;

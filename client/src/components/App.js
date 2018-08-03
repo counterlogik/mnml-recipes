@@ -1,26 +1,46 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import LoginContainer from "../containers/LoginContainer";
-import RecipeListContainer from "../containers/RecipeListContainer";
-import RecipeDetailsContainer from "../containers/RecipeDetailsContainer";
-import NotFound from "./NotFound";
+import React, { Component } from "react";
 
-class App extends React.Component {
-  state = {
-    recipes: {}
-  };
+class App extends Component {
+  goTo(route) {
+    this.props.history.replace(`/${route}`);
+  }
+
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
+  }
 
   render() {
+    const { isAuthenticated } = this.props.auth;
+
     return (
-      <Switch>
-        <Route exact path={"/"} component={LoginContainer} />
-        <Route path={"/recipeList"} component={RecipeListContainer} />}
-        <Route
-          path={"/recipeDetails/:recipeId"}
-          component={RecipeDetailsContainer}
-        />
-        <Route path={"/notFound"} component={NotFound} />
-      </Switch>
+      <div>
+        <button
+          className="button button--dashboard"
+          onClick={this.goTo.bind(this, "dashboard")}
+        >
+          Dashboard
+        </button>
+        {!isAuthenticated() && (
+          <button
+            className="button button--login"
+            onClick={this.login.bind(this)}
+          >
+            Log In
+          </button>
+        )}
+        {isAuthenticated() && (
+          <button
+            className="button button--logout"
+            onClick={this.logout.bind(this)}
+          >
+            Log Out
+          </button>
+        )}
+      </div>
     );
   }
 }
