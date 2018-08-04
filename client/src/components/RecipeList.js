@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../img/fork-and-knife.png";
 
 class RecipeList extends React.Component {
   recipeTitleInput = React.createRef();
@@ -20,10 +21,10 @@ class RecipeList extends React.Component {
   render() {
     return (
       <div className="recipeList">
-        <button className="logoutButton" onClick={() => this.props.logout()}>
-          LOGOUT
-        </button>
-        <h1>Recipes</h1>
+        <div className="flex-header">
+          <img src={logo} alt="Recipes!" />
+          <h1>Recipes</h1>
+        </div>
         <ul>
           {Object.keys(this.props.recipes).map(recipeId => {
             return (

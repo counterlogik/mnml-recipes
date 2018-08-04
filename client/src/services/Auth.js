@@ -79,6 +79,7 @@ export default class Auth {
     // Clear access token, ID token, and expiration from local storage
     localStorage.removeItem("access_token");
     localStorage.removeItem("id_token");
+    localStorage.removeItem("user_id");
     localStorage.removeItem("expires_at");
     localStorage.removeItem("scopes");
     this.userProfile = null;

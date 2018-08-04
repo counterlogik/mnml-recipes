@@ -3,6 +3,7 @@ import { Route, Router } from "react-router-dom";
 import App from "./components/App";
 import Dashboard from "./components/Dashboard";
 import Callback from "./components/Callback";
+import RecipeDetailsContainer from "./containers/RecipeDetailsContainer";
 import Auth from "./services/Auth";
 import history from "./services/History";
 
@@ -28,6 +29,13 @@ export const makeRoutes = () => {
           render={props => {
             handleAuthentication(props);
             return <Callback {...props} />;
+          }}
+        />
+        <Route
+          path="/recipeDetails/:recipeId"
+          render={props => {
+            handleAuthentication(props);
+            return <RecipeDetailsContainer {...props} />;
           }}
         />
       </div>
