@@ -39,8 +39,8 @@ router.get("/", function(req, res, next) {
 router.use(checkJwt);
 
 // recipes GET route
-router.get("/recipes", function(req, res) {
-  Recipe.find({}, function(err, docs) {
+router.post("/recipes", function(req, res) {
+  Recipe.find({ user: req.body.userId }, function(err, docs) {
     if (err) {
       res.send(err);
     } else {
@@ -51,7 +51,11 @@ router.get("/recipes", function(req, res) {
 
 // add recipe POST route
 router.post("/recipes/add", function(req, res) {
-  const recipe = new Recipe({ title: req.body.title, _id: req.body.recipeId });
+  const recipe = new Recipe({
+    title: req.body.title,
+    _id: req.body.recipeId,
+    user: req.body.userId
+  });
 
   recipe.save(function(err) {
     if (err) res.send(err);

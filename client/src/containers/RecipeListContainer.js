@@ -10,11 +10,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchRecipes: () => {
-      dispatch(fetchRecipes());
+    fetchRecipes: userId => {
+      dispatch(fetchRecipes(userId));
     },
-    addRecipe: title => {
-      dispatch(addRecipe(title));
+    addRecipe: (title, userId) => {
+      dispatch(addRecipe(title, userId));
     },
     removeRecipe: id => {
       dispatch(removeRecipe(id));

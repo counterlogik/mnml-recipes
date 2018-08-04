@@ -2,13 +2,15 @@ import { v4 } from "node-uuid";
 
 // TODO: refactor all pertinent actions to handle one OR many items at once
 
-export const fetchRecipes = () => {
+export const fetchRecipes = userId => {
   return dispatch => {
     fetch("/api/recipes", {
-      method: "GET",
+      method: "POST",
       headers: {
+        "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
-      }
+      },
+      body: JSON.stringify({ userId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -26,7 +28,7 @@ export const fetchRecipes = () => {
   };
 };
 
-export const addRecipe = title => {
+export const addRecipe = (title, userId) => {
   const recipeId = `recipe-${v4()}`;
   return dispatch => {
     fetch("/api/recipes/add", {
@@ -35,7 +37,7 @@ export const addRecipe = title => {
         "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
       },
-      body: JSON.stringify({ title, recipeId })
+      body: JSON.stringify({ title, recipeId, userId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);

@@ -5,12 +5,15 @@ class RecipeList extends React.Component {
   recipeTitleInput = React.createRef();
 
   componentDidMount() {
-    this.props.fetchRecipes();
+    this.props.fetchRecipes(localStorage.user_id);
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addRecipe(this.recipeTitleInput.current.value);
+    this.props.addRecipe(
+      this.recipeTitleInput.current.value,
+      localStorage.user_id
+    );
     this.recipeTitleInput.current.value = "";
   };
 
