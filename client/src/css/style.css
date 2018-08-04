@@ -173,7 +173,7 @@ body {
   background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
   height: 100vh;
 }
-.App {
+#App {
   text-align: left;
   height: 100vh;
 }
@@ -241,21 +241,6 @@ main {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-transition: 1.1s;
-  transition: 1.1s;
-  -webkit-transition-timing-function: ease-out;
-          transition-timing-function: ease-out;
-  -webkit-transform: rotate3d(0);
-          transform: rotate3d(0);
-}
-.step:hover {
-  font-size: 4vh;
-  -webkit-transition: 0.15s;
-  transition: 0.15s;
-  -webkit-transition-timing-function: ease-in;
-          transition-timing-function: ease-in;
-  -webkit-transform: rotate3d(-5deg, -2deg, 3deg);
-          transform: rotate3d(-5deg, -2deg, 3deg);
 }
 .remove {
   padding: 0 15px;

@@ -18,12 +18,6 @@ class App extends Component {
 
     return (
       <div>
-        <button
-          className="button button--dashboard"
-          onClick={this.goTo.bind(this, "dashboard")}
-        >
-          Dashboard
-        </button>
         {!isAuthenticated() && (
           <button
             className="button button--login"

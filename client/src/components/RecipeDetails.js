@@ -15,7 +15,6 @@ const RecipeDetails = ({
 
   return (
     <main>
-      <button>SAVE</button>
       <h4 className="grid-header">{recipe.title}</h4>
       <section className="view-box">
         <IngredientsList
