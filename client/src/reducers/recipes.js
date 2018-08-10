@@ -26,12 +26,13 @@ function fetchRecipeDetails(state, action) {
 }
 
 function updateRecipe(state, action) {
-  const { recipeId, title, ingredients, steps } = action;
+  const { recipeId, user, title, ingredients, steps } = action;
 
   return {
     ...state,
     [recipeId]: {
-      recipeId,
+      _id: recipeId,
+      user,
       title,
       ingredients,
       steps

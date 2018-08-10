@@ -95,6 +95,7 @@ export const updateRecipe = (recipeId, title, ingredients, steps) => {
         dispatch({
           type: "UPDATE_RECIPE",
           recipeId,
+          user: localStorage.user_id,
           title,
           ingredients,
           steps
