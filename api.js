@@ -63,8 +63,6 @@ router.get("/recipes/details/:id", function(req, res) {
 
 // update recipe details POST route (update recipe title, ingredients, and steps)
 router.post("/recipes/update", function(req, res) {
-  console.log(req.body.ingredients);
-  console.log(req.body.steps);
   Recipe.findByIdAndUpdate(
     req.body.recipeId,
     {
@@ -332,8 +330,6 @@ router.post("/steps/byRecipeId", function(req, res) {
       res.send(err);
     } else {
       let steps = [];
-
-      console.log(recipe.steps);
 
       async function processStepsArray(stepsArray) {
         for (const stepId of stepsArray) {

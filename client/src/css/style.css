@@ -255,3 +255,6 @@ main {
       -ms-flex-pack: start;
           justify-content: flex-start;
 }
+.recipe-title-input {
+  height: 40px;
+}

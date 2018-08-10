@@ -29,6 +29,16 @@ class RecipeDetails extends React.Component {
     });
   }
 
+  handleRecipeTitleChange = event => {
+    this.setState({
+      changed: {
+        title: event.target.value,
+        ingredients: this.state.changed.ingredients,
+        steps: this.state.changed.steps
+      }
+    });
+  };
+
   handleAddIngredient = event => {
     event.preventDefault();
 
@@ -186,7 +196,16 @@ class RecipeDetails extends React.Component {
   render() {
     return (
       <main>
-        <h4 className="grid-header">{this.state.current.title}</h4>
+        {!this.state.underEdit && (
+          <h4 className="grid-header">{this.state.current.title}</h4>
+        )}
+        {this.state.underEdit && (
+          <input
+            className="recipe-title-input"
+            value={this.state.changed.title}
+            onChange={this.handleRecipeTitleChange}
+          />
+        )}
         <section className="view-box">
           <IngredientsList
             currentIngredients={this.state.current.ingredients}
@@ -195,9 +214,11 @@ class RecipeDetails extends React.Component {
             onIngredientChange={this.onIngredientChange}
             onIngredientRemove={this.onIngredientRemove}
           />
-          <button type="button" onClick={this.handleAddIngredient}>
-            + ingredient
-          </button>
+          {this.state.underEdit && (
+            <button type="button" onClick={this.handleAddIngredient}>
+              + ingredient
+            </button>
+          )}
         </section>
         <section className="view-box view-box--major">
           <StepsList
@@ -207,9 +228,11 @@ class RecipeDetails extends React.Component {
             onStepChange={this.onStepChange}
             onStepRemove={this.onStepRemove}
           />
-          <button type="button" onClick={this.handleAddStep}>
-            + step
-          </button>
+          {this.state.underEdit && (
+            <button type="button" onClick={this.handleAddStep}>
+              + step
+            </button>
+          )}
         </section>
         <div className="recipe-actions">
           <button type="button" onClick={this.toggleEditMode}>
