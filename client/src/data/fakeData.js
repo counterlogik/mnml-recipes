@@ -16,7 +16,7 @@ const fakeData = {
       },
       ingredient4: {
         ingredient:
-          "1–2 Tbsp (15–30g) chili garlic sauce (reduce for less heat) ",
+          "1–2 Tbsp (15–30g) chili garlic sauce (reduce for less heat)",
         id: "ingredient4"
       },
       ingredient5: {
