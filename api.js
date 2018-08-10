@@ -24,8 +24,6 @@ const checkJwt = jwt({
   algorithms: ["RS256"]
 });
 
-// TODO: refactor all pertinent api endpoints to handle one OR many items at once
-
 // GET api entry point message
 router.get("/", function(req, res, next) {
   res.json({

@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 
 class App extends Component {
-  goTo(route) {
-    this.props.history.replace(`/${route}`);
-  }
-
-  login() {
+  login = () => {
     this.props.auth.login();
-  }
+  };
 
-  logout() {
+  logout = () => {
     this.props.auth.logout();
-  }
+  };
 
   render() {
     const { isAuthenticated } = this.props.auth;
@@ -19,18 +15,12 @@ class App extends Component {
     return (
       <div>
         {!isAuthenticated() && (
-          <button
-            className="button button--login"
-            onClick={this.login.bind(this)}
-          >
+          <button className="button button--login" onClick={this.login}>
             Log In
           </button>
         )}
         {isAuthenticated() && (
-          <button
-            className="button button--logout"
-            onClick={this.logout.bind(this)}
-          >
+          <button className="button button--logout" onClick={this.logout}>
             Log Out
           </button>
         )}
