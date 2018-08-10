@@ -92,6 +92,8 @@ export const updateRecipe = (recipeId, title, ingredients, steps) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
+        const state = getState();
+
         dispatch({
           type: "UPDATE_RECIPE",
           recipeId,
@@ -99,67 +101,6 @@ export const updateRecipe = (recipeId, title, ingredients, steps) => {
           ingredients,
           steps
         });
-
-        // update all ingredients for that recipe ID
-        // const ingredientsToDelete = state.recipes.byId[recipeId].ingredients;
-        // ingredientsToDelete.forEach(ingredientId => {
-        //   fetch("/api/ingredients/remove", {
-        //     method: "DELETE",
-        //     headers: {
-        //       "Content-Type": "application/json; charset=utf-8",
-        //       authorization: `Bearer ${localStorage.access_token}`
-        //     },
-        //     body: JSON.stringify({
-        //       ingredientId,
-        //       recipeId
-        //     })
-        //   })
-        //     .then(response => {
-        //       if (!response.ok) throw Error(response.statusText);
-
-        //       return response;
-        //     })
-        //     .catch(error => console.error("Error:", error))
-        //     .then(() => {
-        //       dispatch({
-        //         type: "REMOVE_INGREDIENT",
-        //         ingredientId,
-        //         recipeId
-        //       });
-        //     });
-        // });
-
-        // update all steps for that recipe ID
-        // const stepsToDelete = state.recipes.byId[recipeId].steps;
-        // stepsToDelete.forEach(stepId => {
-        //   fetch("/api/steps/remove", {
-        //     method: "DELETE",
-        //     headers: {
-        //       "Content-Type": "application/json; charset=utf-8",
-        //       authorization: `Bearer ${localStorage.access_token}`
-        //     },
-        //     body: JSON.stringify({
-        //       stepId,
-        //       recipeId
-        //     })
-        //   })
-        //     .then(response => {
-        //       if (!response.ok) throw Error(response.statusText);
-
-        //       return response;
-        //     })
-        //     .catch(error => console.error("Error:", error))
-        //     .then(() => {
-        //       dispatch({
-        //         type: "REMOVE_STEP",
-        //         stepId,
-        //         recipeId
-        //       });
-        //     });
-        // });
-
-        // update recipe itself
-        dispatch({ type: "UPDATE_RECIPE", recipeId });
       });
   };
 };
@@ -271,6 +212,35 @@ export const fetchIngredients = () => {
   };
 };
 
+export const updateIngredient = (ingredientId, ingredient) => {
+  return dispatch => {
+    fetch("/api/ingredients/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({
+        ingredientId,
+        ingredient
+      })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(() => {
+        dispatch({
+          type: "UPDATE_INGREDIENT",
+          ingredientId,
+          ingredient
+        });
+      });
+  };
+};
+
 export const addIngredient = (ingredient, recipeId) => {
   const ingredientId = `ingredient-${v4()}`;
   return dispatch => {
@@ -344,6 +314,35 @@ export const fetchSteps = () => {
         dispatch({
           type: "FETCH_STEPS",
           steps
+        });
+      });
+  };
+};
+
+export const updateStep = (stepId, step) => {
+  return dispatch => {
+    fetch("/api/steps/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({
+        stepId,
+        step
+      })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(() => {
+        dispatch({
+          type: "UPDATE_STEP",
+          stepId,
+          step
         });
       });
   };

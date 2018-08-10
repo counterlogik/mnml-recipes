@@ -1,6 +1,14 @@
 import { connect } from "react-redux";
 import RecipeDetails from "../components/RecipeDetails";
-import { updateRecipe, addIngredient, addStep } from "../actions";
+import {
+  updateRecipe,
+  updateIngredient,
+  addIngredient,
+  removeIngredient,
+  updateStep,
+  addStep,
+  removeStep
+} from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
   const recipeId = ownProps.match.params.recipeId;
@@ -35,11 +43,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateRecipe: (title, ingredients, steps) => {
       dispatch(updateRecipe(recipeId, title, ingredients, steps));
     },
+    updateIngredient: (ingredientId, ingredient) => {
+      dispatch(updateIngredient(ingredientId, ingredient));
+    },
     addIngredient: ingredient => {
       dispatch(addIngredient(ingredient, recipeId));
     },
+    removeIngredient: ingredientId => {
+      dispatch(removeIngredient(ingredientId, recipeId));
+    },
+    updateStep: (stepId, step) => {
+      dispatch(updateStep(stepId, step));
+    },
     addStep: step => {
       dispatch(addStep(step, recipeId));
+    },
+    removeStep: stepId => {
+      dispatch(removeStep(stepId, recipeId));
     }
   };
 };

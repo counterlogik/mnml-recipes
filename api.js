@@ -138,6 +138,23 @@ router.post("/ingredients/byRecipeId", function(req, res) {
   });
 });
 
+// update ingredient POST route
+router.post("/ingredients/update", function(req, res) {
+  Ingredient.findByIdAndUpdate(
+    req.body.ingredientId,
+    {
+      ingredient: req.body.ingredient
+    },
+    function(err, ingredient) {
+      if (err) res.send(err);
+      else
+        res.json({
+          message: "Ingredient updated!"
+        });
+    }
+  );
+});
+
 // add ingredient POST route
 router.post("/ingredients/add", function(req, res, next) {
   const ingredient = new Ingredient({
@@ -222,6 +239,23 @@ router.post("/steps/byRecipeId", function(req, res) {
       processStepsArray(recipe.steps);
     }
   });
+});
+
+// update step POST route
+router.post("/steps/update", function(req, res) {
+  Step.findByIdAndUpdate(
+    req.body.stepId,
+    {
+      step: req.body.step
+    },
+    function(err, ingredient) {
+      if (err) res.send(err);
+      else
+        res.json({
+          message: "Step updated!"
+        });
+    }
+  );
 });
 
 // add step POST route

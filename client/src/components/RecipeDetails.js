@@ -1,6 +1,7 @@
 import React from "react";
 import IngredientsList from "./Ingredients";
 import StepsList from "./Steps";
+import { v4 } from "node-uuid";
 
 class RecipeDetails extends React.Component {
   state = {
@@ -28,6 +29,40 @@ class RecipeDetails extends React.Component {
     });
   }
 
+  handleAddIngredient = event => {
+    event.preventDefault();
+
+    const ingredientId = `ingredient-${v4()}`;
+    this.setState({
+      changed: {
+        title: this.state.changed.title,
+        ingredients: this.state.changed.ingredients.concat({
+          __v: 0,
+          ingredient: "",
+          _id: ingredientId
+        }),
+        step: this.state.changed.steps
+      }
+    });
+  };
+
+  handleAddStep = event => {
+    event.preventDefault();
+
+    const stepId = `step-${v4()}`;
+    this.setState({
+      changed: {
+        title: this.state.changed.title,
+        ingredients: this.state.changed.ingredients,
+        steps: this.state.changed.steps.concat({
+          __v: 0,
+          step: "",
+          _id: stepId
+        })
+      }
+    });
+  };
+
   toggleEditMode = event => {
     event.preventDefault();
 
@@ -50,14 +85,6 @@ class RecipeDetails extends React.Component {
         underEdit: false
       });
 
-      console.log(this.state.current.title);
-      console.log(this.state.current.ingredients);
-      console.log(this.state.current.steps);
-
-      console.log(this.state.changed.title);
-      console.log(this.state.changed.ingredients);
-      console.log(this.state.changed.steps);
-
       let addedIngredients = [];
       let removedIngredients = [];
 
@@ -67,36 +94,69 @@ class RecipeDetails extends React.Component {
       const oldIngredientIds = this.state.current.ingredients.map(
         ingredient => ingredient._id
       );
-      const newIngredientIds = this.state.changed.ingredients.map(
+      const changedIngredientIds = this.state.changed.ingredients.map(
         ingredient => ingredient._id
       );
 
       const oldStepIds = this.state.current.steps.map(step => step._id);
-      const newStepIds = this.state.changed.steps.map(step => step._id);
+      const changedStepIds = this.state.changed.steps.map(step => step._id);
 
       oldIngredientIds.forEach(oldIngredientId => {
-        if (!newIngredientIds.includes(oldIngredientId))
+        if (!changedIngredientIds.includes(oldIngredientId))
           removedIngredients.push(oldIngredientId);
       });
 
-      newIngredientIds.forEach(newIngredientId => {
+      changedIngredientIds.forEach(newIngredientId => {
         if (!oldIngredientIds.includes(newIngredientId))
           addedIngredients.push(newIngredientId);
       });
 
       oldStepIds.forEach(oldStepId => {
-        if (!newStepIds.includes(oldStepId)) removedSteps.push(oldStepId);
+        if (!changedStepIds.includes(oldStepId)) removedSteps.push(oldStepId);
       });
 
-      newStepIds.forEach(newStepId => {
+      changedStepIds.forEach(newStepId => {
         if (!oldStepIds.includes(newStepId)) addedSteps.push(newStepId);
       });
 
       this.props.updateRecipe(
         this.state.changed.title,
-        newIngredientIds,
-        newStepIds
+        changedIngredientIds,
+        changedStepIds
       );
+
+      addedIngredients.forEach(ingredient => {
+        this.props.addIngredient(ingredient);
+      });
+
+      removedIngredients.forEach(ingredientId => {
+        this.props.removeIngredient(ingredientId);
+      });
+
+      addedSteps.forEach(step => {
+        this.props.addStep(step);
+      });
+
+      removedSteps.forEach(stepId => {
+        this.props.removeStep(stepId);
+      });
+
+      changedIngredientIds.forEach(changedIngredientId => {
+        const changedIngredient = this.state.changed.ingredients.find(
+          ingredient => ingredient._id === changedIngredientId
+        );
+        this.props.updateIngredient(
+          changedIngredientId,
+          changedIngredient.ingredient
+        );
+      });
+
+      changedStepIds.forEach(changedStepId => {
+        const changedStep = this.state.changed.steps.find(
+          step => step._id === changedStepId
+        );
+        this.props.updateStep(changedStepId, changedStep.step);
+      });
     }
   };
 
@@ -139,7 +199,6 @@ class RecipeDetails extends React.Component {
   };
 
   render() {
-    const { addIngredient, addStep } = this.props;
     return (
       <main>
         <h4 className="grid-header">{this.state.current.title}</h4>
@@ -150,12 +209,7 @@ class RecipeDetails extends React.Component {
             underEdit={this.state.underEdit}
             onIngredientChange={this.onIngredientChange}
           />
-          <button
-            type="button"
-            onClick={() => {
-              addIngredient();
-            }}
-          >
+          <button type="button" onClick={this.handleAddIngredient}>
             + ingredient
           </button>
         </section>
@@ -166,12 +220,7 @@ class RecipeDetails extends React.Component {
             underEdit={this.state.underEdit}
             onStepChange={this.onStepChange}
           />
-          <button
-            type="button"
-            onClick={() => {
-              addStep();
-            }}
-          >
+          <button type="button" onClick={this.handleAddStep}>
             + step
           </button>
         </section>

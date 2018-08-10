@@ -14,6 +14,18 @@ function fetchSteps(state, action) {
   return arrayToObject(steps);
 }
 
+function updateStepEntry(state, action) {
+  const { stepId, step } = action;
+
+  return {
+    ...state,
+    [stepId]: {
+      stepId: stepId,
+      step: step
+    }
+  };
+}
+
 function addStepEntry(state, action) {
   const { stepId, step } = action;
 
@@ -38,6 +50,8 @@ function stepsById(state = {}, action) {
   switch (action.type) {
     case "FETCH_STEPS":
       return fetchSteps(state, action);
+    case "UPDATE_STEP":
+      return updateStepEntry(state, action);
     case "ADD_STEP":
       return addStepEntry(state, action);
     case "REMOVE_STEP":

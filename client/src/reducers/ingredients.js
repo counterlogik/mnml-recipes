@@ -14,6 +14,18 @@ function fetchIngredients(state, action) {
   return arrayToObject(ingredients);
 }
 
+function updateIngredientEntry(state, action) {
+  const { ingredientId, ingredient } = action;
+
+  return {
+    ...state,
+    [ingredientId]: {
+      ingredientId: ingredientId,
+      ingredient: ingredient
+    }
+  };
+}
+
 function addIngredientEntry(state, action) {
   const { ingredientId, ingredient } = action;
 
@@ -38,6 +50,8 @@ function ingredientsById(state = {}, action) {
   switch (action.type) {
     case "FETCH_INGREDIENTS":
       return fetchIngredients(state, action);
+    case "UPDATE_INGREDIENT":
+      return updateIngredientEntry(state, action);
     case "ADD_INGREDIENT":
       return addIngredientEntry(state, action);
     case "REMOVE_INGREDIENT":
