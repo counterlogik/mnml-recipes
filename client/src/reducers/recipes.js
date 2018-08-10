@@ -25,6 +25,20 @@ function fetchRecipeDetails(state, action) {
   };
 }
 
+function updateRecipe(state, action) {
+  const { recipeId, title, ingredients, steps } = action;
+
+  return {
+    ...state,
+    [recipeId]: {
+      recipeId,
+      title,
+      ingredients,
+      steps
+    }
+  };
+}
+
 function addRecipe(state, action) {
   const { recipeId } = action;
 
@@ -83,6 +97,8 @@ function recipesById(state = [], action) {
       return fetchRecipeDetails(state, action);
     case "ADD_RECIPE":
       return addRecipe(state, action);
+    case "UPDATE_RECIPE":
+      return updateRecipe(state, action);
     case "REMOVE_RECIPE":
       return removeRecipe(state, action);
     case "ADD_INGREDIENT":

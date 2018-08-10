@@ -75,15 +75,15 @@ export const fetchRecipeDetails = recipeId => {
   };
 };
 
-export const updateRecipe = (recipeId, title) => {
+export const updateRecipe = (recipeId, title, ingredients, steps) => {
   return (dispatch, getState) => {
     fetch("/api/recipes/update", {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
       },
-      body: JSON.stringify({ recipeId, title })
+      body: JSON.stringify({ recipeId, title, ingredients, steps })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -92,7 +92,13 @@ export const updateRecipe = (recipeId, title) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        const state = getState();
+        dispatch({
+          type: "UPDATE_RECIPE",
+          recipeId,
+          title,
+          ingredients,
+          steps
+        });
 
         // update all ingredients for that recipe ID
         // const ingredientsToDelete = state.recipes.byId[recipeId].ingredients;

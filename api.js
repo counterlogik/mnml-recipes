@@ -61,6 +61,25 @@ router.get("/recipes/details/:id", function(req, res) {
   });
 });
 
+// update recipe details POST route (update recipe title, ingredients, and steps)
+router.post("/recipes/update", function(req, res) {
+  Recipe.findByIdAndUpdate(
+    req.body.recipeId,
+    {
+      title: req.body.title,
+      ingredients: req.body.ingredients,
+      steps: req.body.steps
+    },
+    function(err, recipe) {
+      if (err) res.send(err);
+      else
+        res.json({
+          message: "Recipe details updated!"
+        });
+    }
+  );
+});
+
 // add recipe POST route
 router.post("/recipes/add", function(req, res) {
   const recipe = new Recipe({

@@ -49,6 +49,54 @@ class RecipeDetails extends React.Component {
         },
         underEdit: false
       });
+
+      console.log(this.state.current.title);
+      console.log(this.state.current.ingredients);
+      console.log(this.state.current.steps);
+
+      console.log(this.state.changed.title);
+      console.log(this.state.changed.ingredients);
+      console.log(this.state.changed.steps);
+
+      let addedIngredients = [];
+      let removedIngredients = [];
+
+      let addedSteps = [];
+      let removedSteps = [];
+
+      const oldIngredientIds = this.state.current.ingredients.map(
+        ingredient => ingredient._id
+      );
+      const newIngredientIds = this.state.changed.ingredients.map(
+        ingredient => ingredient._id
+      );
+
+      const oldStepIds = this.state.current.steps.map(step => step._id);
+      const newStepIds = this.state.changed.steps.map(step => step._id);
+
+      oldIngredientIds.forEach(oldIngredientId => {
+        if (!newIngredientIds.includes(oldIngredientId))
+          removedIngredients.push(oldIngredientId);
+      });
+
+      newIngredientIds.forEach(newIngredientId => {
+        if (!oldIngredientIds.includes(newIngredientId))
+          addedIngredients.push(newIngredientId);
+      });
+
+      oldStepIds.forEach(oldStepId => {
+        if (!newStepIds.includes(oldStepId)) removedSteps.push(oldStepId);
+      });
+
+      newStepIds.forEach(newStepId => {
+        if (!oldStepIds.includes(newStepId)) addedSteps.push(newStepId);
+      });
+
+      this.props.updateRecipe(
+        this.state.changed.title,
+        newIngredientIds,
+        newStepIds
+      );
     }
   };
 
