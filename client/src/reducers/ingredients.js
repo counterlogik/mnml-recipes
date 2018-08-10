@@ -2,6 +2,18 @@ import { combineReducers } from "redux";
 
 // TODO: refactor all pertinent ingredients reducers to handle one OR many ingredients at once
 
+function fetchIngredients(state, action) {
+  const { ingredients } = action;
+
+  const arrayToObject = ingredientsArray =>
+    ingredientsArray.reduce((obj, ingredient) => {
+      obj[ingredient._id] = ingredient;
+      return obj;
+    }, {});
+
+  return arrayToObject(ingredients);
+}
+
 function addIngredientEntry(state, action) {
   const { ingredientId, ingredient } = action;
 
@@ -24,6 +36,8 @@ function removeIngredientEntry(state, action) {
 
 function ingredientsById(state = {}, action) {
   switch (action.type) {
+    case "FETCH_INGREDIENTS":
+      return fetchIngredients(state, action);
     case "ADD_INGREDIENT":
       return addIngredientEntry(state, action);
     case "REMOVE_INGREDIENT":
@@ -31,6 +45,12 @@ function ingredientsById(state = {}, action) {
     default:
       return state;
   }
+}
+
+function fetchIngredientIds(state, action) {
+  const { ingredients } = action;
+  // Replace the list of all Ids with those fetched from the database
+  return ingredients.map(ingredient => ingredient._id);
 }
 
 function addIngredientId(state, action) {
@@ -46,6 +66,8 @@ function removeIngredientId(state, action) {
 
 function allIngredients(state = [], action) {
   switch (action.type) {
+    case "FETCH_INGREDIENTS":
+      return fetchIngredientIds(state, action);
     case "ADD_INGREDIENT":
       return addIngredientId(state, action);
     case "REMOVE_INGREDIENT":

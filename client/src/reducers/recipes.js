@@ -13,14 +13,26 @@ function fetchRecipes(state, action) {
 
   return arrayToObject(recipes);
 }
+
+function fetchRecipeDetails(state, action) {
+  const { details } = action.details;
+
+  return {
+    ...state,
+    [details._id]: {
+      ...details
+    }
+  };
+}
+
 function addRecipe(state, action) {
-  const { recipeId, title } = action;
+  const { recipeId } = action;
 
   return {
     ...state,
     [recipeId]: {
       recipeId,
-      title,
+      title: "",
       ingredients: [],
       steps: []
     }
@@ -67,6 +79,8 @@ function recipesById(state = [], action) {
   switch (action.type) {
     case "FETCH_RECIPES":
       return fetchRecipes(state, action);
+    case "FETCH_RECIPE_DETAILS":
+      return fetchRecipeDetails(state, action);
     case "ADD_RECIPE":
       return addRecipe(state, action);
     case "REMOVE_RECIPE":
@@ -78,6 +92,12 @@ function recipesById(state = [], action) {
     default:
       return state;
   }
+}
+
+function fetchRecipeIds(state, action) {
+  const { recipes } = action;
+  // Replace the list of all Ids with those fetched from the database
+  return recipes.map(recipe => recipe._id);
 }
 
 function addRecipeId(state, action) {
@@ -93,6 +113,8 @@ function removeRecipeId(state, action) {
 
 function allRecipes(state = [], action) {
   switch (action.type) {
+    case "FETCH_RECIPES":
+      return fetchRecipeIds(state, action);
     case "ADD_RECIPE":
       return addRecipeId(state, action);
     case "REMOVE_RECIPE":

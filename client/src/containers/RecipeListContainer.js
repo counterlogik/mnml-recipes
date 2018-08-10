@@ -4,7 +4,9 @@ import { fetchRecipes, addRecipe, removeRecipe } from "../actions/index";
 
 const mapStateToProps = state => {
   return {
-    recipes: state.recipes ? state.recipes.byId : {}
+    recipes: state.recipes ? state.recipes.byId : {},
+    ingredients: state.ingredients ? state.ingredients.byId : {},
+    steps: state.steps ? state.steps.byId : {}
   };
 };
 

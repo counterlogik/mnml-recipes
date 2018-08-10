@@ -21,30 +21,28 @@ const Ingredient = ({
   );
 };
 
-const IngredientsList = ({ ingredients, recipeId, removeIngredient }) => {
-  if (ingredients && ingredients.length > 0) {
+const IngredientsList = ({ ingredients, ingredientIds }) => {
+  if (ingredientIds && ingredientIds.length > 0) {
     return (
       <ul className="ingredients-list">
-        {ingredients.map(ingredient => (
+        {ingredientIds.map(ingredientId => (
           <Ingredient
-            key={ingredient.id}
+            key={ingredients[ingredientId]._id}
             removeIngredient={removeIngredient}
-            ingredientId={ingredient.id}
-            ingredient={ingredient.ingredient}
-            recipeId={recipeId}
+            ingredientId={ingredients[ingredientId]._id}
+            ingredient={ingredients[ingredientId].ingredient}
           />
         ))}
       </ul>
     );
   }
 
-  return <h6>..add some ingredients..</h6>;
+  return <h6>ingredients....</h6>;
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    ingredient: ownProps.ingredient,
-    index: ownProps.index
+    ingredients: state.ingredients ? state.ingredients.byId : {}
   };
 };
 

@@ -1,29 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../img/fork-and-knife.png";
 
 class RecipeList extends React.Component {
-  recipeTitleInput = React.createRef();
-
   componentDidMount() {
     this.props.fetchRecipes(localStorage.user_id);
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addRecipe(
-      this.recipeTitleInput.current.value,
-      localStorage.user_id
-    );
-    this.recipeTitleInput.current.value = "";
+    this.props.addRecipe(localStorage.user_id);
   };
 
   render() {
     return (
       <div className="recipeList">
         <div className="flex-header">
-          <img src={logo} alt="Recipes!" />
-          <h1>Recipes</h1>
+          <h1>your recipes...</h1>
         </div>
         <ul>
           {Object.keys(this.props.recipes).map(recipeId => {
@@ -45,11 +37,6 @@ class RecipeList extends React.Component {
           })}
         </ul>
         <form onSubmit={this.handleSubmit}>
-          <input
-            name="recipeTitleInput"
-            type="text"
-            ref={this.recipeTitleInput}
-          />
           <button type="submit">+ Add Recipe</button>
         </form>
       </div>

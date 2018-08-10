@@ -28,7 +28,7 @@ export const fetchRecipes = userId => {
   };
 };
 
-export const addRecipe = (title, userId) => {
+export const addRecipe = userId => {
   const recipeId = `recipe-${v4()}`;
   return dispatch => {
     fetch("/api/recipes/add", {
@@ -37,7 +37,7 @@ export const addRecipe = (title, userId) => {
         "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
       },
-      body: JSON.stringify({ title, recipeId, userId })
+      body: JSON.stringify({ recipeId, userId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -46,7 +46,114 @@ export const addRecipe = (title, userId) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({ type: "ADD_RECIPE", recipeId, title });
+        dispatch({ type: "ADD_RECIPE", recipeId });
+      });
+  };
+};
+
+export const fetchRecipeDetails = recipeId => {
+  return dispatch => {
+    fetch(`/api/recipes/details/${recipeId}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.access_token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(details => {
+        dispatch({
+          type: "FETCH_RECIPE_DETAILS",
+          details
+        });
+      });
+  };
+};
+
+export const updateRecipe = (recipeId, title) => {
+  return (dispatch, getState) => {
+    fetch("/api/recipes/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({ recipeId, title })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(() => {
+        const state = getState();
+
+        // update all ingredients for that recipe ID
+        // const ingredientsToDelete = state.recipes.byId[recipeId].ingredients;
+        // ingredientsToDelete.forEach(ingredientId => {
+        //   fetch("/api/ingredients/remove", {
+        //     method: "DELETE",
+        //     headers: {
+        //       "Content-Type": "application/json; charset=utf-8",
+        //       authorization: `Bearer ${localStorage.access_token}`
+        //     },
+        //     body: JSON.stringify({
+        //       ingredientId,
+        //       recipeId
+        //     })
+        //   })
+        //     .then(response => {
+        //       if (!response.ok) throw Error(response.statusText);
+
+        //       return response;
+        //     })
+        //     .catch(error => console.error("Error:", error))
+        //     .then(() => {
+        //       dispatch({
+        //         type: "REMOVE_INGREDIENT",
+        //         ingredientId,
+        //         recipeId
+        //       });
+        //     });
+        // });
+
+        // update all steps for that recipe ID
+        // const stepsToDelete = state.recipes.byId[recipeId].steps;
+        // stepsToDelete.forEach(stepId => {
+        //   fetch("/api/steps/remove", {
+        //     method: "DELETE",
+        //     headers: {
+        //       "Content-Type": "application/json; charset=utf-8",
+        //       authorization: `Bearer ${localStorage.access_token}`
+        //     },
+        //     body: JSON.stringify({
+        //       stepId,
+        //       recipeId
+        //     })
+        //   })
+        //     .then(response => {
+        //       if (!response.ok) throw Error(response.statusText);
+
+        //       return response;
+        //     })
+        //     .catch(error => console.error("Error:", error))
+        //     .then(() => {
+        //       dispatch({
+        //         type: "REMOVE_STEP",
+        //         stepId,
+        //         recipeId
+        //       });
+        //     });
+        // });
+
+        // update recipe itself
+        dispatch({ type: "UPDATE_RECIPE", recipeId });
       });
   };
 };
@@ -134,6 +241,30 @@ export const removeRecipe = recipeId => {
   };
 };
 
+export const fetchIngredients = () => {
+  return dispatch => {
+    fetch("/api/ingredients", {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.access_token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(ingredients => {
+        dispatch({
+          type: "FETCH_INGREDIENTS",
+          ingredients
+        });
+      });
+  };
+};
+
 export const addIngredient = (ingredient, recipeId) => {
   const ingredientId = `ingredient-${v4()}`;
   return dispatch => {
@@ -144,7 +275,7 @@ export const addIngredient = (ingredient, recipeId) => {
         authorization: `Bearer ${localStorage.access_token}`
       },
       body: JSON.stringify({
-        ingredient,
+        ingredient: ingredientId,
         ingredientId,
         recipeId
       })
@@ -159,7 +290,7 @@ export const addIngredient = (ingredient, recipeId) => {
         dispatch({
           type: "ADD_INGREDIENT",
           ingredientId,
-          ingredient,
+          ingredient: ingredientId,
           recipeId
         });
       });
@@ -188,6 +319,30 @@ export const removeIngredient = (ingredientId, recipeId) => {
   };
 };
 
+export const fetchSteps = () => {
+  return dispatch => {
+    fetch("/api/steps", {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.access_token}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(steps => {
+        dispatch({
+          type: "FETCH_STEPS",
+          steps
+        });
+      });
+  };
+};
+
 export const addStep = (step, recipeId) => {
   const stepId = `step-${v4()}`;
   return dispatch => {
@@ -197,7 +352,7 @@ export const addStep = (step, recipeId) => {
         "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
       },
-      body: JSON.stringify({ step, stepId, recipeId })
+      body: JSON.stringify({ step: stepId, stepId, recipeId })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);
@@ -206,7 +361,7 @@ export const addStep = (step, recipeId) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        dispatch({ type: "ADD_STEP", stepId, step, recipeId });
+        dispatch({ type: "ADD_STEP", stepId, step: stepId, recipeId });
       });
   };
 };

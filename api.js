@@ -38,21 +38,32 @@ router.get("/", function(req, res, next) {
 
 router.use(checkJwt);
 
-// recipes GET route
+// recipes POST route (fetch all recipes for user)
 router.post("/recipes", function(req, res) {
-  Recipe.find({ user: req.body.userId }, function(err, docs) {
+  Recipe.find({ user: req.body.userId }, function(err, recipes) {
     if (err) {
       res.send(err);
     } else {
-      res.json(docs);
+      res.json(recipes);
     }
+  });
+});
+
+// get recipe details GET route (get recipe title, ingredients, and steps)
+router.get("/recipes/details/:id", function(req, res) {
+  Recipe.findById(req.params.id, function(err, recipe) {
+    if (err) res.send(err);
+    else
+      res.json({
+        message: "Recipe details retrieved!",
+        details: recipe
+      });
   });
 });
 
 // add recipe POST route
 router.post("/recipes/add", function(req, res) {
   const recipe = new Recipe({
-    title: req.body.title,
     _id: req.body.recipeId,
     user: req.body.userId
   });
@@ -68,6 +79,43 @@ router.delete("/recipes/remove", function(req, res, next) {
   Recipe.findByIdAndRemove(req.body.recipeId, function(err) {
     if (err) res.send(err);
     else res.json({ message: "Recipe deleted!" });
+  });
+});
+
+// ingredients GET route (fetch all ingredients)
+router.get("/ingredients", function(req, res) {
+  Ingredient.find({}, function(err, ingredients) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(ingredients);
+    }
+  });
+});
+
+// ingredients for recipeId POST route (fetch all ingredients for recipeId)
+router.post("/ingredients/byRecipeId", function(req, res) {
+  Recipe.findById(req.body.recipeId, function(err, recipe) {
+    if (err) {
+      res.send(err);
+    } else {
+      let ingredients = [];
+
+      async function processIngredientsArray(ingredientsArray) {
+        for (const ingredientId of ingredientsArray) {
+          await Ingredient.findById(ingredientId, function(err, ingredient) {
+            if (err) {
+              res.send(err);
+            } else {
+              ingredients.push(ingredient);
+            }
+          });
+        }
+        res.json(ingredients);
+      }
+
+      processIngredientsArray(recipe.ingredients);
+    }
   });
 });
 
@@ -114,6 +162,45 @@ router.delete("/ingredients/remove", function(req, res, next) {
           }
         }
       );
+    }
+  });
+});
+
+// steps GET route (fetch all steps)
+router.get("/steps", function(req, res) {
+  Step.find({}, function(err, steps) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json(steps);
+    }
+  });
+});
+
+// steps for recipeId POST route (fetch all steps for recipeId)
+router.post("/steps/byRecipeId", function(req, res) {
+  Recipe.findById(req.body.recipeId, function(err, recipe) {
+    if (err) {
+      res.send(err);
+    } else {
+      let steps = [];
+
+      console.log(recipe.steps);
+
+      async function processStepsArray(stepsArray) {
+        for (const stepId of stepsArray) {
+          await Step.findById(stepId, function(err, step) {
+            if (err) {
+              res.send(err);
+            } else {
+              steps.push(step);
+            }
+          });
+        }
+        res.json(steps);
+      }
+
+      processStepsArray(recipe.steps);
     }
   });
 });

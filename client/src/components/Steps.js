@@ -16,30 +16,28 @@ const Step = ({ step, stepId, removeStep, recipeId }) => {
   );
 };
 
-const StepsList = ({ steps, recipeId, removeStep }) => {
-  if (steps && steps.length > 0) {
+const StepsList = ({ steps, stepIds }) => {
+  if (stepIds && stepIds.length > 0) {
     return (
       <ul className="steps-list">
-        {steps.map(step => (
+        {stepIds.map(stepId => (
           <Step
-            key={step.id}
+            key={steps[stepId]._id}
             removeStep={removeStep}
-            stepId={step.id}
-            step={step.step}
-            recipeId={recipeId}
+            stepId={steps[stepId]._id}
+            step={steps[stepId].step}
           />
         ))}
       </ul>
     );
   }
 
-  return <h6>..add some steps..</h6>;
+  return <h6>steps...</h6>;
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    ingredient: ownProps.step,
-    index: ownProps.index
+    steps: state.steps ? state.steps.byId : {}
   };
 };
 
