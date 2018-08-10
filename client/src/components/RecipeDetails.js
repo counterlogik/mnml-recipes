@@ -41,7 +41,7 @@ class RecipeDetails extends React.Component {
           ingredient: "",
           _id: ingredientId
         }),
-        step: this.state.changed.steps
+        steps: this.state.changed.steps
       }
     });
   };
@@ -85,10 +85,7 @@ class RecipeDetails extends React.Component {
         underEdit: false
       });
 
-      let addedIngredients = [];
       let removedIngredients = [];
-
-      let addedSteps = [];
       let removedSteps = [];
 
       const oldIngredientIds = this.state.current.ingredients.map(
@@ -106,57 +103,17 @@ class RecipeDetails extends React.Component {
           removedIngredients.push(oldIngredientId);
       });
 
-      changedIngredientIds.forEach(newIngredientId => {
-        if (!oldIngredientIds.includes(newIngredientId))
-          addedIngredients.push(newIngredientId);
-      });
-
       oldStepIds.forEach(oldStepId => {
         if (!changedStepIds.includes(oldStepId)) removedSteps.push(oldStepId);
       });
 
-      changedStepIds.forEach(newStepId => {
-        if (!oldStepIds.includes(newStepId)) addedSteps.push(newStepId);
-      });
-
       this.props.updateRecipe(
         this.state.changed.title,
-        changedIngredientIds,
-        changedStepIds
+        this.state.changed.ingredients,
+        this.state.changed.steps,
+        removedIngredients,
+        removedSteps
       );
-
-      addedIngredients.forEach(ingredient => {
-        this.props.addIngredient(ingredient);
-      });
-
-      removedIngredients.forEach(ingredientId => {
-        this.props.removeIngredient(ingredientId);
-      });
-
-      addedSteps.forEach(step => {
-        this.props.addStep(step);
-      });
-
-      removedSteps.forEach(stepId => {
-        this.props.removeStep(stepId);
-      });
-
-      changedIngredientIds.forEach(changedIngredientId => {
-        const changedIngredient = this.state.changed.ingredients.find(
-          ingredient => ingredient._id === changedIngredientId
-        );
-        this.props.updateIngredient(
-          changedIngredientId,
-          changedIngredient.ingredient
-        );
-      });
-
-      changedStepIds.forEach(changedStepId => {
-        const changedStep = this.state.changed.steps.find(
-          step => step._id === changedStepId
-        );
-        this.props.updateStep(changedStepId, changedStep.step);
-      });
     }
   };
 
@@ -178,11 +135,26 @@ class RecipeDetails extends React.Component {
     });
   };
 
+  onIngredientRemove = id => {
+    const idx = this.state.changed.ingredients.findIndex(
+      ingredient => ingredient._id === id
+    );
+    const ingredientsLength = this.state.changed.ingredients.length;
+
+    this.setState({
+      changed: {
+        ...this.state.changed,
+        ingredients: [
+          ...this.state.changed.ingredients.slice(0, idx),
+          ...this.state.changed.ingredients.slice(idx + 1, ingredientsLength)
+        ]
+      }
+    });
+  };
+
   onStepChange = (value, id) => {
     const idx = this.state.changed.steps.findIndex(step => step._id === id);
     const stepsLength = this.state.changed.steps.length;
-
-    console.log(this.state);
 
     this.setState({
       changed: {
@@ -194,8 +166,21 @@ class RecipeDetails extends React.Component {
         ]
       }
     });
+  };
 
-    console.log(this.state);
+  onStepRemove = id => {
+    const idx = this.state.changed.steps.findIndex(step => step._id === id);
+    const stepsLength = this.state.changed.steps.length;
+
+    this.setState({
+      changed: {
+        ...this.state.changed,
+        steps: [
+          ...this.state.changed.steps.slice(0, idx),
+          ...this.state.changed.steps.slice(idx + 1, stepsLength)
+        ]
+      }
+    });
   };
 
   render() {
@@ -208,6 +193,7 @@ class RecipeDetails extends React.Component {
             changedIngredients={this.state.changed.ingredients}
             underEdit={this.state.underEdit}
             onIngredientChange={this.onIngredientChange}
+            onIngredientRemove={this.onIngredientRemove}
           />
           <button type="button" onClick={this.handleAddIngredient}>
             + ingredient
@@ -219,6 +205,7 @@ class RecipeDetails extends React.Component {
             changedSteps={this.state.changed.steps}
             underEdit={this.state.underEdit}
             onStepChange={this.onStepChange}
+            onStepRemove={this.onStepRemove}
           />
           <button type="button" onClick={this.handleAddStep}>
             + step

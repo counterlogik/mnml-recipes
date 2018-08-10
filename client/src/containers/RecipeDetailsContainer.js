@@ -40,8 +40,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const recipeId = ownProps.match.params.recipeId;
 
   return {
-    updateRecipe: (title, ingredients, steps) => {
-      dispatch(updateRecipe(recipeId, title, ingredients, steps));
+    updateRecipe: (
+      title,
+      ingredients,
+      steps,
+      removedIngredients,
+      removedSteps
+    ) => {
+      dispatch(
+        updateRecipe(
+          recipeId,
+          title,
+          ingredients,
+          steps,
+          removedIngredients,
+          removedSteps
+        )
+      );
     },
     updateIngredient: (ingredientId, ingredient) => {
       dispatch(updateIngredient(ingredientId, ingredient));

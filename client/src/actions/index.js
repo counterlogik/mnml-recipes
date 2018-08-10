@@ -75,7 +75,14 @@ export const fetchRecipeDetails = recipeId => {
   };
 };
 
-export const updateRecipe = (recipeId, title, ingredients, steps) => {
+export const updateRecipe = (
+  recipeId,
+  title,
+  ingredients,
+  steps,
+  removedIngredients,
+  removedSteps
+) => {
   return (dispatch, getState) => {
     fetch("/api/recipes/update", {
       method: "POST",
@@ -83,7 +90,14 @@ export const updateRecipe = (recipeId, title, ingredients, steps) => {
         "Content-Type": "application/json; charset=utf-8",
         authorization: `Bearer ${localStorage.access_token}`
       },
-      body: JSON.stringify({ recipeId, title, ingredients, steps })
+      body: JSON.stringify({
+        recipeId,
+        title,
+        ingredients,
+        steps,
+        removedIngredients,
+        removedSteps
+      })
     })
       .then(response => {
         if (!response.ok) throw Error(response.statusText);

@@ -5,8 +5,8 @@ class StepsList extends React.Component {
     this.props.onStepChange(event.target.value, event.target.name);
   };
 
-  removeStep = (stepId, recipeId) => {
-    console.log(stepId, recipeId);
+  handleStepRemove = id => {
+    this.props.onStepRemove(id);
   };
 
   render() {
@@ -29,9 +29,7 @@ class StepsList extends React.Component {
               />
               <button
                 className="remove remove--step"
-                onClick={() =>
-                  this.removeStep(step._id, this.props.match.recipeId)
-                }
+                onClick={() => this.handleStepRemove(step._id)}
               >
                 &times;
               </button>

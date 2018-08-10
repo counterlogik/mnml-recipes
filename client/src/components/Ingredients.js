@@ -5,8 +5,8 @@ class IngredientsList extends React.Component {
     this.props.onIngredientChange(event.target.value, event.target.name);
   };
 
-  removeIngredient = (ingredientId, recipeId) => {
-    console.log(ingredientId, recipeId);
+  handleIngredientRemove = id => {
+    this.props.onIngredientRemove(id);
   };
 
   render() {
@@ -29,12 +29,7 @@ class IngredientsList extends React.Component {
               />
               <button
                 className="remove remove--ingredient"
-                onClick={() =>
-                  this.removeIngredient(
-                    ingredient._id,
-                    this.props.match.recipeId
-                  )
-                }
+                onClick={() => this.handleIngredientRemove(ingredient._id)}
               >
                 &times;
               </button>

@@ -63,19 +63,131 @@ router.get("/recipes/details/:id", function(req, res) {
 
 // update recipe details POST route (update recipe title, ingredients, and steps)
 router.post("/recipes/update", function(req, res) {
+  console.log(req.body.ingredients);
+  console.log(req.body.steps);
   Recipe.findByIdAndUpdate(
     req.body.recipeId,
     {
       title: req.body.title,
-      ingredients: req.body.ingredients,
-      steps: req.body.steps
+      ingredients: req.body.ingredients.map(ingredient => ingredient._id),
+      steps: req.body.steps.map(step => step._id)
     },
     function(err, recipe) {
       if (err) res.send(err);
-      else
-        res.json({
-          message: "Recipe details updated!"
-        });
+      else {
+        let updatedIngredients = [];
+        let newIngredients = [];
+
+        async function processIngredientsArray(ingredientsArray) {
+          for (const ingredient of ingredientsArray) {
+            await Ingredient.findByIdAndUpdate(
+              ingredient._id,
+              { ingredient: ingredient.ingredient },
+              function(err, doc) {
+                if (err) {
+                  res.send(err);
+                } else {
+                  if (doc === null) {
+                    newIngredients.push(ingredient);
+                  } else {
+                    updatedIngredients.push(ingredient);
+                  }
+                }
+              }
+            );
+          }
+
+          let updatedSteps = [];
+          let newSteps = [];
+
+          async function processStepsArray(stepsArray) {
+            for (const step of stepsArray) {
+              await Step.findByIdAndUpdate(
+                step._id,
+                { step: step.step },
+                function(err, doc) {
+                  if (err) {
+                    res.send(err);
+                  } else {
+                    if (doc === null) {
+                      newSteps.push(step);
+                    } else {
+                      updatedSteps.push(step);
+                    }
+                  }
+                }
+              );
+            }
+
+            async function processNewIngredientsArray(newIngredientsArray) {
+              for (const newIngredient of newIngredientsArray) {
+                const ingredient = new Ingredient({
+                  ingredient: newIngredient.ingredient,
+                  _id: newIngredient._id
+                });
+
+                await ingredient.save(function(err) {
+                  if (err) res.send(err);
+                });
+              }
+
+              async function processNewStepsArray(newStepsArray) {
+                for (const newStep of newStepsArray) {
+                  const step = new Step({
+                    step: newStep.step,
+                    _id: newStep._id
+                  });
+
+                  await step.save(function(err) {
+                    if (err) res.send(err);
+                  });
+                }
+
+                async function processRemovedIngredientIdsArray(
+                  removedIngredientIdsArray
+                ) {
+                  for (const removedIngredientId of removedIngredientIdsArray) {
+                    await Ingredient.findByIdAndRemove(
+                      removedIngredientId,
+                      function(err) {
+                        if (err) res.send(err);
+                      }
+                    );
+                  }
+
+                  async function processRemovedStepIdsArray(
+                    removedStepIdsArray
+                  ) {
+                    for (const removedStepId of removedStepIdsArray) {
+                      await Step.findByIdAndRemove(removedStepId, function(
+                        err
+                      ) {
+                        if (err) res.send(err);
+                      });
+                    }
+
+                    res.json({
+                      message: "Recipe details updated!"
+                    });
+                  }
+
+                  processRemovedStepIdsArray(req.body.removedSteps);
+                }
+
+                processRemovedIngredientIdsArray(req.body.removedIngredients);
+              }
+
+              processNewStepsArray(newSteps);
+            }
+
+            processNewIngredientsArray(newIngredients);
+          }
+
+          processStepsArray(req.body.steps);
+        }
+
+        processIngredientsArray(req.body.ingredients);
+      }
     }
   );
 });
