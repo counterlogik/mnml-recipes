@@ -3,28 +3,40 @@ import RecipeDetails from "../components/RecipeDetails";
 import { addIngredient, addStep } from "../actions";
 
 const mapStateToProps = (state, ownProps) => {
+  const recipeId = ownProps.match.params.recipeId;
+
+  const recipeIngredientIds =
+    state.recipes.byId[recipeId] && state.recipes.byId[recipeId].ingredients
+      ? state.recipes.byId[recipeId].ingredients
+      : [];
+
+  const recipeIngredients = recipeIngredientIds.map(
+    id => state.ingredients.byId[id]
+  );
+
+  const recipeStepIds =
+    state.recipes.byId[recipeId] && state.recipes.byId[recipeId].steps
+      ? state.recipes.byId[recipeId].steps
+      : [];
+
+  const recipeSteps = recipeStepIds.map(id => state.steps.byId[id]);
+
   return {
-    recipe: state.recipes.byId[ownProps.match.params.recipeId] || {},
-    ingredients:
-      state.recipes.byId[ownProps.match.params.recipeId] &&
-      state.recipes.byId[ownProps.match.params.recipeId].ingredients
-        ? state.recipes.byId[ownProps.match.params.recipeId].ingredients
-        : [],
-    steps:
-      state.recipes.byId[ownProps.match.params.recipeId] &&
-      state.recipes.byId[ownProps.match.params.recipeId].steps
-        ? state.recipes.byId[ownProps.match.params.recipeId].steps
-        : []
+    recipe: state.recipes.byId[recipeId] || {},
+    ingredients: recipeIngredients,
+    steps: recipeSteps
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  const recipeId = ownProps.match.params.recipeId;
+
   return {
     addIngredient: ingredient => {
-      dispatch(addIngredient(ingredient, ownProps.match.params.recipeId));
+      dispatch(addIngredient(ingredient, recipeId));
     },
     addStep: step => {
-      dispatch(addStep(step, ownProps.match.params.recipeId));
+      dispatch(addStep(step, recipeId));
     }
   };
 };

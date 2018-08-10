@@ -201,7 +201,6 @@ main {
   overflow-y: scroll;
 }
 .ingredient-list {
-  min-height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -222,7 +221,6 @@ main {
           justify-content: space-between;
 }
 .steps-list {
-  min-height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

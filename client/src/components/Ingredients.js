@@ -1,46 +1,48 @@
 import React from "react";
-import { connect } from "react-redux";
-import { removeIngredient } from "../actions";
 
-const IngredientsList = ({ ingredients, ingredientIds }) => {
-  if (Object.keys(ingredients).length) {
+class IngredientsList extends React.Component {
+  handleIngredientInputChange = event => {
+    this.props.onIngredientChange(event.target.value, event.target.name);
+  };
+
+  removeIngredient = (ingredientId, recipeId) => {
+    console.log(ingredientId, recipeId);
+  };
+
+  render() {
+    const { currentIngredients, changedIngredients, underEdit } = this.props;
     return (
       <ul className="ingredients-list">
-        {ingredientIds.map(ingredientId => (
-          <li className="ingredient" key={ingredientId}>
-            <p>{ingredients[ingredientId].ingredient}</p>
-            <button
-              className="remove remove--ingredient"
-              onClick={() =>
-                removeIngredient(ingredientId, this.props.match.recipeId)
-              }
-            >
-              &times;
-            </button>
-          </li>
-        ))}
+        {!underEdit &&
+          currentIngredients.map(ingredient => (
+            <li className="ingredient" key={ingredient._id}>
+              <p>{ingredient.ingredient}</p>
+            </li>
+          ))}
+        {underEdit &&
+          changedIngredients.map(ingredient => (
+            <li className="ingredient" key={ingredient._id}>
+              <input
+                name={ingredient._id}
+                value={ingredient.ingredient}
+                onChange={this.handleIngredientInputChange}
+              />
+              <button
+                className="remove remove--ingredient"
+                onClick={() =>
+                  this.removeIngredient(
+                    ingredient._id,
+                    this.props.match.recipeId
+                  )
+                }
+              >
+                &times;
+              </button>
+            </li>
+          ))}
       </ul>
     );
   }
+}
 
-  return <h6>ingredients....</h6>;
-};
-
-const mapStateToProps = state => {
-  return {
-    ingredients: state.ingredients ? state.ingredients.byId : {}
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    removeIngredient: id => {
-      dispatch(removeIngredient(id, ownProps.recipeId));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IngredientsList);
+export default IngredientsList;

@@ -1,44 +1,45 @@
 import React from "react";
-import { connect } from "react-redux";
-import { removeStep } from "../actions";
 
-const StepsList = ({ steps, stepIds }) => {
-  if (Object.keys(steps).length) {
+class StepsList extends React.Component {
+  handleStepInputChange = event => {
+    this.props.onStepChange(event.target.value, event.target.name);
+  };
+
+  removeStep = (stepId, recipeId) => {
+    console.log(stepId, recipeId);
+  };
+
+  render() {
+    const { currentSteps, changedSteps, underEdit } = this.props;
     return (
       <ul className="steps-list">
-        {stepIds.map(stepId => (
-          <li className="step" key={stepId}>
-            <p>{steps[stepId].step}</p>
-            <button
-              className="remove remove--step"
-              onClick={() => removeStep(stepId, this.props.match.recipeId)}
-            >
-              &times;
-            </button>
-          </li>
-        ))}
+        {!underEdit &&
+          currentSteps.map(step => (
+            <li className="step" key={step._id}>
+              <p>{step.step}</p>
+            </li>
+          ))}
+        {underEdit &&
+          changedSteps.map(step => (
+            <li className="step" key={step._id}>
+              <input
+                name={step._id}
+                value={step.step}
+                onChange={this.handleStepInputChange}
+              />
+              <button
+                className="remove remove--step"
+                onClick={() =>
+                  this.removeStep(step._id, this.props.match.recipeId)
+                }
+              >
+                &times;
+              </button>
+            </li>
+          ))}
       </ul>
     );
   }
+}
 
-  return <h6>steps...</h6>;
-};
-
-const mapStateToProps = state => {
-  return {
-    steps: state.steps ? state.steps.byId : {}
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    removeStep: id => {
-      dispatch(removeStep(id, ownProps.recipeId));
-    }
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(StepsList);
+export default StepsList;
