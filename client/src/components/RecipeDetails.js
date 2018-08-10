@@ -17,46 +17,13 @@ class RecipeDetails extends React.Component {
     underEdit: false
   };
 
-  componentDidMount() {
-    this.props.fetchRecipeDetails(this.props.match.params.recipeId);
-    this.props.fetchIngredients();
-    this.props.fetchSteps();
-    console.log(this.props);
-  }
-
-  // componentWillMount() {
-  //   this.setState({
-  //     current: {
-  //       title: this.props.recipe.title,
-  //       ingredients: [],
-  //       steps: []
-  //     },
-  //     new: {
-  //       title: this.props.recipe.title,
-  //       ingredients: [],
-  //       steps: []
-  //     }
-  //   });
-  // }
-
   toggleEditMode = event => {
     event.preventDefault();
     this.setState({ underEdit: !this.state.underEdit });
   };
 
   render() {
-    const {
-      match,
-      recipe,
-      ingredients,
-      steps,
-      addIngredient,
-      addStep
-    } = this.props;
-
-    console.log(ingredients);
-    console.log(steps);
-
+    const { recipe, ingredients, steps, addIngredient, addStep } = this.props;
     return (
       <main>
         <h4 className="grid-header">{recipe.title}</h4>

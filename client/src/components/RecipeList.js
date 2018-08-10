@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 class RecipeList extends React.Component {
   componentDidMount() {
     this.props.fetchRecipes(localStorage.user_id);
+    this.props.fetchIngredients();
+    this.props.fetchSteps();
   }
 
   handleSubmit = event => {

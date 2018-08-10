@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
 import RecipeList from "../components/RecipeList";
-import { fetchRecipes, addRecipe, removeRecipe } from "../actions/index";
+import {
+  fetchRecipes,
+  fetchIngredients,
+  fetchSteps,
+  addRecipe,
+  removeRecipe
+} from "../actions/index";
 
 const mapStateToProps = state => {
   return {
@@ -14,6 +20,12 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchRecipes: userId => {
       dispatch(fetchRecipes(userId));
+    },
+    fetchIngredients: () => {
+      dispatch(fetchIngredients());
+    },
+    fetchSteps: () => {
+      dispatch(fetchSteps());
     },
     addRecipe: (title, userId) => {
       dispatch(addRecipe(title, userId));

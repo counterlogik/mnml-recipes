@@ -2,36 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { removeIngredient } from "../actions";
 
-const Ingredient = ({
-  ingredient,
-  ingredientId,
-  removeIngredient,
-  recipeId
-}) => {
-  return (
-    <li className="ingredient">
-      <p>{ingredient}</p>
-      <button
-        className="remove remove--ingredient"
-        onClick={() => removeIngredient(ingredientId, recipeId)}
-      >
-        &times;
-      </button>
-    </li>
-  );
-};
-
 const IngredientsList = ({ ingredients, ingredientIds }) => {
-  if (ingredientIds && ingredientIds.length > 0) {
+  if (Object.keys(ingredients).length) {
     return (
       <ul className="ingredients-list">
         {ingredientIds.map(ingredientId => (
-          <Ingredient
-            key={ingredients[ingredientId]._id}
-            removeIngredient={removeIngredient}
-            ingredientId={ingredients[ingredientId]._id}
-            ingredient={ingredients[ingredientId].ingredient}
-          />
+          <li className="ingredient" key={ingredientId}>
+            <p>{ingredients[ingredientId].ingredient}</p>
+            <button
+              className="remove remove--ingredient"
+              onClick={() =>
+                removeIngredient(ingredientId, this.props.match.recipeId)
+              }
+            >
+              &times;
+            </button>
+          </li>
         ))}
       </ul>
     );
