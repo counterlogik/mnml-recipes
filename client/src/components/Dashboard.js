@@ -12,7 +12,11 @@ class Dashboard extends Component {
     return (
       <div>
         {isAuthenticated() && <RecipeList {...this.props} />}
-        {!isAuthenticated() && <h4>you're not logged in.</h4>}
+        {!isAuthenticated() && (
+          <h4 className="header header--unauthenticated">
+            you're not logged in.
+          </h4>
+        )}
       </div>
     );
   }
