@@ -22,14 +22,14 @@ class StepsList extends React.Component {
         {underEdit &&
           changedSteps.map(step => (
             <li className="step" key={step._id}>
-              <input
+              <textarea
                 className="edit-field edit-field--step"
                 name={step._id}
                 value={step.step}
                 onChange={this.handleStepInputChange}
               />
               <button
-                className="btn btn--icon"
+                className="btn btn--icon btn--delete"
                 onClick={() => this.handleStepRemove(step._id)}
               >
                 &times;

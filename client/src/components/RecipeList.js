@@ -58,7 +58,7 @@ class RecipeList extends React.Component {
         <div className="flex-header">
           <h1>your recipes...</h1>
         </div>
-        <ul>
+        <ul className="recipe-list-grid">
           {this.state.recipes.map(recipe => {
             const recipeId = recipe._id;
             return (

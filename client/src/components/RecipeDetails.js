@@ -233,7 +233,6 @@ class RecipeDetails extends React.Component {
   render() {
     return (
       <main>
-        <h2 className="grid-empty-cell"> ... </h2>
         {!this.state.underEdit && (
           <h4 className="grid-header">{this.state.current.title}</h4>
         )}
