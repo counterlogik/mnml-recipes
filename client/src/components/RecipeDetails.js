@@ -127,6 +127,11 @@ class RecipeDetails extends React.Component {
     }
   };
 
+  deleteRecipe = event => {
+    this.props.history.replace("/dashboard");
+    this.props.removeRecipe();
+  };
+
   onIngredientChange = (value, id) => {
     const idx = this.state.changed.ingredients.findIndex(
       ingredient => ingredient._id === id
@@ -196,6 +201,7 @@ class RecipeDetails extends React.Component {
   render() {
     return (
       <main>
+        <h2> ... </h2>
         {!this.state.underEdit && (
           <h4 className="grid-header">{this.state.current.title}</h4>
         )}
@@ -236,8 +242,13 @@ class RecipeDetails extends React.Component {
         </section>
         <div className="recipe-actions">
           <button type="button" onClick={this.toggleEditMode}>
-            edit this recipe
+            {!this.state.underEdit ? "edit this recipe" : "save this recipe"}
           </button>
+          {this.state.underEdit && (
+            <button type="button" onClick={this.deleteRecipe}>
+              delete this recipe
+            </button>
+          )}
         </div>
       </main>
     );

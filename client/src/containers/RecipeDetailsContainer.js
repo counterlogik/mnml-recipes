@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import RecipeDetails from "../components/RecipeDetails";
 import {
+  removeRecipe,
   updateRecipe,
   updateIngredient,
   addIngredient,
@@ -40,6 +41,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const recipeId = ownProps.match.params.recipeId;
 
   return {
+    removeRecipe: () => {
+      dispatch(removeRecipe(recipeId));
+    },
     updateRecipe: (
       title,
       ingredients,

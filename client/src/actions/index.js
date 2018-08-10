@@ -118,6 +118,7 @@ export const updateRecipe = (
   };
 };
 
+// remove ingredients and steps needs async work
 export const removeRecipe = recipeId => {
   return (dispatch, getState) => {
     fetch("/api/recipes/remove", {
