@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import IngredientsList from "./Ingredients";
 import StepsList from "./Steps";
 import { v4 } from "node-uuid";
@@ -232,7 +233,7 @@ class RecipeDetails extends React.Component {
   render() {
     return (
       <main>
-        <h2> ... </h2>
+        <h2 className="grid-empty-cell"> ... </h2>
         {!this.state.underEdit && (
           <h4 className="grid-header">{this.state.current.title}</h4>
         )}
@@ -252,7 +253,11 @@ class RecipeDetails extends React.Component {
             onIngredientRemove={this.onIngredientRemove}
           />
           {this.state.underEdit && (
-            <button type="button" onClick={this.handleAddIngredient}>
+            <button
+              className="btn btn--small"
+              type="button"
+              onClick={this.handleAddIngredient}
+            >
               + ingredient
             </button>
           )}
@@ -266,17 +271,36 @@ class RecipeDetails extends React.Component {
             onStepRemove={this.onStepRemove}
           />
           {this.state.underEdit && (
-            <button type="button" onClick={this.handleAddStep}>
+            <button
+              className="btn btn--small"
+              type="button"
+              onClick={this.handleAddStep}
+            >
               + step
             </button>
           )}
         </section>
+        <div className="app-navigation">
+          <Link to={"/dashboard"}>
+            <button className="btn" type="button">
+              back to all recipes
+            </button>
+          </Link>
+        </div>
         <div className="recipe-actions">
-          <button type="button" onClick={this.toggleEditMode}>
+          <button
+            className="btn btn--edit"
+            type="button"
+            onClick={this.toggleEditMode}
+          >
             {!this.state.underEdit ? "edit this recipe" : "save this recipe"}
           </button>
           {this.state.underEdit && (
-            <button type="button" onClick={this.deleteRecipe}>
+            <button
+              className="btn btn--delete"
+              type="button"
+              onClick={this.deleteRecipe}
+            >
               delete this recipe
             </button>
           )}

@@ -23,12 +23,13 @@ class StepsList extends React.Component {
           changedSteps.map(step => (
             <li className="step" key={step._id}>
               <input
+                className="edit-field edit-field--step"
                 name={step._id}
                 value={step.step}
                 onChange={this.handleStepInputChange}
               />
               <button
-                className="remove remove--step"
+                className="btn btn--icon"
                 onClick={() => this.handleStepRemove(step._id)}
               >
                 &times;

@@ -54,7 +54,7 @@ class RecipeList extends React.Component {
 
   render() {
     return (
-      <div className="recipeList">
+      <div className="recipe-list">
         <div className="flex-header">
           <h1>your recipes...</h1>
         </div>
@@ -64,14 +64,16 @@ class RecipeList extends React.Component {
             return (
               <li key={recipeId}>
                 <Link to={`/recipeDetails/${recipeId}`}>
-                  <button className="loadRecipe">{recipe.title}</button>
+                  <button className="btn btn--link">{recipe.title}</button>
                 </Link>
               </li>
             );
           })}
         </ul>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">+ add recipe</button>
+        <form className="dashboard-actions" onSubmit={this.handleSubmit}>
+          <button className="btn btn--circular" type="submit">
+            +
+          </button>
         </form>
       </div>
     );

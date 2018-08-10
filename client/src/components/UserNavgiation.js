@@ -13,7 +13,7 @@ class UserNavgiation extends Component {
     const { isAuthenticated } = this.props.auth;
 
     return (
-      <div>
+      <div className="user-navigation">
         {!isAuthenticated() && (
           <button className="button button--login" onClick={this.login}>
             Log In

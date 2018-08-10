@@ -23,12 +23,13 @@ class IngredientsList extends React.Component {
           changedIngredients.map(ingredient => (
             <li className="ingredient" key={ingredient._id}>
               <input
+                className="edit-field edit-field--ingredient"
                 name={ingredient._id}
                 value={ingredient.ingredient}
                 onChange={this.handleIngredientInputChange}
               />
               <button
-                className="remove remove--ingredient"
+                className="btn btn--icon"
                 onClick={() => this.handleIngredientRemove(ingredient._id)}
               >
                 &times;
