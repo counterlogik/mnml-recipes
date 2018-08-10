@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import IngredientsList from "./Ingredients";
 import StepsList from "./Steps";
+import Modal from "./Modal";
 import { v4 } from "node-uuid";
 
 class RecipeDetails extends React.Component {
@@ -16,7 +17,8 @@ class RecipeDetails extends React.Component {
       ingredients: [],
       steps: []
     },
-    underEdit: false
+    underEdit: false,
+    isModalOpen: false
   };
 
   componentDidMount() {
@@ -140,6 +142,14 @@ class RecipeDetails extends React.Component {
           });
         });
     }
+  };
+
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
   };
 
   deleteRecipe = () => {
@@ -298,12 +308,29 @@ class RecipeDetails extends React.Component {
             <button
               className="btn btn--delete"
               type="button"
-              onClick={this.deleteRecipe}
+              onClick={this.openModal}
             >
               delete this recipe
             </button>
           )}
         </div>
+        <Modal>
+          {this.state.isModalOpen && (
+            <div className="modal">
+              <h4 className="modal-header">
+                Are you sure you want to delete this recipe?
+              </h4>
+              <div className="btn-group btn-group--modal">
+                <button className="btn btn--modal" onClick={this.deleteRecipe}>
+                  delete recipe
+                </button>
+                <button className="btn btn--modal" onClick={this.closeModal}>
+                  do not delete
+                </button>
+              </div>
+            </div>
+          )}
+        </Modal>
       </main>
     );
   }

@@ -45,6 +45,13 @@ button
   font-size 2rem
   font-weight 700
 
+.btn--modal
+  color #14b6cc
+
+.btn-group--modal
+  display flex
+  justify-content space-around
+
 main
   display grid
   grid-template-columns 1fr 2fr
@@ -159,3 +166,23 @@ main
 .view-box::-webkit-scrollbar-thumb
   background-color #222222
   outline 0.125rem solid #222222
+
+.modal
+  background rgba(34, 34, 34, 0.95)
+  display inline-block
+  padding 1.5rem
+  top 50%
+  transform translateY(-50%)
+  left calc(50vw - 256px)
+  width 512px
+  min-height 192px
+  max-height calc(90vh)
+  position fixed
+  z-index 100
+  overflow-x hidden
+  overflow-y auto
+  -webkit-overflow-scrolling touch
+
+.modal-header
+  color #f8fbde
+  margin-bottom 2rem
