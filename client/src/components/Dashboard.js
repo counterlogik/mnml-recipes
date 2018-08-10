@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import RecipesListContainer from "../containers/RecipeListContainer";
+import RecipeList from "../components/RecipeList";
 
 class Dashboard extends Component {
   login() {
@@ -11,7 +11,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        {isAuthenticated() && <RecipesListContainer />}
+        {isAuthenticated() && <RecipeList {...this.props} />}
         {!isAuthenticated() && (
           <h4>
             You are not logged in! Please{" "}

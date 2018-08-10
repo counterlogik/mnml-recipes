@@ -19,14 +19,29 @@ class RecipeDetails extends React.Component {
   };
 
   componentDidMount() {
-    this.setState({
-      ...this.state,
-      current: {
-        title: this.props.recipe.title,
-        ingredients: this.props.ingredients,
-        steps: this.props.steps
+    fetch(`/api/recipes/details/${this.props.match.params.recipeId}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.access_token}`
       }
-    });
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(details => {
+        this.setState({
+          ...this.state,
+          current: {
+            title: details.title,
+            ingredients: details.ingredients,
+            steps: details.steps
+          }
+        });
+      });
   }
 
   handleRecipeTitleChange = event => {
@@ -95,41 +110,57 @@ class RecipeDetails extends React.Component {
         underEdit: false
       });
 
-      let removedIngredients = [];
-      let removedSteps = [];
+      fetch("/api/recipes/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          authorization: `Bearer ${localStorage.access_token}`
+        },
+        body: JSON.stringify({
+          recipeId: this.props.match.params.recipeId,
+          title: this.state.changed.title,
+          ingredients: this.state.changed.ingredients,
+          steps: this.state.changed.steps
+        })
+      })
+        .then(response => {
+          if (!response.ok) throw Error(response.statusText);
 
-      const oldIngredientIds = this.state.current.ingredients.map(
-        ingredient => ingredient._id
-      );
-      const changedIngredientIds = this.state.changed.ingredients.map(
-        ingredient => ingredient._id
-      );
-
-      const oldStepIds = this.state.current.steps.map(step => step._id);
-      const changedStepIds = this.state.changed.steps.map(step => step._id);
-
-      oldIngredientIds.forEach(oldIngredientId => {
-        if (!changedIngredientIds.includes(oldIngredientId))
-          removedIngredients.push(oldIngredientId);
-      });
-
-      oldStepIds.forEach(oldStepId => {
-        if (!changedStepIds.includes(oldStepId)) removedSteps.push(oldStepId);
-      });
-
-      this.props.updateRecipe(
-        this.state.changed.title,
-        this.state.changed.ingredients,
-        this.state.changed.steps,
-        removedIngredients,
-        removedSteps
-      );
+          return response;
+        })
+        .catch(error => console.error("Error:", error))
+        .then(() => {
+          this.setState({
+            current: {
+              title: this.state.changed.title,
+              ingredients: this.state.changed.ingredients,
+              steps: this.state.changed.steps
+            }
+          });
+        });
     }
   };
 
-  deleteRecipe = event => {
+  deleteRecipe = () => {
     this.props.history.replace("/dashboard");
-    this.props.removeRecipe();
+
+    fetch("/api/recipes/remove", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({ recipeId: this.props.match.params.recipeId })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(() => {
+        this.props.history.replace("/dashboard");
+      });
   };
 
   onIngredientChange = (value, id) => {

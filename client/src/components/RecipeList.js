@@ -1,16 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { v4 } from "node-uuid";
 
 class RecipeList extends React.Component {
+  state = {
+    recipes: []
+  };
+
   componentDidMount() {
-    this.props.fetchRecipes(localStorage.user_id);
-    this.props.fetchIngredients();
-    this.props.fetchSteps();
+    fetch("/api/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({ userId: localStorage.user_id })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(response => response.json())
+      .then(recipes => {
+        this.setState({ recipes: recipes });
+      });
   }
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.addRecipe(localStorage.user_id);
+
+    // make fetch to API to add Recipe
+    const recipeId = `recipe-${v4()}`;
+    fetch("/api/recipes/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        authorization: `Bearer ${localStorage.access_token}`
+      },
+      body: JSON.stringify({ recipeId, userId: localStorage.user_id })
+    })
+      .then(response => {
+        if (!response.ok) throw Error(response.statusText);
+
+        return response;
+      })
+      .catch(error => console.error("Error:", error))
+      .then(() => {
+        this.props.history.replace(`/recipeDetails/${recipeId}`);
+      });
   };
 
   render() {
@@ -20,26 +59,19 @@ class RecipeList extends React.Component {
           <h1>your recipes...</h1>
         </div>
         <ul>
-          {Object.keys(this.props.recipes).map(recipeId => {
+          {this.state.recipes.map(recipe => {
+            const recipeId = recipe._id;
             return (
               <li key={recipeId}>
                 <Link to={`/recipeDetails/${recipeId}`}>
-                  <button className="loadRecipe">
-                    {this.props.recipes[recipeId].title}
-                  </button>
+                  <button className="loadRecipe">{recipe.title}</button>
                 </Link>
-                <button
-                  className="removeRecipe"
-                  onClick={() => this.props.removeRecipe(recipeId)}
-                >
-                  &times;
-                </button>
               </li>
             );
           })}
         </ul>
         <form onSubmit={this.handleSubmit}>
-          <button type="submit">+ Add Recipe</button>
+          <button type="submit">+ add recipe</button>
         </form>
       </div>
     );
