@@ -300,9 +300,20 @@ main {
   grid-template-rows: -webkit-min-content;
   grid-template-rows: -moz-min-content;
   grid-template-rows: min-content;
-  grid-gap: 1rem 2rem;
+  grid-gap: 0.5rem 1rem;
   padding: 1rem;
-  max-height: calc(100vh - 13rem);
+  max-height: calc(100vh - 26rem);
+  overflow-y: scroll;
+}
+.recipe-list-grid::-webkit-scrollbar {
+  width: 0.25rem;
+}
+.recipe-list-grid::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0.25rem rgba(34,34,34,0.25);
+}
+.recipe-list-grid::-webkit-scrollbar-thumb {
+  background-color: #222;
+  outline: 0.125rem solid #222;
 }
 .grid-header {
   grid-column: 2;
