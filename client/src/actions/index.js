@@ -92,8 +92,6 @@ export const updateRecipe = (recipeId, title, ingredients, steps) => {
       })
       .catch(error => console.error("Error:", error))
       .then(() => {
-        const state = getState();
-
         dispatch({
           type: "UPDATE_RECIPE",
           recipeId,
