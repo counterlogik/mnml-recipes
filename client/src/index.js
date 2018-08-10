@@ -21,7 +21,7 @@ const handleAuthentication = ({ location }) => {
 const Routes = () => {
   return (
     <Router history={history}>
-      <div>
+      <div className="routed">
         <Route
           path="/"
           render={props => <UserNavgiation auth={auth} {...props} />}
