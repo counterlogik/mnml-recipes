@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import IngredientsList from "./Ingredients";
 import StepsList from "./Steps";
 import Modal from "./Modal";
+import arrowLeft from "../img/arrow-alt-circle-left-regular.png";
+import editSolid from "../img/edit-solid.png";
+import trashAltSolid from "../img/trash-alt-solid.png";
+import saveDisk from "../img/save.png";
 import { v4 } from "node-uuid";
 
 class RecipeDetails extends React.Component {
@@ -18,7 +22,8 @@ class RecipeDetails extends React.Component {
       steps: []
     },
     underEdit: false,
-    isModalOpen: false
+    isModalOpen: false,
+    activeTab: "ingredients"
   };
 
   componentDidMount() {
@@ -144,6 +149,13 @@ class RecipeDetails extends React.Component {
     }
   };
 
+  toggleContents = () => {
+    this.setState({
+      activeTab:
+        this.state.activeTab === "ingredients" ? "steps" : "ingredients"
+    });
+  };
+
   openModal = () => {
     this.setState({ isModalOpen: true });
   };
@@ -257,7 +269,12 @@ class RecipeDetails extends React.Component {
         </div>
 
         <main>
-          <section className="view-box view-box--steps">
+          <section
+            className={
+              "view-box view-box--steps" +
+              (this.state.activeTab === "steps" ? " view-box--is-active" : "")
+            }
+          >
             <IngredientsList
               currentIngredients={this.state.current.ingredients}
               changedIngredients={this.state.changed.ingredients}
@@ -275,7 +292,14 @@ class RecipeDetails extends React.Component {
               </button>
             )}
           </section>
-          <section className="view-box view-box--ingredients view-box--is-active">
+          <section
+            className={
+              "view-box view-box--ingredients" +
+              (this.state.activeTab === "ingredients"
+                ? " view-box--is-active"
+                : "")
+            }
+          >
             <StepsList
               currentSteps={this.state.current.steps}
               changedSteps={this.state.changed.steps}
@@ -294,11 +318,41 @@ class RecipeDetails extends React.Component {
             )}
           </section>
         </main>
+        <div className="details-chooser">
+          <button
+            className={
+              "btn btn--details-chooser" +
+              (this.state.activeTab === "steps"
+                ? " btn--details-chooser--is-active"
+                : "")
+            }
+            type="button"
+            onClick={this.toggleContents}
+          >
+            ingredients
+          </button>
+          <button
+            className={
+              "btn btn--details-chooser" +
+              (this.state.activeTab === "ingredients"
+                ? " btn--details-chooser--is-active"
+                : "")
+            }
+            type="button"
+            onClick={this.toggleContents}
+          >
+            steps
+          </button>
+        </div>
         <div className="bottom-navigation">
           <div className="app-navigation">
             <Link to={"/dashboard"}>
-              <button className="btn" type="button">
-                {"<"}
+              <button className="btn btn--nav" type="button">
+                <img
+                  className="ico ico--nav"
+                  src={arrowLeft}
+                  alt="go back to recipes list"
+                />
               </button>
             </Link>
           </div>
@@ -308,7 +362,19 @@ class RecipeDetails extends React.Component {
               type="button"
               onClick={this.toggleEditMode}
             >
-              {!this.state.underEdit ? "edit this recipe" : "save this recipe"}
+              {!this.state.underEdit ? (
+                <img
+                  className="ico ico--edit"
+                  src={editSolid}
+                  alt="edit this recipe"
+                />
+              ) : (
+                <img
+                  className="ico ico--edit"
+                  src={saveDisk}
+                  alt="save this recipe"
+                />
+              )}
             </button>
             {this.state.underEdit && (
               <button
@@ -316,7 +382,11 @@ class RecipeDetails extends React.Component {
                 type="button"
                 onClick={this.openModal}
               >
-                delete this recipe
+                <img
+                  className="ico ico--delete"
+                  src={trashAltSolid}
+                  alt="delete this recipe"
+                />
               </button>
             )}
           </div>

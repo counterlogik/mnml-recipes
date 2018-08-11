@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import plusCircle from "../img/plus-solid.png";
 import { v4 } from "node-uuid";
 
 class RecipeList extends React.Component {
@@ -71,8 +72,8 @@ class RecipeList extends React.Component {
           })}
         </ul>
         <form className="dashboard-actions" onSubmit={this.handleSubmit}>
-          <button className="btn btn--circular" type="submit">
-            +
+          <button className="btn btn--add" type="submit">
+            <img className="ico ico--add" src={plusCircle} alt="add a recipe" />
           </button>
         </form>
       </div>
