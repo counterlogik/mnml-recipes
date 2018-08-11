@@ -1,38 +1,54 @@
 const express = require("express");
+const passport = require("passport");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
-const jwt = require("express-jwt");
-const jwksRsa = require("jwks-rsa");
-require("dotenv").config();
+const User = require("./models/User");
 const Recipe = require("./models/Recipe");
+require("./auth/auth");
 
-if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
-  throw "Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file";
-}
+// user signup POST route (via Passport middleware)
+router.post(
+  "/signup",
+  passport.authenticate("signup", { session: false }),
+  async (req, res, next) => {
+    res.json({
+      message: "Signup successful!",
+      user: req.user
+    });
+  }
+);
 
-const checkJwt = jwt({
-  // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint.
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
-  }),
-
-  // Validate the audience and the issuer.
-  audience: process.env.AUTH0_AUDIENCE,
-  issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-  algorithms: ["RS256"]
+// user login POST route (via Passport middleware)
+router.post("/login", async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const err = new Error("An error occured!");
+        return next(err);
+      }
+      req.login(user, { session: false }, async error => {
+        if (err) return next(err);
+        const body = { _id: user._id, email: user.email };
+        const token = jwt.sign({ user: body }, "top_secret");
+        return res.json({ token });
+      });
+    } catch (err) {
+      return next(err);
+    }
+  })(req, res, next);
 });
 
-// GET api entry point message
-router.get("/", function(req, res, next) {
+// authenticate with JWT for the rest of the routes here
+router.use("/", passport.authenticate("jwt", { session: false }));
+
+// profile GET route
+router.get("/user/profile", (req, res, next) => {
   res.json({
-    message:
-      "This is the default route for our Recipes API, try a more specific route query."
+    message: "You made it to the secure route",
+    user: req.user,
+    token: req.query.secret_token
   });
 });
-
-router.use(checkJwt);
 
 // recipes POST route (fetch all recipes for user)
 router.post("/recipes", function(req, res) {
