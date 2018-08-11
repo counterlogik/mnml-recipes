@@ -242,77 +242,84 @@ class RecipeDetails extends React.Component {
 
   render() {
     return (
-      <main>
-        {!this.state.underEdit && (
-          <h4 className="grid-header">{this.state.current.title}</h4>
-        )}
-        {this.state.underEdit && (
-          <input
-            className="recipe-title-input"
-            value={this.state.changed.title}
-            onChange={this.handleRecipeTitleChange}
-          />
-        )}
-        <section className="view-box">
-          <IngredientsList
-            currentIngredients={this.state.current.ingredients}
-            changedIngredients={this.state.changed.ingredients}
-            underEdit={this.state.underEdit}
-            onIngredientChange={this.onIngredientChange}
-            onIngredientRemove={this.onIngredientRemove}
-          />
-          {this.state.underEdit && (
-            <button
-              className="btn btn--small"
-              type="button"
-              onClick={this.handleAddIngredient}
-            >
-              + ingredient
-            </button>
+      <div className="container container--details">
+        <div className="page-header">
+          {!this.state.underEdit && (
+            <h4 className="header header--main">{this.state.current.title}</h4>
           )}
-        </section>
-        <section className="view-box view-box--major">
-          <StepsList
-            currentSteps={this.state.current.steps}
-            changedSteps={this.state.changed.steps}
-            underEdit={this.state.underEdit}
-            onStepChange={this.onStepChange}
-            onStepRemove={this.onStepRemove}
-          />
           {this.state.underEdit && (
-            <button
-              className="btn btn--small"
-              type="button"
-              onClick={this.handleAddStep}
-            >
-              + step
-            </button>
+            <input
+              className="recipe-title-input"
+              value={this.state.changed.title}
+              onChange={this.handleRecipeTitleChange}
+            />
           )}
-        </section>
-        <div className="app-navigation">
-          <Link to={"/dashboard"}>
-            <button className="btn" type="button">
-              back to all recipes
-            </button>
-          </Link>
         </div>
-        <div className="recipe-actions">
-          <button
-            className="btn btn--edit"
-            type="button"
-            onClick={this.toggleEditMode}
-          >
-            {!this.state.underEdit ? "edit this recipe" : "save this recipe"}
-          </button>
-          {this.state.underEdit && (
+
+        <main>
+          <section className="view-box view-box--steps">
+            <IngredientsList
+              currentIngredients={this.state.current.ingredients}
+              changedIngredients={this.state.changed.ingredients}
+              underEdit={this.state.underEdit}
+              onIngredientChange={this.onIngredientChange}
+              onIngredientRemove={this.onIngredientRemove}
+            />
+            {this.state.underEdit && (
+              <button
+                className="btn btn--small"
+                type="button"
+                onClick={this.handleAddIngredient}
+              >
+                + ingredient
+              </button>
+            )}
+          </section>
+          <section className="view-box view-box--ingredients view-box--is-active">
+            <StepsList
+              currentSteps={this.state.current.steps}
+              changedSteps={this.state.changed.steps}
+              underEdit={this.state.underEdit}
+              onStepChange={this.onStepChange}
+              onStepRemove={this.onStepRemove}
+            />
+            {this.state.underEdit && (
+              <button
+                className="btn btn--small"
+                type="button"
+                onClick={this.handleAddStep}
+              >
+                + step
+              </button>
+            )}
+          </section>
+        </main>
+        <div className="bottom-navigation">
+          <div className="app-navigation">
+            <Link to={"/dashboard"}>
+              <button className="btn" type="button">
+                {"<"}
+              </button>
+            </Link>
+          </div>
+          <div className="recipe-actions">
             <button
-              className="btn btn--delete"
+              className="btn btn--edit"
               type="button"
-              onClick={this.openModal}
+              onClick={this.toggleEditMode}
             >
-              delete this recipe
+              {!this.state.underEdit ? "edit this recipe" : "save this recipe"}
             </button>
-          )}
+            {this.state.underEdit && (
+              <button
+                className="btn btn--delete"
+                type="button"
+                onClick={this.openModal}
+              >
+                delete this recipe
+              </button>
+            )}
+          </div>
         </div>
         <Modal>
           {this.state.isModalOpen && (
@@ -331,7 +338,7 @@ class RecipeDetails extends React.Component {
             </div>
           )}
         </Modal>
-      </main>
+      </div>
     );
   }
 }

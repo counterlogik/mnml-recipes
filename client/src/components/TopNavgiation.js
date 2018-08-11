@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Auth from "../services/Auth";
 
-class UserNavgiation extends Component {
+class TopNavgiation extends Component {
   login = () => {
     this.props.history.push("/login");
   };
@@ -12,14 +12,14 @@ class UserNavgiation extends Component {
 
   render() {
     return (
-      <div className="user-navigation">
+      <div className="top-navigation">
         {!Auth.isUserAuthenticated() && (
-          <button className="button button--auth" onClick={this.login}>
+          <button className="btn btn--top-nav" onClick={this.login}>
             log in
           </button>
         )}
         {Auth.isUserAuthenticated() && (
-          <button className="button button--auth" onClick={this.logout}>
+          <button className="btn btn--top-nav" onClick={this.logout}>
             log out
           </button>
         )}
@@ -28,4 +28,4 @@ class UserNavgiation extends Component {
   }
 }
 
-export default UserNavgiation;
+export default TopNavgiation;

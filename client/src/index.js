@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { Route, Router } from "react-router-dom";
-import UserNavgiation from "./components/UserNavgiation";
+import TopNavgiation from "./components/TopNavgiation";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import RecipeDetails from "./components/RecipeDetails";
@@ -32,7 +32,7 @@ class Routes extends React.Component {
     return (
       <Router history={history}>
         <div className="routed">
-          <UserNavgiation history={history} {...this.props} />
+          <TopNavgiation history={history} {...this.props} />
           <Route
             exact
             path="/"
