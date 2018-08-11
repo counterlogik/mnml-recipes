@@ -204,3 +204,17 @@ main
 .form--auth
   max-width 368px
   margin 0 auto
+
+@media only screen and (max-width: 767px), (-webkit-device-pixel-ratio: 3) and (max-width: 812px)
+  .grid-header
+    grid-column span 2
+    font-size 1.25rem
+
+  button
+    border 0.125rem dashed #14b6cc
+    padding 0.25rem 0.5rem
+    font-size 1rem
+
+  main
+    grid-template-rows 1fr auto min-content
+    grid-template-columns repeat(auto-fill, minmax(10rem, 1fr))
