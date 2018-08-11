@@ -53,7 +53,6 @@ router.get("/user/profile", (req, res, next) => {
 
 // recipes POST route (fetch all recipes for user)
 router.post("/recipes", function(req, res) {
-  console.log(req.body);
   Recipe.find({ user: req.body.userId }, function(err, recipes) {
     if (err) {
       res.send(err);
