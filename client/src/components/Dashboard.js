@@ -1,18 +1,13 @@
 import React, { Component } from "react";
 import RecipeList from "../components/RecipeList";
+import Auth from "../services/Auth";
 
 class Dashboard extends Component {
-  login = () => {
-    this.props.auth.login();
-  };
-
   render() {
-    const { isAuthenticated } = this.props.auth;
-
     return (
       <div>
-        {isAuthenticated() && <RecipeList {...this.props} />}
-        {!isAuthenticated() && (
+        {Auth.isUserAuthenticated() && <RecipeList {...this.props} />}
+        {!Auth.isUserAuthenticated() && (
           <h4 className="header header--unauthenticated">
             you're not logged in.
           </h4>

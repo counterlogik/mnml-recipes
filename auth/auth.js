@@ -3,6 +3,7 @@ const localStrategy = require("passport-local").Strategy;
 const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const UserModel = require("../models/User");
+const CONFIG = require("../config/config");
 
 // Passport middleware to handle registration
 passport.use(
@@ -53,8 +54,8 @@ passport.use(
 passport.use(
   new JWTstrategy(
     {
-      secretOrKey: "top_secret",
-      jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token")
+      secretOrKey: CONFIG.jwt_secret,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
     },
     async (token, done) => {
       try {

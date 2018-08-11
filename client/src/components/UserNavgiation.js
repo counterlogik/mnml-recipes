@@ -1,27 +1,26 @@
 import React, { Component } from "react";
+import Auth from "../services/Auth";
 
 class UserNavgiation extends Component {
   login = () => {
-    this.props.auth.login();
+    this.props.history.push("/login");
   };
 
   logout = () => {
-    this.props.auth.logout();
+    this.props.history.push("/logout");
   };
 
   render() {
-    const { isAuthenticated } = this.props.auth;
-
     return (
       <div className="user-navigation">
-        {!isAuthenticated() && (
-          <button className="button button--login" onClick={this.login}>
-            Log In
+        {!Auth.isUserAuthenticated() && (
+          <button className="button button--auth" onClick={this.login}>
+            log in
           </button>
         )}
-        {isAuthenticated() && (
-          <button className="button button--logout" onClick={this.logout}>
-            Log Out
+        {Auth.isUserAuthenticated() && (
+          <button className="button button--auth" onClick={this.logout}>
+            log out
           </button>
         )}
       </div>

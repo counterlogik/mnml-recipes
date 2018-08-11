@@ -11,5 +11,6 @@ CONFIG.db_password = process.env.DB_PASSWORD = "AwHjqLqsn9j8CCzMysgQ";
 
 CONFIG.jwt_encryption = process.env.JWT_ENCRYPTION = "PleaseChange";
 CONFIG.jwt_expiration = process.env.JWT_EXPIRATION = "10000";
+CONFIG.jwt_secret = "mDUDufMT9vdhgV9E";
 
 module.exports = CONFIG;

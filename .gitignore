@@ -22,14 +22,8 @@ yarn-error.log*
 
 /.vscode
 
-# Do not expose firebase API key
-/client/src/base.js
-
 # ignore database
 /db
-
-# Do not expose Auth0 secrets
-.auth0
 
 # Do not expose config secrets
 /config

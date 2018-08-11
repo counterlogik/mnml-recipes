@@ -2,53 +2,76 @@ import React from "react";
 import { render } from "react-dom";
 import { Route, Router } from "react-router-dom";
 import UserNavgiation from "./components/UserNavgiation";
+import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
-import Callback from "./components/Callback";
 import RecipeDetails from "./components/RecipeDetails";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Logout from "./components/Logout";
 import Auth from "./services/Auth";
 import history from "./services/History";
 import "./css/style.css";
 import registerServiceWorker from "./registerServiceWorker";
 
-const auth = new Auth();
+class Routes extends React.Component {
+  state = {
+    authenticated: false
+  };
 
-const handleAuthentication = ({ location }) => {
-  if (/access_token|id_token|error/.test(location.hash)) {
-    auth.handleAuthentication();
+  componentDidMount() {
+    // check if user is logged in on refresh
+    this.toggleAuthenticateStatus();
   }
-};
 
-const Routes = () => {
-  return (
-    <Router history={history}>
-      <div className="routed">
-        <Route
-          path="/"
-          render={props => <UserNavgiation auth={auth} {...props} />}
-        />
-        <Route
-          path="/dashboard"
-          render={props => <Dashboard auth={auth} {...props} />}
-        />
-        <Route
-          path="/callback"
-          render={props => {
-            handleAuthentication(props);
-            return <Callback {...props} />;
-          }}
-        />
-        <Route
-          path="/recipeDetails/:recipeId"
-          render={props => {
-            handleAuthentication(props);
-            return <RecipeDetails {...props} />;
-          }}
-        />
-      </div>
-    </Router>
-  );
-};
+  toggleAuthenticateStatus = () => {
+    // check authenticated status and toggle state based on that
+    this.setState({ authenticated: Auth.isUserAuthenticated() });
+  };
 
-render(Routes(), document.querySelector("#App"));
+  render() {
+    return (
+      <Router history={history}>
+        <div className="routed">
+          <UserNavgiation history={history} {...this.props} />
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <Home
+                toggleAuthenticateStatus={() => this.toggleAuthenticateStatus()}
+                {...props}
+              />
+            )}
+          />
+          <Route path="/dashboard" render={props => <Dashboard {...props} />} />
+          <Route
+            path="/recipeDetails/:recipeId"
+            render={props => {
+              return <RecipeDetails {...props} />;
+            }}
+          />
+          <Route
+            path="/login"
+            history={history}
+            render={props => {
+              return (
+                <Login
+                  toggleAuthenticateStatus={() =>
+                    this.toggleAuthenticateStatus()
+                  }
+                  {...props}
+                />
+              );
+            }}
+          />
+          <Route path="/register" component={Register} />
+          <Route path="/logout" component={Logout} />
+        </div>
+      </Router>
+    );
+  }
+}
+
+render(<Routes />, document.querySelector("#App"));
 
 registerServiceWorker();

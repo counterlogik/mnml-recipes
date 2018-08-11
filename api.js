@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("./models/User");
 const Recipe = require("./models/Recipe");
+const CONFIG = require("./config/config");
 require("./auth/auth");
 
 // user signup POST route (via Passport middleware)
@@ -29,8 +30,8 @@ router.post("/login", async (req, res, next) => {
       req.login(user, { session: false }, async error => {
         if (err) return next(err);
         const body = { _id: user._id, email: user.email };
-        const token = jwt.sign({ user: body }, "top_secret");
-        return res.json({ token });
+        const token = jwt.sign({ user: body }, CONFIG.jwt_secret);
+        return res.json({ token, user_id: user._id });
       });
     } catch (err) {
       return next(err);
@@ -52,6 +53,7 @@ router.get("/user/profile", (req, res, next) => {
 
 // recipes POST route (fetch all recipes for user)
 router.post("/recipes", function(req, res) {
+  console.log(req.body);
   Recipe.find({ user: req.body.userId }, function(err, recipes) {
     if (err) {
       res.send(err);
