@@ -75,25 +75,29 @@ class Register extends React.Component {
           )}
 
           <input
+            className="edit-field edit-field--auth"
             name="email"
             onChange={this.changeUser}
             value={this.state.user.email}
           />
 
           <input
+            className="edit-field edit-field--auth"
             type="password"
             name="password"
             onChange={this.changeUser}
             value={this.state.user.password}
           />
 
-          <button className="btn btn--auth" type="submit">
-            log in
-          </button>
+          <div className="btn-group btn-group--auth">
+            <button className="btn btn--auth">
+              <Link to={"/login"}>log in</Link>
+            </button>
 
-          <button className="btn btn--auth" type="submit">
-            <Link to={"/register"}>register</Link>
-          </button>
+            <button className="btn btn--auth" type="submit">
+              register
+            </button>
+          </div>
         </form>
       </div>
     );

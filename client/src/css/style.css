@@ -266,6 +266,9 @@ button {
   border-color: #14cc1a;
   color: #0f8413;
 }
+.btn--auth {
+  width: 48%;
+}
 .btn--delete {
   border-color: #ff0039;
   color: #ad0027;
@@ -284,6 +287,14 @@ button {
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+}
+.btn-group--auth {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 main {
   display: grid;
@@ -457,8 +468,8 @@ main {
   display: inline-block;
   padding: 1.5rem;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  -webkit-transform: translatey(-50%);
+          transform: translatey(-50%);
   left: calc(50vw - 256px);
   width: 512px;
   min-height: 192px;
@@ -472,4 +483,15 @@ main {
 .modal-header {
   color: #f8fbde;
   margin-bottom: 2rem;
+}
+.container--home {
+  max-width: 368px;
+  margin: 0 auto;
+}
+.header--home {
+  color: #0f8413;
+}
+.form--auth {
+  max-width: 368px;
+  margin: 0 auto;
 }

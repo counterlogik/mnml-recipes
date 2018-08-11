@@ -10,7 +10,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="container container--home">
-        <h5>your recipes...</h5>
+        <h3 className="header header--home">your recipes...</h3>
         {Auth.isUserAuthenticated() ? (
           <p>you are logged in.</p>
         ) : (
