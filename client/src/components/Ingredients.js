@@ -1,4 +1,5 @@
 import React from "react";
+import timesSolid from "../img/times-solid.png";
 
 class IngredientsList extends React.Component {
   handleIngredientInputChange = event => {
@@ -32,7 +33,11 @@ class IngredientsList extends React.Component {
                 className="btn btn--icon btn--delete"
                 onClick={() => this.handleIngredientRemove(ingredient._id)}
               >
-                &times;
+                <img
+                  className="ico ico--remove"
+                  src={timesSolid}
+                  alt="remove this ingredient"
+                />
               </button>
             </li>
           ))}

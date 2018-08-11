@@ -1,4 +1,5 @@
 import React from "react";
+import timesSolid from "../img/times-solid.png";
 
 class StepsList extends React.Component {
   handleStepInputChange = event => {
@@ -32,7 +33,11 @@ class StepsList extends React.Component {
                 className="btn btn--icon btn--delete"
                 onClick={() => this.handleStepRemove(step._id)}
               >
-                &times;
+                <img
+                  className="ico ico--remove"
+                  src={timesSolid}
+                  alt="remove this step"
+                />
               </button>
             </li>
           ))}
