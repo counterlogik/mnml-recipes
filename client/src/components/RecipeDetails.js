@@ -257,7 +257,11 @@ class RecipeDetails extends React.Component {
       <div className="container container--details">
         <div className="page-header">
           {!this.state.underEdit && (
-            <h4 className="header header--main">{this.state.current.title}</h4>
+            <div className="page-header__content">
+              <h4 className="header header--main">
+                {this.state.current.title}
+              </h4>
+            </div>
           )}
           {this.state.underEdit && (
             <input
@@ -266,6 +270,13 @@ class RecipeDetails extends React.Component {
               onChange={this.handleRecipeTitleChange}
             />
           )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <polygon fill="white" points="0,100 100,0 100,100" />
+          </svg>
         </div>
 
         <main>

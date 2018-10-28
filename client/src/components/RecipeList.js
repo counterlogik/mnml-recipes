@@ -58,6 +58,13 @@ class RecipeList extends React.Component {
       <div className="recipe-list">
         <div className="flex-header">
           <h1>your recipes...</h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <polygon fill="white" points="0,100 100,0 100,100" />
+          </svg>
         </div>
         <ul className="recipe-list-grid">
           {this.state.recipes.map(recipe => {
